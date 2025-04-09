@@ -1,5 +1,11 @@
 package cl.estacionamiento.usuario.repository;
 
-public interface ModeloRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import cl.estacionamiento.usuario.dto.ModeloDTO;
+
+@Repository
+public interface ModeloRepository  extends JpaRepository<ModeloDTO, Integer> {
 
 }

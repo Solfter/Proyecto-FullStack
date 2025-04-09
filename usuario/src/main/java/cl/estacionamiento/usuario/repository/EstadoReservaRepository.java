@@ -1,5 +1,11 @@
 package cl.estacionamiento.usuario.repository;
 
-public interface EstadoReservaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import cl.estacionamiento.usuario.dto.EstacionamientoDTO;
+
+@Repository
+public interface EstadoReservaRepository  extends JpaRepository<EstadoReservaDTO, Integer> {
 
 }
