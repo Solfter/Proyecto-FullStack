@@ -19,8 +19,8 @@ import lombok.Setter;
 @Table(name = "ESPACIO_FAVORITO")
 public class EspacioFavoritoDTO {
     @Id
-    @Column(name = "RUT_USUARIO")
-    private int rut;
+    @Column(name = "ID_ESPACIO_FAVORITO")
+    private int idEspacioFavorito;
     @Id
     @Column(name = "ID_ESTACIONAMIENTO")
     private int idEstacionamiento;
