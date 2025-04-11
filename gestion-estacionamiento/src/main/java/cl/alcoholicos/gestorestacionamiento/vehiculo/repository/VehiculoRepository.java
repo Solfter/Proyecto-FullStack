@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoDTO;
 
 @Repository
-public interface VehiculoRepository  extends JpaRepository<VehiculoDTO, Integer> {
+public interface VehiculoRepository  extends JpaRepository<VehiculoDTO, String> {
 
 }

@@ -18,5 +18,5 @@ import lombok.Setter;
 public class ZonaDTO {
     @Id
     @Column(name = "ID_ZONA")
-    private char idZona;
+    private Character idZona;
 }

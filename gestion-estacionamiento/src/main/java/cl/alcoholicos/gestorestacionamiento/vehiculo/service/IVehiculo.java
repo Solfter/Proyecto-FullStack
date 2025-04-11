@@ -6,8 +6,7 @@ import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoDTO;
 
 public interface IVehiculo {
 
-
-   VehiculoDTO insert(VehiculoDTO vehiculo);
+    VehiculoDTO insert(VehiculoDTO vehiculo);
 
     VehiculoDTO update(String patente, VehiculoDTO vehiculo);
 
@@ -16,4 +15,5 @@ public interface IVehiculo {
     VehiculoDTO getById(String patente);
 
     List<VehiculoDTO> getAll();
+    
 }

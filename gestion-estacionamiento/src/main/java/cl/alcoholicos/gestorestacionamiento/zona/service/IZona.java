@@ -8,11 +8,11 @@ public interface IZona {
 
     ZonaDTO insert(ZonaDTO zona);
 
-    ZonaDTO update(Integer idZona, ZonaDTO zona);
+    ZonaDTO update(Character idZona, ZonaDTO zona);
 
-    ZonaDTO delete(Integer idZona);
+    ZonaDTO delete(Character idZona);
 
-    ZonaDTO getById(Integer idZona);
+    ZonaDTO getById(Character idZona);
 
     List<ZonaDTO> getAll();
 
