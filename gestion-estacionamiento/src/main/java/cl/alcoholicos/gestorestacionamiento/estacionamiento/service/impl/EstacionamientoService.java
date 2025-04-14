@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.estacionamiento.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoDTO;
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.repository.EstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.service.IEstacionamiento;
 
+@Service
 public class EstacionamientoService implements IEstacionamiento {
 
     @Autowired
