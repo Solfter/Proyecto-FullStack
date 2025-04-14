@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class EspacioFavoritoId implements Serializable {
-    private int rut;
     private int idEstacionamiento;
+    private int usuario; // El nombre debe coincidir con el nombre del campo en EspacioFavoritoDTO (usuario)
 }
+

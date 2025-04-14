@@ -8,11 +8,11 @@ public interface IEspacioFavorito {
     
     EspacioFavoritoDTO insert(EspacioFavoritoDTO espacioFavorito);
 
-    EspacioFavoritoDTO update(Integer idEspacioFavorito, EspacioFavoritoDTO espacioFavorito);
+    EspacioFavoritoDTO update(Integer rutUsuario, Integer idEstacionamiento, EspacioFavoritoDTO espacioFavorito);
 
-    EspacioFavoritoDTO delete(Integer idEspacioFavorito);
+    EspacioFavoritoDTO delete(Integer rutUsuario, Integer idEstacionamiento);
 
-    EspacioFavoritoDTO getById(Integer idEspacioFavorito);
+    EspacioFavoritoDTO getById(Integer rutUsuario, Integer idEstacionamiento);
 
     List<EspacioFavoritoDTO> getAll();
 

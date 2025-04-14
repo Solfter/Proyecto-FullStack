@@ -37,23 +37,23 @@ public class EspacioFavoritoController {
         return ResponseEntity.ok(nuevoEspacioFavorito);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EspacioFavoritoDTO> update(@PathVariable Integer idEspacioFavorito, @RequestBody EspacioFavoritoDTO espacioFavorito) {
-        EspacioFavoritoDTO espacioFavoritoExistente = espacioFavoritoService.getById(idEspacioFavorito);
+    @PutMapping("/{rut}-{id}")
+    public ResponseEntity<EspacioFavoritoDTO> update(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento, @RequestBody EspacioFavoritoDTO espacioFavorito) {
+        EspacioFavoritoDTO espacioFavoritoExistente = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
         if (espacioFavoritoExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        EspacioFavoritoDTO espacioFavoritoActualizado = espacioFavoritoService.update(idEspacioFavorito, espacioFavorito);
+        EspacioFavoritoDTO espacioFavoritoActualizado = espacioFavoritoService.update(rutUsuario, idEstacionamiento, espacioFavoritoExistente);
         return ResponseEntity.ok(espacioFavoritoActualizado);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<EspacioFavoritoDTO> delete(@PathVariable Integer idEspacioFavorito) {
-        EspacioFavoritoDTO espacioFavorito = espacioFavoritoService.getById(idEspacioFavorito);
+    @DeleteMapping("/{rut}-{id}")
+    public ResponseEntity<EspacioFavoritoDTO> delete(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento) {
+        EspacioFavoritoDTO espacioFavorito = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
         if (espacioFavorito == null) {
             return ResponseEntity.notFound().build();
         }
-        EspacioFavoritoDTO espacioFavoritoBorrado = espacioFavoritoService.delete(idEspacioFavorito);
+        EspacioFavoritoDTO espacioFavoritoBorrado = espacioFavoritoService.delete(rutUsuario, idEstacionamiento);
         if (espacioFavoritoBorrado == null) {
             return ResponseEntity.ok(espacioFavorito);
         }
