@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.estadoincidente.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.dto.EstadoIncidenteDTO;
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.repository.EstadoIncidenteRepository;
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.service.IEstadoIncidente;
 
+@Service
 public class EstadoIncidenteService implements IEstadoIncidente {
 
     @Autowired

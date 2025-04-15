@@ -58,7 +58,7 @@ public class TipoUsuarioController {
 
         TipoUsuarioDTO tipoUsuarioBorrado = tipoUsuarioService.delete(idTipoUsuario);
         if (tipoUsuarioBorrado == null) {
-            return ResponseEntity.ok(tipoUsuarioBorrado);
+            return ResponseEntity.ok(tipoUsuario);
         }
 
         return ResponseEntity.badRequest().build();
