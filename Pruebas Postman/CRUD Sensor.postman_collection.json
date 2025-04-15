@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "23376d72-49c7-4272-9494-b1fde2a41e77",
+		"name": "CRUD Sensor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar Sensor (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idSensor\": 3,\n  \"idZona\": \"A\"\n}"
+				},
+				"url": "http://localhost:8001/sensor"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los Sensores (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/sensor"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Sensor (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idSensor\": 3,\n  \"idZona\": \"B\"\n}"
+				},
+				"url": "http://localhost:8001/sensor/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Sensor (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/sensor/3"
+			},
+			"response": []
+		}
+	]
+}

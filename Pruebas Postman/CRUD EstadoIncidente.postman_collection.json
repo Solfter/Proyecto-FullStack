@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "30ba4bb0-c393-4a63-8533-e26d782a33a4",
+		"name": "CRUD EstadoIncidente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar EstadoIncidente (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idEstadoIncidente\": 3,\n  \"descEstadoIncidente\": \"Prueba\"\n}"
+				},
+				"url": "http://localhost:8001/estadoincidente"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los EstadoIncidente (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/estadoincidente"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar EstadoIncidente (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idEstadoIncidente\": 3,\n  \"descEstadoIncidente\": \"Prueba Put\"\n}"
+				},
+				"url": "http://localhost:8001/estadoincidente/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar EstadoIncidente (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/estadoincidente/3"
+			},
+			"response": []
+		}
+	]
+}

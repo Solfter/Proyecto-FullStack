@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "80ee0f89-45f0-4940-a5b9-aa8835eafc0c",
+		"name": "CRUD TipoEstadoReserva",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar TipoEstadoReserva (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idTipoEstadoReserva\": 1,\n  \"descTipoEstadoReserva\": \"Activa\"\n}"
+				},
+				"url": "http://localhost:8001/tipoestadoreserva"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los TipoEstadoReserva (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/tipoestadoreserva"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar TipoEstadoReserva (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idTipoEstadoReserva\": 1,\n  \"descTipoEstadoReserva\": \"Cancelada\"\n}"
+				},
+				"url": "http://localhost:8001/tipoestadoreserva/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar TipoEstadoReserva (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/tipoestadoreserva/1"
+			},
+			"response": []
+		}
+	]
+}

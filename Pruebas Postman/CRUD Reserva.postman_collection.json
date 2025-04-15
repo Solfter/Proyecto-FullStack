@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "3fd2cc7e-9076-4a34-acd3-7b953417a7c1",
+		"name": "CRUD Reserva",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar Reserva (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idReserva\": 3,\n  \"fechaCreacionReserva\": \"2025-04-14\",\n  \"fechaReserva\": \"2025-04-20\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"rutUsuario\": 12345678,\n  \"idEstacionamiento\": 1\n}"
+				},
+				"url": "http://localhost:8001/reserva"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las Reservas (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/reserva"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Reserva (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idReserva\": 3,\n  \"fechaCreacionReserva\": \"2025-04-14\",\n  \"fechaReserva\": \"2025-04-21\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"11:00:00\",\n  \"rutUsuario\": 12345678,\n  \"idEstacionamiento\": 2\n}"
+				},
+				"url": "http://localhost:8001/reserva/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Reserva (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/reserva/3"
+			},
+			"response": []
+		}
+	]
+}
