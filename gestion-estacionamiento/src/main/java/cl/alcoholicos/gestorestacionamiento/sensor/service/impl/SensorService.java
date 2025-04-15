@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.sensor.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.sensor.dto.SensorDTO;
 import cl.alcoholicos.gestorestacionamiento.sensor.repository.SensorRepository;
 import cl.alcoholicos.gestorestacionamiento.sensor.service.ISensor;
 
+@Service
 public class SensorService implements ISensor {
 
     @Autowired
