@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.reserva.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.reserva.dto.ReservaDTO;
 import cl.alcoholicos.gestorestacionamiento.reserva.repository.ReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.reserva.service.IReserva;
 
+@Service
 public class ReservaService implements IReserva {
 
     @Autowired
