@@ -57,7 +57,7 @@ public class ZonaController {
 
         ZonaDTO zonaBorrada = zonaService.delete(idZona);
         if (zonaBorrada == null) {
-            return ResponseEntity.ok(zonaBorrada);
+            return ResponseEntity.ok(zona);
         }
 
         return ResponseEntity.badRequest().build();

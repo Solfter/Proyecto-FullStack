@@ -58,7 +58,7 @@ public class ModeloController {
 
         ModeloDTO modeloBorrado = modeloService.delete(idModelo);
         if (modeloBorrado == null) {
-            return ResponseEntity.ok(modeloBorrado);
+            return ResponseEntity.ok(modelo);
         }
 
         return ResponseEntity.badRequest().build();

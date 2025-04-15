@@ -57,7 +57,7 @@ public class MarcaController {
 
         MarcaDTO marcaBorrada = marcaService.delete(idMarca);
         if (marcaBorrada == null) {
-            return ResponseEntity.ok(marcaBorrada);
+            return ResponseEntity.ok(marca);
         }
 
         return ResponseEntity.badRequest().build();

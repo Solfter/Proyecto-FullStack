@@ -56,8 +56,8 @@ public class EstacionamientoController {
             return ResponseEntity.notFound().build();
         }
 
-        EstacionamientoDTO usuarioBorrado = estacionamientoService.delete(idEstacionamiento);
-        if (usuarioBorrado == null) {
+        EstacionamientoDTO estacionamientoBorrado = estacionamientoService.delete(idEstacionamiento);
+        if (estacionamientoBorrado == null) {
             return ResponseEntity.ok(estacionamiento);
         }
 
