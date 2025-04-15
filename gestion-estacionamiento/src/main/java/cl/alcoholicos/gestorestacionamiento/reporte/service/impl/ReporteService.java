@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.reporte.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.reporte.dto.ReporteDTO;
 import cl.alcoholicos.gestorestacionamiento.reporte.repository.ReporteRepository;
 import cl.alcoholicos.gestorestacionamiento.reporte.service.IReporte;
 
+@Service
 public class ReporteService implements IReporte {
 
     @Autowired
