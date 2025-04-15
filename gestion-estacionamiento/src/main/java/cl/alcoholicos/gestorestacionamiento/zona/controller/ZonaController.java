@@ -43,7 +43,7 @@ public class ZonaController {
         if (zonaExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        ZonaDTO zonaActualizada = zonaService.update(idZona, zonaExistente);
+        ZonaDTO zonaActualizada = zonaService.update(idZona, zona);
         return ResponseEntity.ok(zonaActualizada);
 
     }

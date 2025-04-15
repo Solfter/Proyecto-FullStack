@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.feedback.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.feedback.repository.FeedbackRepository;
 import cl.alcoholicos.gestorestacionamiento.feedback.dto.FeedbackDTO;
 import cl.alcoholicos.gestorestacionamiento.feedback.service.IFeedback;
 
+@Service
 public class FeedbackService implements IFeedback {
 
     @Autowired
