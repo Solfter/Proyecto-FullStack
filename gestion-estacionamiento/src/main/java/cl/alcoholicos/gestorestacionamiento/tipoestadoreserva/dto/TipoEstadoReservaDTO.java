@@ -20,5 +20,5 @@ public class TipoEstadoReservaDTO {
     @Column(name = "ID_TPO_EST_RESERVA")
     private int idTipoEstadoReserva;
     @Column(name = "DESC_TPO_EST_RESERVA")
-    private int descTipoEstadoReserva;
+    private String descTipoEstadoReserva;
 }
