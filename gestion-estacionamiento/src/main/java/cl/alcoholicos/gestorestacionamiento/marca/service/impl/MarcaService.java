@@ -3,11 +3,13 @@ package cl.alcoholicos.gestorestacionamiento.marca.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.marca.dto.MarcaDTO;
 import cl.alcoholicos.gestorestacionamiento.marca.repository.MarcaRepository;
 import cl.alcoholicos.gestorestacionamiento.marca.service.IMarca;
 
+@Service
 public class MarcaService implements IMarca {
 
     @Autowired
