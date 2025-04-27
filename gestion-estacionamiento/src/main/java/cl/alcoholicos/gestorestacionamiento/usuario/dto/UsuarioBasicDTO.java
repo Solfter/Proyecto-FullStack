@@ -5,13 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class UsuarioBasicDTO {
     private int rut;
     private Character dv;
     private String pNombre;    
     private String sNombre;    
     private String apPaterno;  
-    private String apMaterno;  
-    private String correo;
-    private int nroCelular;
+    private String apMaterno;
 }
