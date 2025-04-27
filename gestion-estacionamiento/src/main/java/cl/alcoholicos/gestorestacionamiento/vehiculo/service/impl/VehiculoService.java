@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.entity.VehiculoEntity;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.repository.VehiculoRepository;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.service.IVehiculo;
 
@@ -16,30 +16,30 @@ public class VehiculoService implements IVehiculo {
     private VehiculoRepository vehiculoRepository;
 
     @Override
-    public VehiculoDTO insert(VehiculoDTO vehiculo) {
+    public VehiculoEntity insert(VehiculoEntity vehiculo) {
         return vehiculoRepository.save(vehiculo);
     }
 
     @Override
-    public VehiculoDTO update(String patente, VehiculoDTO vehiculo) {
+    public VehiculoEntity update(String patente, VehiculoEntity vehiculo) {
         vehiculo.setPatente(patente);
         return vehiculoRepository.save(vehiculo);
     }
 
     @Override
-    public VehiculoDTO delete(String patente) {
+    public VehiculoEntity delete(String patente) {
         vehiculoRepository.deleteById(patente);
         return null;
     }
 
     @Override
-    public VehiculoDTO getById(String patente) {
+    public VehiculoEntity getById(String patente) {
         return vehiculoRepository.findById(patente).get();
     }
 
     @Override
-    public List<VehiculoDTO> getAll() {
-        return (List<VehiculoDTO>) vehiculoRepository.findAll();
+    public List<VehiculoEntity> getAll() {
+        return (List<VehiculoEntity>) vehiculoRepository.findAll();
     }
 
 }

@@ -2,18 +2,18 @@ package cl.alcoholicos.gestorestacionamiento.reporte.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.reporte.dto.ReporteDTO;
+import cl.alcoholicos.gestorestacionamiento.reporte.entity.ReporteEntity;
 
 public interface IReporte {
     
-    ReporteDTO insert(ReporteDTO reporte);
+    ReporteEntity insert(ReporteEntity reporte);
 
-    ReporteDTO update(Integer idReporte, ReporteDTO reporte);
+    ReporteEntity update(Integer idReporte, ReporteEntity reporte);
 
-    ReporteDTO delete(Integer idReporte);
+    ReporteEntity delete(Integer idReporte);
 
-    ReporteDTO getById(Integer idReporte);
+    ReporteEntity getById(Integer idReporte);
 
-    List<ReporteDTO> getAll();
+    List<ReporteEntity> getAll();
 
 }

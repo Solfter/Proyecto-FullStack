@@ -1,0 +1,24 @@
+package cl.alcoholicos.gestorestacionamiento.tipousuario.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "TIPO_USUARIO")
+public class TipoUsuarioEntity {
+    @Id
+    @Column(name = "ID_TIPO_USUARIO")
+    private int idTipoUsuario;
+    @Column(name = "DESC_TIPO_USUARIO")
+    private String descTipoUsuario;
+}

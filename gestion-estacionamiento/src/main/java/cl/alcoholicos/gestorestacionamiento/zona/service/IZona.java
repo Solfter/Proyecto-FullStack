@@ -2,18 +2,18 @@ package cl.alcoholicos.gestorestacionamiento.zona.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.zona.dto.ZonaDTO;
+import cl.alcoholicos.gestorestacionamiento.zona.entity.ZonaEntity;
 
 public interface IZona {
 
-    ZonaDTO insert(ZonaDTO zona);
+    ZonaEntity insert(ZonaEntity zona);
 
-    ZonaDTO update(Character idZona, ZonaDTO zona);
+    ZonaEntity update(Character idZona, ZonaEntity zona);
 
-    ZonaDTO delete(Character idZona);
+    ZonaEntity delete(Character idZona);
 
-    ZonaDTO getById(Character idZona);
+    ZonaEntity getById(Character idZona);
 
-    List<ZonaDTO> getAll();
+    List<ZonaEntity> getAll();
 
 }

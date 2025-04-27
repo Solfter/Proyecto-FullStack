@@ -2,18 +2,18 @@ package cl.alcoholicos.gestorestacionamiento.tipousuario.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.tipousuario.dto.TipoUsuarioDTO;
+import cl.alcoholicos.gestorestacionamiento.tipousuario.entity.TipoUsuarioEntity;
 
 public interface ITipoUsuario {
        
-    TipoUsuarioDTO insert(TipoUsuarioDTO usuario);
+    TipoUsuarioEntity insert(TipoUsuarioEntity usuario);
 
-    TipoUsuarioDTO update(Integer idTipoUsuario, TipoUsuarioDTO usuario);
+    TipoUsuarioEntity update(Integer idTipoUsuario, TipoUsuarioEntity usuario);
 
-    TipoUsuarioDTO delete(Integer idTipoUsuario);
+    TipoUsuarioEntity delete(Integer idTipoUsuario);
 
-    TipoUsuarioDTO getById(Integer idTipoUsuario);
+    TipoUsuarioEntity getById(Integer idTipoUsuario);
 
-    List<TipoUsuarioDTO> getAll();
+    List<TipoUsuarioEntity> getAll();
 
 }

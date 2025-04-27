@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.marca.dto.MarcaDTO;
+import cl.alcoholicos.gestorestacionamiento.marca.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.marca.service.impl.MarcaService;
 
 @RestController
@@ -23,8 +23,8 @@ public class MarcaController {
     private MarcaService marcaService;
 
     @GetMapping
-    public ResponseEntity<List<MarcaDTO>> getAll() {
-        List<MarcaDTO> marcas = marcaService.getAll();
+    public ResponseEntity<List<MarcaEntity>> getAll() {
+        List<MarcaEntity> marcas = marcaService.getAll();
         if (marcas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -32,30 +32,30 @@ public class MarcaController {
     }
 
     @PostMapping
-    public ResponseEntity<MarcaDTO> insert(@RequestBody MarcaDTO marca) {
-        MarcaDTO nuevaMarca = marcaService.insert(marca);
+    public ResponseEntity<MarcaEntity> insert(@RequestBody MarcaEntity marca) {
+        MarcaEntity nuevaMarca = marcaService.insert(marca);
         return ResponseEntity.ok(nuevaMarca);
     }
 
     @PutMapping("/{idMarca}")
-    public ResponseEntity<MarcaDTO> update(@PathVariable Integer idMarca, @RequestBody MarcaDTO marca) {
-        MarcaDTO marcaExistente = marcaService.getById(idMarca);
+    public ResponseEntity<MarcaEntity> update(@PathVariable Integer idMarca, @RequestBody MarcaEntity marca) {
+        MarcaEntity marcaExistente = marcaService.getById(idMarca);
         if (marcaExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        MarcaDTO marcaActualizada = marcaService.update(idMarca, marcaExistente);
+        MarcaEntity marcaActualizada = marcaService.update(idMarca, marcaExistente);
         return ResponseEntity.ok(marcaActualizada);
 
     }
 
     @DeleteMapping("/{idMarca}")
-    public ResponseEntity<MarcaDTO> delete (@PathVariable Integer idMarca) {
-        MarcaDTO marca = marcaService.getById(idMarca);
+    public ResponseEntity<MarcaEntity> delete (@PathVariable Integer idMarca) {
+        MarcaEntity marca = marcaService.getById(idMarca);
         if (marca == null) {
             return ResponseEntity.notFound().build();
         }
 
-        MarcaDTO marcaBorrada = marcaService.delete(idMarca);
+        MarcaEntity marcaBorrada = marcaService.delete(idMarca);
         if (marcaBorrada == null) {
             return ResponseEntity.ok(marca);
         }

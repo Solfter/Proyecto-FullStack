@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.entity.VehiculoEntity;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.service.impl.VehiculoService;
 
 @RestController
@@ -24,8 +24,8 @@ public class VehiculoController {
     private VehiculoService vehiculoService;
 
     @GetMapping
-    public ResponseEntity<List<VehiculoDTO>> getAll() {
-        List<VehiculoDTO> vehiculos = vehiculoService.getAll();
+    public ResponseEntity<List<VehiculoEntity>> getAll() {
+        List<VehiculoEntity> vehiculos = vehiculoService.getAll();
         if (vehiculos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class VehiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<VehiculoDTO> insert(@RequestBody VehiculoDTO vehiculo) {
-        VehiculoDTO nuevoVehiculo = vehiculoService.insert(vehiculo);
+    public ResponseEntity<VehiculoEntity> insert(@RequestBody VehiculoEntity vehiculo) {
+        VehiculoEntity nuevoVehiculo = vehiculoService.insert(vehiculo);
         return ResponseEntity.ok(nuevoVehiculo);
     }
 
     @PutMapping("/{patente}")
-    public ResponseEntity<VehiculoDTO> update(@PathVariable String patente, @RequestBody VehiculoDTO vehiculo) {
-        VehiculoDTO vehiculoExistente = vehiculoService.getById(patente);
+    public ResponseEntity<VehiculoEntity> update(@PathVariable String patente, @RequestBody VehiculoEntity vehiculo) {
+        VehiculoEntity vehiculoExistente = vehiculoService.getById(patente);
         if (vehiculoExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        VehiculoDTO vehiculoActualizado = vehiculoService.update(patente, vehiculo);
+        VehiculoEntity vehiculoActualizado = vehiculoService.update(patente, vehiculo);
         return ResponseEntity.ok(vehiculoActualizado);
     }
 
     @DeleteMapping("/{patente}")
-    public ResponseEntity<VehiculoDTO> delete(@PathVariable String patente) {
+    public ResponseEntity<VehiculoEntity> delete(@PathVariable String patente) {
 
-        VehiculoDTO vehiculo = vehiculoService.getById(patente);
+        VehiculoEntity vehiculo = vehiculoService.getById(patente);
         if (vehiculo == null) {
             return ResponseEntity.notFound().build();
         }
 
-        VehiculoDTO vehiculoBorrado = vehiculoService.delete(patente);
+        VehiculoEntity vehiculoBorrado = vehiculoService.delete(patente);
         if (vehiculoBorrado == null) {
             return ResponseEntity.ok(vehiculo);
         }

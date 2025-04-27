@@ -2,18 +2,18 @@ package cl.alcoholicos.gestorestacionamiento.incidente.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.incidente.dto.IncidenteDTO;
+import cl.alcoholicos.gestorestacionamiento.incidente.entity.IncidenteEntity;
 
 public interface IIncidente {
     
-    IncidenteDTO insert(IncidenteDTO incidente);
+    IncidenteEntity insert(IncidenteEntity incidente);
 
-    IncidenteDTO update(Integer idIncidente, IncidenteDTO incidente);
+    IncidenteEntity update(Integer idIncidente, IncidenteEntity incidente);
 
-    IncidenteDTO delete(Integer idIncidente);
+    IncidenteEntity delete(Integer idIncidente);
 
-    IncidenteDTO getById(Integer idIncidente);
+    IncidenteEntity getById(Integer idIncidente);
 
-    List<IncidenteDTO> getAll();
+    List<IncidenteEntity> getAll();
 
 }

@@ -2,17 +2,17 @@ package cl.alcoholicos.gestorestacionamiento.usuario.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioDTO;
+import cl.alcoholicos.gestorestacionamiento.usuario.entity.UsuarioEntity;
 
 public interface IUsuarioService {
 
-    UsuarioDTO insert(UsuarioDTO usuario);
+    UsuarioEntity insert(UsuarioEntity usuario);
 
-    UsuarioDTO update(Integer rut, UsuarioDTO usuario);
+    UsuarioEntity update(Integer rut, UsuarioEntity usuario);
 
-    UsuarioDTO delete(Integer rut);
+    UsuarioEntity delete(Integer rut);
 
-    UsuarioDTO getById(Integer rut);
+    UsuarioEntity getById(Integer rut);
 
-    List<UsuarioDTO> getAll();
+    List<UsuarioEntity> getAll();
 }

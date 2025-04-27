@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.espaciofavorito.dto.EspacioFavoritoDTO;
+import cl.alcoholicos.gestorestacionamiento.espaciofavorito.entity.EspacioFavoritoEntity;
 import cl.alcoholicos.gestorestacionamiento.espaciofavorito.service.impl.EspacioFavoritoService;
 
 @RestController
@@ -23,8 +23,8 @@ public class EspacioFavoritoController {
     @Autowired EspacioFavoritoService espacioFavoritoService;
 
     @GetMapping
-    public ResponseEntity<List<EspacioFavoritoDTO>> getAll() {
-        List<EspacioFavoritoDTO> espaciosFavoritos = espacioFavoritoService.getAll();
+    public ResponseEntity<List<EspacioFavoritoEntity>> getAll() {
+        List<EspacioFavoritoEntity> espaciosFavoritos = espacioFavoritoService.getAll();
         if (espaciosFavoritos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -32,28 +32,28 @@ public class EspacioFavoritoController {
     }
 
     @PostMapping
-    public ResponseEntity<EspacioFavoritoDTO> insert(@RequestBody EspacioFavoritoDTO espacioFavorito) {
-        EspacioFavoritoDTO nuevoEspacioFavorito = espacioFavoritoService.insert(espacioFavorito);
+    public ResponseEntity<EspacioFavoritoEntity> insert(@RequestBody EspacioFavoritoEntity espacioFavorito) {
+        EspacioFavoritoEntity nuevoEspacioFavorito = espacioFavoritoService.insert(espacioFavorito);
         return ResponseEntity.ok(nuevoEspacioFavorito);
     }
 
     @PutMapping("/{rut}-{id}")
-    public ResponseEntity<EspacioFavoritoDTO> update(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento, @RequestBody EspacioFavoritoDTO espacioFavorito) {
-        EspacioFavoritoDTO espacioFavoritoExistente = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
+    public ResponseEntity<EspacioFavoritoEntity> update(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento, @RequestBody EspacioFavoritoEntity espacioFavorito) {
+        EspacioFavoritoEntity espacioFavoritoExistente = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
         if (espacioFavoritoExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        EspacioFavoritoDTO espacioFavoritoActualizado = espacioFavoritoService.update(rutUsuario, idEstacionamiento, espacioFavoritoExistente);
+        EspacioFavoritoEntity espacioFavoritoActualizado = espacioFavoritoService.update(rutUsuario, idEstacionamiento, espacioFavoritoExistente);
         return ResponseEntity.ok(espacioFavoritoActualizado);
     }
 
     @DeleteMapping("/{rut}-{id}")
-    public ResponseEntity<EspacioFavoritoDTO> delete(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento) {
-        EspacioFavoritoDTO espacioFavorito = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
+    public ResponseEntity<EspacioFavoritoEntity> delete(@PathVariable Integer rutUsuario, @PathVariable Integer idEstacionamiento) {
+        EspacioFavoritoEntity espacioFavorito = espacioFavoritoService.getById(rutUsuario, idEstacionamiento);
         if (espacioFavorito == null) {
             return ResponseEntity.notFound().build();
         }
-        EspacioFavoritoDTO espacioFavoritoBorrado = espacioFavoritoService.delete(rutUsuario, idEstacionamiento);
+        EspacioFavoritoEntity espacioFavoritoBorrado = espacioFavoritoService.delete(rutUsuario, idEstacionamiento);
         if (espacioFavoritoBorrado == null) {
             return ResponseEntity.ok(espacioFavorito);
         }

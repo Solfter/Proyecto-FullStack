@@ -2,19 +2,19 @@ package cl.alcoholicos.gestorestacionamiento.estadoreserva.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.estadoreserva.dto.EstadoReservaDTO;
+import cl.alcoholicos.gestorestacionamiento.estadoreserva.entity.EstadoReservaEntity;
 
 public interface IEstadoReserva {
     
-    EstadoReservaDTO insert(EstadoReservaDTO estadoReserva);
+    EstadoReservaEntity insert(EstadoReservaEntity estadoReserva);
 
-    EstadoReservaDTO update(Integer idEstadoReserva, EstadoReservaDTO estadoReserva);
+    EstadoReservaEntity update(Integer idEstadoReserva, EstadoReservaEntity estadoReserva);
 
-    EstadoReservaDTO delete(Integer idEstadoReserva);
+    EstadoReservaEntity delete(Integer idEstadoReserva);
 
-    EstadoReservaDTO getById(Integer idEstadoReserva);
+    EstadoReservaEntity getById(Integer idEstadoReserva);
 
-    List<EstadoReservaDTO> getAll();
+    List<EstadoReservaEntity> getAll();
     
     
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.estadoestacionamiento.dto.EstadoEstacionamientoDTO;
+import cl.alcoholicos.gestorestacionamiento.estadoestacionamiento.entity.EstadoEstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.estadoestacionamiento.repository.EstadoEstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.estadoestacionamiento.service.IEstadoEstacionamiento;
 
@@ -16,29 +16,29 @@ public class EstadoEstacionamientoService implements IEstadoEstacionamiento {
     private EstadoEstacionamientoRepository estadoEstacionamientoRepository;
 
     @Override
-    public EstadoEstacionamientoDTO insert(EstadoEstacionamientoDTO estadoEstacionamientoDTO) {
+    public EstadoEstacionamientoEntity insert(EstadoEstacionamientoEntity estadoEstacionamientoDTO) {
         return estadoEstacionamientoRepository.save(estadoEstacionamientoDTO);
     }
 
     @Override
-    public EstadoEstacionamientoDTO update(Integer idEstadoEstacionamiento, EstadoEstacionamientoDTO estadoEstacionamientoDTO) {
+    public EstadoEstacionamientoEntity update(Integer idEstadoEstacionamiento, EstadoEstacionamientoEntity estadoEstacionamientoDTO) {
         estadoEstacionamientoDTO.setIdEstadoEstacionamiento(idEstadoEstacionamiento);
         return estadoEstacionamientoRepository.save(estadoEstacionamientoDTO);
     }
 
     @Override
-    public EstadoEstacionamientoDTO delete(Integer idEstacionamiento) {
+    public EstadoEstacionamientoEntity delete(Integer idEstacionamiento) {
         estadoEstacionamientoRepository.deleteById(idEstacionamiento);
         return null;
     }
 
     @Override
-    public EstadoEstacionamientoDTO getById(Integer idEstadoEstacionamiento) {
+    public EstadoEstacionamientoEntity getById(Integer idEstadoEstacionamiento) {
         return estadoEstacionamientoRepository.findById(idEstadoEstacionamiento).get();
     }
 
     @Override
-    public List<EstadoEstacionamientoDTO> getAll() {
-        return (List<EstadoEstacionamientoDTO>) estadoEstacionamientoRepository.findAll();
+    public List<EstadoEstacionamientoEntity> getAll() {
+        return (List<EstadoEstacionamientoEntity>) estadoEstacionamientoRepository.findAll();
     }
 }

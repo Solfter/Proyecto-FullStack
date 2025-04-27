@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoDTO;
+import cl.alcoholicos.gestorestacionamiento.estacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.service.impl.EstacionamientoService;
 
 @RestController
@@ -24,8 +24,8 @@ public class EstacionamientoController {
     private EstacionamientoService estacionamientoService;
 
     @GetMapping
-    public ResponseEntity<List<EstacionamientoDTO>> getAll() {
-        List<EstacionamientoDTO> estacionamientos = estacionamientoService.getAll();
+    public ResponseEntity<List<EstacionamientoEntity>> getAll() {
+        List<EstacionamientoEntity> estacionamientos = estacionamientoService.getAll();
         if (estacionamientos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class EstacionamientoController {
     }
 
     @PostMapping
-    public ResponseEntity<EstacionamientoDTO> insert(@RequestBody EstacionamientoDTO estacionamiento) {
-        EstacionamientoDTO nuevoEstacionamiento = estacionamientoService.insert(estacionamiento);
+    public ResponseEntity<EstacionamientoEntity> insert(@RequestBody EstacionamientoEntity estacionamiento) {
+        EstacionamientoEntity nuevoEstacionamiento = estacionamientoService.insert(estacionamiento);
         return ResponseEntity.ok(nuevoEstacionamiento);
     }
 
     @PutMapping("/{idEstacionamiento}")
-    public ResponseEntity<EstacionamientoDTO> update(@PathVariable Integer idEstacionamiento, @RequestBody EstacionamientoDTO estacionamiento) {
-        EstacionamientoDTO estacionamientoExistente = estacionamientoService.getById(idEstacionamiento);
+    public ResponseEntity<EstacionamientoEntity> update(@PathVariable Integer idEstacionamiento, @RequestBody EstacionamientoEntity estacionamiento) {
+        EstacionamientoEntity estacionamientoExistente = estacionamientoService.getById(idEstacionamiento);
         if (estacionamientoExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        EstacionamientoDTO estacionamientoActualizado = estacionamientoService.update(idEstacionamiento, estacionamiento);
+        EstacionamientoEntity estacionamientoActualizado = estacionamientoService.update(idEstacionamiento, estacionamiento);
         return ResponseEntity.ok(estacionamientoActualizado);
     }
 
     @DeleteMapping("/{idEstacionamiento}")
-    public ResponseEntity<EstacionamientoDTO> delete(@PathVariable Integer idEstacionamiento) {
+    public ResponseEntity<EstacionamientoEntity> delete(@PathVariable Integer idEstacionamiento) {
 
-        EstacionamientoDTO estacionamiento = estacionamientoService.getById(idEstacionamiento);
+        EstacionamientoEntity estacionamiento = estacionamientoService.getById(idEstacionamiento);
         if (estacionamiento == null) {
             return ResponseEntity.notFound().build();
         }
 
-        EstacionamientoDTO estacionamientoBorrado = estacionamientoService.delete(idEstacionamiento);
+        EstacionamientoEntity estacionamientoBorrado = estacionamientoService.delete(idEstacionamiento);
         if (estacionamientoBorrado == null) {
             return ResponseEntity.ok(estacionamiento);
         }

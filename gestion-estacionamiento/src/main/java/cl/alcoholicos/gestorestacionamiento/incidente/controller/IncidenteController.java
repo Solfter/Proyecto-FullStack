@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.incidente.dto.IncidenteDTO;
+import cl.alcoholicos.gestorestacionamiento.incidente.entity.IncidenteEntity;
 import cl.alcoholicos.gestorestacionamiento.incidente.service.impl.IncidenteService;
 
 @RequestMapping("/incidente")
@@ -23,8 +23,8 @@ public class IncidenteController {
     private IncidenteService incidenteService;
 
     @GetMapping
-    public ResponseEntity<List<IncidenteDTO>> getAll() {
-        List<IncidenteDTO> incidentes = incidenteService.getAll();
+    public ResponseEntity<List<IncidenteEntity>> getAll() {
+        List<IncidenteEntity> incidentes = incidenteService.getAll();
         if (incidentes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -32,30 +32,30 @@ public class IncidenteController {
     }
 
     @PostMapping
-    public ResponseEntity<IncidenteDTO> insert(@RequestBody IncidenteDTO incidente) {
-        IncidenteDTO nuevoIncidente = incidenteService.insert(incidente);
+    public ResponseEntity<IncidenteEntity> insert(@RequestBody IncidenteEntity incidente) {
+        IncidenteEntity nuevoIncidente = incidenteService.insert(incidente);
         return ResponseEntity.ok(nuevoIncidente);
     }
 
     @PutMapping("/{idIncidente}")
-    public ResponseEntity<IncidenteDTO> update(@PathVariable Integer idIncidente, @RequestBody IncidenteDTO incidente) {
-        IncidenteDTO incidenteExistente = incidenteService.getById(idIncidente);
+    public ResponseEntity<IncidenteEntity> update(@PathVariable Integer idIncidente, @RequestBody IncidenteEntity incidente) {
+        IncidenteEntity incidenteExistente = incidenteService.getById(idIncidente);
         if (incidenteExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        IncidenteDTO incidenteActualizado = incidenteService.update(idIncidente, incidente);
+        IncidenteEntity incidenteActualizado = incidenteService.update(idIncidente, incidente);
         return ResponseEntity.ok(incidenteActualizado);
 
     }
 
     @DeleteMapping("/{idIncidente}")
-    public ResponseEntity<IncidenteDTO> delete (@PathVariable Integer idIncidente) {
-        IncidenteDTO incidente = incidenteService.getById(idIncidente);
+    public ResponseEntity<IncidenteEntity> delete (@PathVariable Integer idIncidente) {
+        IncidenteEntity incidente = incidenteService.getById(idIncidente);
         if (incidente == null) {
             return ResponseEntity.notFound().build();
         }
 
-        IncidenteDTO incidenteBorrado = incidenteService.delete(idIncidente);
+        IncidenteEntity incidenteBorrado = incidenteService.delete(idIncidente);
         if (incidenteBorrado == null) {
             return ResponseEntity.ok(incidente);
         }

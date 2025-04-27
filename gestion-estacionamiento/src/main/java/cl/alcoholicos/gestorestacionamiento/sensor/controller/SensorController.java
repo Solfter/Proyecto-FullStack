@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.sensor.dto.SensorDTO;
+import cl.alcoholicos.gestorestacionamiento.sensor.entity.SensorEntity;
 import cl.alcoholicos.gestorestacionamiento.sensor.service.impl.SensorService;
 
 @RequestMapping("/sensor")
@@ -24,8 +24,8 @@ public class SensorController {
     private SensorService sensorService;
 
     @GetMapping
-    public ResponseEntity<List<SensorDTO>> getAll() {
-        List<SensorDTO> sensores = sensorService.getAll();
+    public ResponseEntity<List<SensorEntity>> getAll() {
+        List<SensorEntity> sensores = sensorService.getAll();
         if (sensores.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class SensorController {
     }
 
     @PostMapping
-    public ResponseEntity<SensorDTO> insert(@RequestBody SensorDTO sensor) {
-        SensorDTO nuevoSensor = sensorService.insert(sensor);
+    public ResponseEntity<SensorEntity> insert(@RequestBody SensorEntity sensor) {
+        SensorEntity nuevoSensor = sensorService.insert(sensor);
         return ResponseEntity.ok(nuevoSensor);
     }
 
     @PutMapping("/{idSensor}")
-    public ResponseEntity<SensorDTO> update(@PathVariable Integer idSensor, @RequestBody SensorDTO sensor) {
-        SensorDTO sensorExistente = sensorService.getById(idSensor);
+    public ResponseEntity<SensorEntity> update(@PathVariable Integer idSensor, @RequestBody SensorEntity sensor) {
+        SensorEntity sensorExistente = sensorService.getById(idSensor);
         if (sensorExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        SensorDTO sensorActualizado = sensorService.update(idSensor, sensor);
+        SensorEntity sensorActualizado = sensorService.update(idSensor, sensor);
         return ResponseEntity.ok(sensorActualizado);
     }
 
     @DeleteMapping("/{idSensor}")
-    public ResponseEntity<SensorDTO> delete(@PathVariable Integer idSensor) {
+    public ResponseEntity<SensorEntity> delete(@PathVariable Integer idSensor) {
 
-        SensorDTO sensor = sensorService.getById(idSensor);
+        SensorEntity sensor = sensorService.getById(idSensor);
         if (sensor == null) {
             return ResponseEntity.notFound().build();
         }
 
-        SensorDTO sensorBorrado = sensorService.delete(idSensor);
+        SensorEntity sensorBorrado = sensorService.delete(idSensor);
         if (sensorBorrado == null) {
             return ResponseEntity.ok(sensor);
         }

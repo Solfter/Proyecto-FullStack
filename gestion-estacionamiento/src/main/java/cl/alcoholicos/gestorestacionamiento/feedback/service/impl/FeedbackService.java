@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.feedback.entity.FeedbackEntity;
 import cl.alcoholicos.gestorestacionamiento.feedback.repository.FeedbackRepository;
-import cl.alcoholicos.gestorestacionamiento.feedback.dto.FeedbackDTO;
 import cl.alcoholicos.gestorestacionamiento.feedback.service.IFeedback;
 
 @Service
@@ -16,30 +16,30 @@ public class FeedbackService implements IFeedback {
     private FeedbackRepository feedbackRepository;
 
     @Override
-    public FeedbackDTO insert(FeedbackDTO feedback) {
+    public FeedbackEntity insert(FeedbackEntity feedback) {
         return feedbackRepository.save(feedback);
     }
 
     @Override
-    public FeedbackDTO update(Integer idFeedback, FeedbackDTO feedback) {
+    public FeedbackEntity update(Integer idFeedback, FeedbackEntity feedback) {
         feedback.setIdFeedback(idFeedback);
         return feedbackRepository.save(feedback);
     }
 
     @Override
-    public FeedbackDTO delete(Integer idFeedback) {
+    public FeedbackEntity delete(Integer idFeedback) {
         feedbackRepository.deleteById(idFeedback);
         return null;
     }
 
     @Override
-    public FeedbackDTO getById(Integer idFeedback) {
+    public FeedbackEntity getById(Integer idFeedback) {
         return feedbackRepository.findById(idFeedback).get();
     }
 
     @Override
-    public List<FeedbackDTO> getAll() {
-        return (List<FeedbackDTO>) feedbackRepository.findAll();
+    public List<FeedbackEntity> getAll() {
+        return (List<FeedbackEntity>) feedbackRepository.findAll();
     }
 
 }

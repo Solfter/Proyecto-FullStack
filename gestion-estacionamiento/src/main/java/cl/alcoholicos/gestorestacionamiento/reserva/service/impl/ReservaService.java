@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.reserva.dto.ReservaDTO;
+import cl.alcoholicos.gestorestacionamiento.reserva.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.reserva.repository.ReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.reserva.service.IReserva;
 
@@ -16,30 +16,30 @@ public class ReservaService implements IReserva {
     private ReservaRepository reservaRepository;
 
     @Override
-    public ReservaDTO insert(ReservaDTO reserva) {
+    public ReservaEntity insert(ReservaEntity reserva) {
         return reservaRepository.save(reserva);
     }
 
     @Override
-    public ReservaDTO update(Integer idReserva, ReservaDTO reserva) {
+    public ReservaEntity update(Integer idReserva, ReservaEntity reserva) {
         reserva.setIdReserva(idReserva);
         return reservaRepository.save(reserva);
     }
 
     @Override
-    public ReservaDTO delete(Integer idReserva) {
+    public ReservaEntity delete(Integer idReserva) {
         reservaRepository.deleteById(idReserva);
         return null;
     }
 
     @Override
-    public ReservaDTO getById(Integer idReserva) {
+    public ReservaEntity getById(Integer idReserva) {
         return reservaRepository.findById(idReserva).get();
     }
 
     @Override
-    public List<ReservaDTO> getAll() {
-        return (List<ReservaDTO>) reservaRepository.findAll();
+    public List<ReservaEntity> getAll() {
+        return (List<ReservaEntity>) reservaRepository.findAll();
 
     }
 

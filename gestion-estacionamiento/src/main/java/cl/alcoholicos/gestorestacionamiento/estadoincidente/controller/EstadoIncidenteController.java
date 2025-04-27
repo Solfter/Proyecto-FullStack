@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.estadoincidente.dto.EstadoIncidenteDTO;
+import cl.alcoholicos.gestorestacionamiento.estadoincidente.entity.EstadoIncidenteEntity;
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.service.impl.EstadoIncidenteService;
 
 @RestController
@@ -24,8 +24,8 @@ public class EstadoIncidenteController {
     private EstadoIncidenteService estadoIncidenteService;
 
     @GetMapping
-    public ResponseEntity<List<EstadoIncidenteDTO>> getAll() {
-        List<EstadoIncidenteDTO> estadoIncidentes = estadoIncidenteService.getAll();
+    public ResponseEntity<List<EstadoIncidenteEntity>> getAll() {
+        List<EstadoIncidenteEntity> estadoIncidentes = estadoIncidenteService.getAll();
         if (estadoIncidentes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class EstadoIncidenteController {
     }
 
     @PostMapping
-    public ResponseEntity<EstadoIncidenteDTO> insert(@RequestBody EstadoIncidenteDTO idEstadoIncidente) {
-        EstadoIncidenteDTO nuevoEstadoIncidente = estadoIncidenteService.insert(idEstadoIncidente);
+    public ResponseEntity<EstadoIncidenteEntity> insert(@RequestBody EstadoIncidenteEntity idEstadoIncidente) {
+        EstadoIncidenteEntity nuevoEstadoIncidente = estadoIncidenteService.insert(idEstadoIncidente);
         return ResponseEntity.ok(nuevoEstadoIncidente);
     }
 
     @PutMapping("/{idEstadoIncidente}")
-    public ResponseEntity<EstadoIncidenteDTO> update(@PathVariable Integer idEstadoIncidente, @RequestBody EstadoIncidenteDTO estadoEstacionamiento) {
-        EstadoIncidenteDTO estadoIncidenteExistente = estadoIncidenteService.getById(idEstadoIncidente);
+    public ResponseEntity<EstadoIncidenteEntity> update(@PathVariable Integer idEstadoIncidente, @RequestBody EstadoIncidenteEntity estadoEstacionamiento) {
+        EstadoIncidenteEntity estadoIncidenteExistente = estadoIncidenteService.getById(idEstadoIncidente);
         if (estadoIncidenteExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        EstadoIncidenteDTO estadoIncidenteActualizado = estadoIncidenteService.update(idEstadoIncidente, estadoEstacionamiento);
+        EstadoIncidenteEntity estadoIncidenteActualizado = estadoIncidenteService.update(idEstadoIncidente, estadoEstacionamiento);
         return ResponseEntity.ok(estadoIncidenteActualizado);
     }
 
     @DeleteMapping("/{idEstadoIncidente}")
-    public ResponseEntity<EstadoIncidenteDTO> delete(@PathVariable Integer idEstadoIncidente) {
+    public ResponseEntity<EstadoIncidenteEntity> delete(@PathVariable Integer idEstadoIncidente) {
 
-        EstadoIncidenteDTO estadoIncidente = estadoIncidenteService.getById(idEstadoIncidente);
+        EstadoIncidenteEntity estadoIncidente = estadoIncidenteService.getById(idEstadoIncidente);
         if (estadoIncidente == null) {
             return ResponseEntity.notFound().build();
         }
 
-        EstadoIncidenteDTO estadoIncidenteBorrado = estadoIncidenteService.delete(idEstadoIncidente);
+        EstadoIncidenteEntity estadoIncidenteBorrado = estadoIncidenteService.delete(idEstadoIncidente);
         if (estadoIncidenteBorrado == null) {
             return ResponseEntity.ok(estadoIncidente);
         }

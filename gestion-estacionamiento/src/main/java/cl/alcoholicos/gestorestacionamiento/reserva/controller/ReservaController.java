@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.reserva.dto.ReservaDTO;
+import cl.alcoholicos.gestorestacionamiento.reserva.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.reserva.service.impl.ReservaService;
 
 @RestController
@@ -24,8 +24,8 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @GetMapping
-    public ResponseEntity<List<ReservaDTO>> getAll() {
-        List<ReservaDTO> reservas = reservaService.getAll();
+    public ResponseEntity<List<ReservaEntity>> getAll() {
+        List<ReservaEntity> reservas = reservaService.getAll();
         if (reservas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class ReservaController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservaDTO> insert(@RequestBody ReservaDTO reserva) {
-        ReservaDTO nuevaReserva = reservaService.insert(reserva);
+    public ResponseEntity<ReservaEntity> insert(@RequestBody ReservaEntity reserva) {
+        ReservaEntity nuevaReserva = reservaService.insert(reserva);
         return ResponseEntity.ok(nuevaReserva);
     }
 
     @PutMapping("/{idReserva}")
-    public ResponseEntity<ReservaDTO> update(@PathVariable Integer idReserva, @RequestBody ReservaDTO reserva) {
-        ReservaDTO reservaExistente = reservaService.getById(idReserva);
+    public ResponseEntity<ReservaEntity> update(@PathVariable Integer idReserva, @RequestBody ReservaEntity reserva) {
+        ReservaEntity reservaExistente = reservaService.getById(idReserva);
         if (reservaExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        ReservaDTO reservaActualizada = reservaService.update(idReserva, reserva);
+        ReservaEntity reservaActualizada = reservaService.update(idReserva, reserva);
         return ResponseEntity.ok(reservaActualizada);
     }
 
     @DeleteMapping("/{idReserva}")
-    public ResponseEntity<ReservaDTO> delete(@PathVariable Integer idReserva) {
+    public ResponseEntity<ReservaEntity> delete(@PathVariable Integer idReserva) {
 
-        ReservaDTO reserva = reservaService.getById(idReserva);
+        ReservaEntity reserva = reservaService.getById(idReserva);
         if (reserva == null) {
             return ResponseEntity.notFound().build();
         }
 
-        ReservaDTO reservaBorrada = reservaService.delete(idReserva);
+        ReservaEntity reservaBorrada = reservaService.delete(idReserva);
         if (reservaBorrada == null) {
             return ResponseEntity.ok(reserva);
         }

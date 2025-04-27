@@ -2,19 +2,19 @@ package cl.alcoholicos.gestorestacionamiento.feedback.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.feedback.dto.FeedbackDTO;
+import cl.alcoholicos.gestorestacionamiento.feedback.entity.FeedbackEntity;
 
 public interface IFeedback {
     
-    FeedbackDTO insert(FeedbackDTO feedback);
+    FeedbackEntity insert(FeedbackEntity feedback);
 
-    FeedbackDTO update(Integer idFeedback, FeedbackDTO feedback);
+    FeedbackEntity update(Integer idFeedback, FeedbackEntity feedback);
 
-    FeedbackDTO delete(Integer idFeedback);
+    FeedbackEntity delete(Integer idFeedback);
 
-    FeedbackDTO getById(Integer idFeedback);
+    FeedbackEntity getById(Integer idFeedback);
 
-    List<FeedbackDTO> getAll();
+    List<FeedbackEntity> getAll();
     
     
 

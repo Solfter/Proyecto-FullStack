@@ -2,19 +2,19 @@ package cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.dto.TipoEstadoReservaDTO;
+import cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.entity.TipoEstadoReservaEntity;
 
 public interface ITipoEstadoReserva {
 
-    TipoEstadoReservaDTO insert(TipoEstadoReservaDTO tipoEstadoReserva);
+    TipoEstadoReservaEntity insert(TipoEstadoReservaEntity tipoEstadoReserva);
 
-    TipoEstadoReservaDTO update(Integer idTipoEstadoReserva, TipoEstadoReservaDTO tipoEstadoReserva);
+    TipoEstadoReservaEntity update(Integer idTipoEstadoReserva, TipoEstadoReservaEntity tipoEstadoReserva);
 
-    TipoEstadoReservaDTO delete(Integer idTipoEstadoReserva);
+    TipoEstadoReservaEntity delete(Integer idTipoEstadoReserva);
 
-    TipoEstadoReservaDTO getById(Integer idTipoEstadoReserva);
+    TipoEstadoReservaEntity getById(Integer idTipoEstadoReserva);
 
-    List<TipoEstadoReservaDTO> getAll();
+    List<TipoEstadoReservaEntity> getAll();
 
 
 }

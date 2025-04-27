@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.dto.TipoEstadoReservaDTO;
+import cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.tipoestadoreserva.service.impl.TipoEstadoReservaService;
 
 @RestController
@@ -24,8 +24,8 @@ public class TipoEstadoReservaController {
     private TipoEstadoReservaService tipoEstadoReservaService;
 
     @GetMapping
-    public ResponseEntity<List<TipoEstadoReservaDTO>> getAll() {
-        List<TipoEstadoReservaDTO> tipoEstadoReservas = tipoEstadoReservaService.getAll();
+    public ResponseEntity<List<TipoEstadoReservaEntity>> getAll() {
+        List<TipoEstadoReservaEntity> tipoEstadoReservas = tipoEstadoReservaService.getAll();
         if (tipoEstadoReservas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,28 +33,28 @@ public class TipoEstadoReservaController {
     }
 
     @PostMapping
-    public ResponseEntity<TipoEstadoReservaDTO> insert(@RequestBody TipoEstadoReservaDTO tipoEstadoReserva) {
-        TipoEstadoReservaDTO nuevoTipoEstadoReserva = tipoEstadoReservaService.insert(tipoEstadoReserva);
+    public ResponseEntity<TipoEstadoReservaEntity> insert(@RequestBody TipoEstadoReservaEntity tipoEstadoReserva) {
+        TipoEstadoReservaEntity nuevoTipoEstadoReserva = tipoEstadoReservaService.insert(tipoEstadoReserva);
         return ResponseEntity.ok(nuevoTipoEstadoReserva);
     }
 
     @PutMapping("/{idTipoEstadoReserva}")
-    public ResponseEntity<TipoEstadoReservaDTO> update(@PathVariable Integer idTipoEstadoReserva, @RequestBody TipoEstadoReservaDTO tipoEstadoReserva) {
-        TipoEstadoReservaDTO tipoEstadoReservaExistente = tipoEstadoReservaService.getById(idTipoEstadoReserva);
+    public ResponseEntity<TipoEstadoReservaEntity> update(@PathVariable Integer idTipoEstadoReserva, @RequestBody TipoEstadoReservaEntity tipoEstadoReserva) {
+        TipoEstadoReservaEntity tipoEstadoReservaExistente = tipoEstadoReservaService.getById(idTipoEstadoReserva);
         if (tipoEstadoReservaExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        TipoEstadoReservaDTO tipoEstadoReservaActualizado = tipoEstadoReservaService.update(idTipoEstadoReserva, tipoEstadoReserva);
+        TipoEstadoReservaEntity tipoEstadoReservaActualizado = tipoEstadoReservaService.update(idTipoEstadoReserva, tipoEstadoReserva);
         return ResponseEntity.ok(tipoEstadoReservaActualizado);
     }
 
     @DeleteMapping("/{idTipoEstadoReserva}")
-    public ResponseEntity<TipoEstadoReservaDTO> delete(@PathVariable Integer idTipoEstadoReserva) {
-        TipoEstadoReservaDTO tipoEstadoReserva = tipoEstadoReservaService.getById(idTipoEstadoReserva);
+    public ResponseEntity<TipoEstadoReservaEntity> delete(@PathVariable Integer idTipoEstadoReserva) {
+        TipoEstadoReservaEntity tipoEstadoReserva = tipoEstadoReservaService.getById(idTipoEstadoReserva);
         if (tipoEstadoReserva == null) {
             return ResponseEntity.notFound().build();
         }
-        TipoEstadoReservaDTO tipoEstadoReservaBorrado = tipoEstadoReservaService.delete(idTipoEstadoReserva);
+        TipoEstadoReservaEntity tipoEstadoReservaBorrado = tipoEstadoReservaService.delete(idTipoEstadoReserva);
         if (tipoEstadoReservaBorrado == null) {
             return ResponseEntity.ok(tipoEstadoReserva);
         }

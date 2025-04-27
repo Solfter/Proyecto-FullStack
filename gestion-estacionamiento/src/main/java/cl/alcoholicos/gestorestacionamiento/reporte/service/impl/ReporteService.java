@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.reporte.dto.ReporteDTO;
+import cl.alcoholicos.gestorestacionamiento.reporte.entity.ReporteEntity;
 import cl.alcoholicos.gestorestacionamiento.reporte.repository.ReporteRepository;
 import cl.alcoholicos.gestorestacionamiento.reporte.service.IReporte;
 
@@ -16,30 +16,30 @@ public class ReporteService implements IReporte {
     private ReporteRepository reporteRepository;
 
     @Override
-    public ReporteDTO insert(ReporteDTO reporte) {
+    public ReporteEntity insert(ReporteEntity reporte) {
         return reporteRepository.save(reporte);
     }
 
     @Override
-    public ReporteDTO update(Integer idReporte, ReporteDTO reporte) {
+    public ReporteEntity update(Integer idReporte, ReporteEntity reporte) {
         reporte.setIdReporte(idReporte);
         return reporteRepository.save(reporte);
     }
 
     @Override
-    public ReporteDTO delete(Integer idReporte) {
+    public ReporteEntity delete(Integer idReporte) {
         reporteRepository.deleteById(idReporte);
         return null;
     }
 
     @Override
-    public ReporteDTO getById(Integer idReporte) {
+    public ReporteEntity getById(Integer idReporte) {
         return reporteRepository.findById(idReporte).get();
     }
 
     @Override
-    public List<ReporteDTO> getAll() {
-        return (List<ReporteDTO>) reporteRepository.findAll();
+    public List<ReporteEntity> getAll() {
+        return (List<ReporteEntity>) reporteRepository.findAll();
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.zona.dto.ZonaDTO;
+import cl.alcoholicos.gestorestacionamiento.zona.entity.ZonaEntity;
 import cl.alcoholicos.gestorestacionamiento.zona.repository.ZonaRepository;
 import cl.alcoholicos.gestorestacionamiento.zona.service.IZona;
 
@@ -16,30 +16,30 @@ public class ZonaService implements IZona {
     private ZonaRepository zonaRepository;
 
     @Override
-    public ZonaDTO insert(ZonaDTO zona) {
+    public ZonaEntity insert(ZonaEntity zona) {
         return zonaRepository.save(zona);
     }
 
     @Override
-    public ZonaDTO update(Character idZona, ZonaDTO zona) {
+    public ZonaEntity update(Character idZona, ZonaEntity zona) {
         zona.setIdZona(idZona);
         return zonaRepository.save(zona);
     }
 
     @Override
-    public ZonaDTO delete(Character idZona) {
+    public ZonaEntity delete(Character idZona) {
         zonaRepository.deleteById(idZona);
         return null;
     }
 
     @Override
-    public ZonaDTO getById(Character idZona) {
+    public ZonaEntity getById(Character idZona) {
         return zonaRepository.findById(idZona).get();
     }
 
     @Override
-    public List<ZonaDTO> getAll() {
-        return (List<ZonaDTO>) zonaRepository.findAll();
+    public List<ZonaEntity> getAll() {
+        return (List<ZonaEntity>) zonaRepository.findAll();
     }
 
 }

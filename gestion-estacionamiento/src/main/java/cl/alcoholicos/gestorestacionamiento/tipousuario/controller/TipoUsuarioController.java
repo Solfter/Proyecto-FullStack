@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.tipousuario.dto.TipoUsuarioDTO;
+import cl.alcoholicos.gestorestacionamiento.tipousuario.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.tipousuario.service.impl.TipoUsuarioService;
 
 @RequestMapping("/tipousuario")
@@ -24,8 +24,8 @@ public class TipoUsuarioController {
     private TipoUsuarioService tipoUsuarioService;
 
     @GetMapping
-    public ResponseEntity<List<TipoUsuarioDTO>> getAll() {
-        List<TipoUsuarioDTO> tipoUsuarios = tipoUsuarioService.getAll();
+    public ResponseEntity<List<TipoUsuarioEntity>> getAll() {
+        List<TipoUsuarioEntity> tipoUsuarios = tipoUsuarioService.getAll();
         if (tipoUsuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,30 +33,30 @@ public class TipoUsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<TipoUsuarioDTO> insert(@RequestBody TipoUsuarioDTO tipoUsuario) {
-        TipoUsuarioDTO nuevoTipoUsuario = tipoUsuarioService.insert(tipoUsuario);
+    public ResponseEntity<TipoUsuarioEntity> insert(@RequestBody TipoUsuarioEntity tipoUsuario) {
+        TipoUsuarioEntity nuevoTipoUsuario = tipoUsuarioService.insert(tipoUsuario);
         return ResponseEntity.ok(nuevoTipoUsuario);
     }
 
     @PutMapping("/{idTipoUsuario}")
-    public ResponseEntity<TipoUsuarioDTO> update(@PathVariable Integer idTipoUsuario, @RequestBody TipoUsuarioDTO tipoUsuario) {
-        TipoUsuarioDTO tipoUsuarioExistente = tipoUsuarioService.getById(idTipoUsuario);
+    public ResponseEntity<TipoUsuarioEntity> update(@PathVariable Integer idTipoUsuario, @RequestBody TipoUsuarioEntity tipoUsuario) {
+        TipoUsuarioEntity tipoUsuarioExistente = tipoUsuarioService.getById(idTipoUsuario);
         if (tipoUsuarioExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        TipoUsuarioDTO tipoUsurioActualizado = tipoUsuarioService.update(idTipoUsuario, tipoUsuario);
+        TipoUsuarioEntity tipoUsurioActualizado = tipoUsuarioService.update(idTipoUsuario, tipoUsuario);
         return ResponseEntity.ok(tipoUsurioActualizado);
 
     }
 
     @DeleteMapping("/{idTipoUsuario}")
-    public ResponseEntity<TipoUsuarioDTO> delete (@PathVariable Integer idTipoUsuario) {
-        TipoUsuarioDTO tipoUsuario = tipoUsuarioService.getById(idTipoUsuario);
+    public ResponseEntity<TipoUsuarioEntity> delete (@PathVariable Integer idTipoUsuario) {
+        TipoUsuarioEntity tipoUsuario = tipoUsuarioService.getById(idTipoUsuario);
         if (tipoUsuario == null) {
             return ResponseEntity.notFound().build();
         }
 
-        TipoUsuarioDTO tipoUsuarioBorrado = tipoUsuarioService.delete(idTipoUsuario);
+        TipoUsuarioEntity tipoUsuarioBorrado = tipoUsuarioService.delete(idTipoUsuario);
         if (tipoUsuarioBorrado == null) {
             return ResponseEntity.ok(tipoUsuario);
         }

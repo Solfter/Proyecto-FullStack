@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.estadoincidente.dto.EstadoIncidenteDTO;
+import cl.alcoholicos.gestorestacionamiento.estadoincidente.entity.EstadoIncidenteEntity;
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.repository.EstadoIncidenteRepository;
 import cl.alcoholicos.gestorestacionamiento.estadoincidente.service.IEstadoIncidente;
 
@@ -16,30 +16,30 @@ public class EstadoIncidenteService implements IEstadoIncidente {
     private EstadoIncidenteRepository estadoIncidenteRepository;
 
     @Override
-    public EstadoIncidenteDTO insert(EstadoIncidenteDTO estadoIncidente) {
+    public EstadoIncidenteEntity insert(EstadoIncidenteEntity estadoIncidente) {
         return estadoIncidenteRepository.save(estadoIncidente);
     }
 
     @Override
-    public EstadoIncidenteDTO update(Integer idEstadoIncidente, EstadoIncidenteDTO estadoIncidente) {
+    public EstadoIncidenteEntity update(Integer idEstadoIncidente, EstadoIncidenteEntity estadoIncidente) {
         estadoIncidente.setIdEstadoIncidente(idEstadoIncidente);
         return estadoIncidenteRepository.save(estadoIncidente);
     }
 
     @Override
-    public EstadoIncidenteDTO delete(Integer idEstadoIncidente) {
+    public EstadoIncidenteEntity delete(Integer idEstadoIncidente) {
         estadoIncidenteRepository.deleteById(idEstadoIncidente);
         return null;
     }
 
     @Override
-    public EstadoIncidenteDTO getById(Integer idEstadoIncidente) {
+    public EstadoIncidenteEntity getById(Integer idEstadoIncidente) {
         return estadoIncidenteRepository.findById(idEstadoIncidente).get();
     }
 
     @Override
-    public List<EstadoIncidenteDTO> getAll() {
-        return (List<EstadoIncidenteDTO>) estadoIncidenteRepository.findAll();
+    public List<EstadoIncidenteEntity> getAll() {
+        return (List<EstadoIncidenteEntity>) estadoIncidenteRepository.findAll();
     }
 
 }

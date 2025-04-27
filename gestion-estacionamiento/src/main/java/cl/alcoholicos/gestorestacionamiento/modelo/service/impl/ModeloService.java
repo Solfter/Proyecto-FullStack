@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.modelo.dto.ModeloDTO;
+import cl.alcoholicos.gestorestacionamiento.modelo.entity.ModeloEntity;
 import cl.alcoholicos.gestorestacionamiento.modelo.repository.ModeloRepository;
 import cl.alcoholicos.gestorestacionamiento.modelo.service.IModelo;
 
@@ -16,30 +16,30 @@ public class ModeloService implements IModelo {
     private ModeloRepository modeloRepository;
 
     @Override
-    public ModeloDTO insert(ModeloDTO modelo) {
+    public ModeloEntity insert(ModeloEntity modelo) {
         return modeloRepository.save(modelo);
     }
 
     @Override
-    public ModeloDTO update(Integer idModelo, ModeloDTO modelo) {
+    public ModeloEntity update(Integer idModelo, ModeloEntity modelo) {
         modelo.setIdModelo(idModelo);
         return modeloRepository.save(modelo);
     }
 
     @Override
-    public ModeloDTO delete(Integer idModelo) {
+    public ModeloEntity delete(Integer idModelo) {
         modeloRepository.deleteById(idModelo);
         return null;
     }
 
     @Override
-    public ModeloDTO getById(Integer idModelo) {
+    public ModeloEntity getById(Integer idModelo) {
         return modeloRepository.findById(idModelo).get();
     }
 
     @Override
-    public List<ModeloDTO> getAll() {
-        return (List<ModeloDTO>) modeloRepository.findAll();
+    public List<ModeloEntity> getAll() {
+        return (List<ModeloEntity>) modeloRepository.findAll();
     }
 
 }

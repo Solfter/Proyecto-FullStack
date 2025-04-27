@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.marca.dto.MarcaDTO;
+import cl.alcoholicos.gestorestacionamiento.marca.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.marca.repository.MarcaRepository;
 import cl.alcoholicos.gestorestacionamiento.marca.service.IMarca;
 
@@ -16,30 +16,30 @@ public class MarcaService implements IMarca {
     private MarcaRepository marcaRepository;
 
     @Override
-    public MarcaDTO insert(MarcaDTO marca) {
+    public MarcaEntity insert(MarcaEntity marca) {
         return marcaRepository.save(marca);
     }
 
     @Override
-    public MarcaDTO update(Integer idMarca, MarcaDTO marca) {
+    public MarcaEntity update(Integer idMarca, MarcaEntity marca) {
         marca.setIdMarca(idMarca);
         return marcaRepository.save(marca);
     }
 
     @Override
-    public MarcaDTO delete(Integer idMarca) {
+    public MarcaEntity delete(Integer idMarca) {
         marcaRepository.deleteById(idMarca);
         return null;
     }
 
     @Override
-    public MarcaDTO getById(Integer idMarca) {
+    public MarcaEntity getById(Integer idMarca) {
         return marcaRepository.findById(idMarca).get();
     }
 
     @Override
-    public List<MarcaDTO> getAll() {
-        return (List<MarcaDTO>) marcaRepository.findAll();
+    public List<MarcaEntity> getAll() {
+        return (List<MarcaEntity>) marcaRepository.findAll();
     }
 
 }

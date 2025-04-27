@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.alcoholicos.gestorestacionamiento.feedback.dto.FeedbackDTO;
+import cl.alcoholicos.gestorestacionamiento.feedback.entity.FeedbackEntity;
 import cl.alcoholicos.gestorestacionamiento.feedback.service.impl.FeedbackService;
 
 @RestController
@@ -23,8 +23,8 @@ public class FeedbackController {
     private FeedbackService feedbackService;
 
     @GetMapping
-    public ResponseEntity<List<FeedbackDTO>> getAll() {
-        List<FeedbackDTO> feedbacks = feedbackService.getAll();
+    public ResponseEntity<List<FeedbackEntity>> getAll() {
+        List<FeedbackEntity> feedbacks = feedbackService.getAll();
         if (feedbacks.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -32,30 +32,30 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedbackDTO> insert(@RequestBody FeedbackDTO feedback) {
-        FeedbackDTO nuevoFeedback = feedbackService.insert(feedback);
+    public ResponseEntity<FeedbackEntity> insert(@RequestBody FeedbackEntity feedback) {
+        FeedbackEntity nuevoFeedback = feedbackService.insert(feedback);
         return ResponseEntity.ok(nuevoFeedback);
     }
 
     @PutMapping("/{idFeedback}")
-    public ResponseEntity<FeedbackDTO> update(@PathVariable Integer idFeedback, @RequestBody FeedbackDTO feedback) {
-        FeedbackDTO feedbackExistente = feedbackService.getById(idFeedback);
+    public ResponseEntity<FeedbackEntity> update(@PathVariable Integer idFeedback, @RequestBody FeedbackEntity feedback) {
+        FeedbackEntity feedbackExistente = feedbackService.getById(idFeedback);
         if (feedbackExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        FeedbackDTO feedbackActuailizado = feedbackService.update(idFeedback, feedback);
+        FeedbackEntity feedbackActuailizado = feedbackService.update(idFeedback, feedback);
         return ResponseEntity.ok(feedbackActuailizado);
 
     }
 
     @DeleteMapping("/{idFeedback}")
-    public ResponseEntity<FeedbackDTO> delete (@PathVariable Integer idFeedback) {
-        FeedbackDTO feedback = feedbackService.getById(idFeedback);
+    public ResponseEntity<FeedbackEntity> delete (@PathVariable Integer idFeedback) {
+        FeedbackEntity feedback = feedbackService.getById(idFeedback);
         if (feedback == null) {
             return ResponseEntity.notFound().build();
         }
 
-        FeedbackDTO feedbackBorrado = feedbackService.delete(idFeedback);
+        FeedbackEntity feedbackBorrado = feedbackService.delete(idFeedback);
         if (feedbackBorrado == null) {
             return ResponseEntity.ok(feedback);
         }
