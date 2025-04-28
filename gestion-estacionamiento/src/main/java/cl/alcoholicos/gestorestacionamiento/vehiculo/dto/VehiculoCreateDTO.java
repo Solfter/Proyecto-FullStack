@@ -1,5 +1,8 @@
 package cl.alcoholicos.gestorestacionamiento.vehiculo.dto;
 
+import cl.alcoholicos.gestorestacionamiento.modelo.dto.ModeloResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.modelo.entity.ModeloEntity;
+import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioResponseDTO;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

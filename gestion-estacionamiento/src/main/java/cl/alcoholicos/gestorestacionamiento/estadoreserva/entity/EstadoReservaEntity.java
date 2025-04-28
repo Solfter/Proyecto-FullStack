@@ -26,5 +26,5 @@ public class EstadoReservaEntity {
     @Column(name = "ID_RESERVA")
     private int idReserva;
     @Column(name = "ID_ESTADO_RESERVA")
-    private String descEstadoReserva;
+    private String fechaEstadoReserva;
 }
