@@ -2,6 +2,8 @@ package cl.alcoholicos.gestorestacionamiento.estadoincidente.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import lombok.Setter;
 @Table(name = "ESTADO_INCIDENTE")
 public class EstadoIncidenteEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ESTADO_INCIDENTE")
     private int idEstadoIncidente;
     @Column(name = "DESC_ESTADO_INCIDENTE")
