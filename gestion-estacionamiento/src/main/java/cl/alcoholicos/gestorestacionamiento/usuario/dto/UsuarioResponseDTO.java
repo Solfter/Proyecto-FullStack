@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UsuarioResponseDTO {
     private int rut;
-    private char dv;
-    private String pNombre;
-    private String sNombre;
+    private String dv;
+    private String primerNombre;
+    private String segundoNombre;
     private String apPaterno;
     private String apMaterno;
     private String correo;

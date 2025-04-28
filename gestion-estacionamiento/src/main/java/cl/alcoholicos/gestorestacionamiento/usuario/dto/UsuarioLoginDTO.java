@@ -13,10 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UsuarioLoginDTO {
     @NotNull
-    private int rut;
-    
-    @NotNull
-    private char dv;
+    private String correo;
     
     @NotBlank
     private String password;

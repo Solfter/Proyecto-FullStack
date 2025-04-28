@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UsuarioBasicDTO {
     private int rut;
-    private Character dv;
+    private String dv;
     private String pNombre;    
     private String sNombre;    
     private String apPaterno;  

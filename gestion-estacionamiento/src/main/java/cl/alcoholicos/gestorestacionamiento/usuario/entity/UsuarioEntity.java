@@ -23,15 +23,13 @@ public class UsuarioEntity {
     private int rut;
     
     @Column(name = "DV")
-    private Character dv;
+    private String dv;
     
     @Column(name = "P_NOMBRE") 
-    @JsonProperty("pNombre")
-    private String pNombre;    
+    private String primerNombre;    
     
     @Column(name = "S_NOMBRE") 
-    @JsonProperty("sNombre")
-    private String sNombre;    
+    private String segundoNombre;    
     
     @Column(name = "AP_PATERNO")
     private String apPaterno;  
@@ -44,4 +42,7 @@ public class UsuarioEntity {
     
     @Column(name = "NRO_CELULAR")
     private int nroCelular;
+
+    @Column(name = "PASSWORD")
+    private String password;
 }
