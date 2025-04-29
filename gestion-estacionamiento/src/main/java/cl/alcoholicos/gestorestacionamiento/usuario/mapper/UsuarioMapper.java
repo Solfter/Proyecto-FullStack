@@ -13,7 +13,7 @@ import cl.alcoholicos.gestorestacionamiento.usuario.entity.UsuarioEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapper {
-    UsuarioResponseDTO toResponseDTO(UsuarioEntity usuario);
+    UsuarioResponseDTO toResponseDTO(UsuarioEntity usuarioEntity);
     UsuarioEntity toEntity(UsuarioCreateDTO usuarioCreateDTO);
     
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -1,45 +1,67 @@
 package cl.alcoholicos.gestorestacionamiento.vehiculo.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.entity.VehiculoEntity;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.mapper.VehiculoMapper;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.repository.VehiculoRepository;
 import cl.alcoholicos.gestorestacionamiento.vehiculo.service.IVehiculo;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class VehiculoService implements IVehiculo {
-
-    @Autowired
-    private VehiculoRepository vehiculoRepository;
+    private final VehiculoRepository vehiculoRepository;
+    private final VehiculoMapper vehiculoMapper;
 
     @Override
-    public VehiculoEntity insert(VehiculoEntity vehiculo) {
-        return vehiculoRepository.save(vehiculo);
+    public VehiculoResponseDTO insert(VehiculoCreateDTO vehiculoCreateDTO) {
+        VehiculoEntity vehiculo = vehiculoMapper.toEntity(vehiculoCreateDTO);
+        VehiculoEntity vehiculoGuardado = vehiculoRepository.save(vehiculo);
+        VehiculoResponseDTO responseDTO = vehiculoMapper.toResponseDTO(vehiculoGuardado);
+        return responseDTO;
     }
 
     @Override
-    public VehiculoEntity update(String patente, VehiculoEntity vehiculo) {
-        vehiculo.setPatente(patente);
-        return vehiculoRepository.save(vehiculo);
+    public VehiculoResponseDTO update(String patente, VehiculoUpdateDTO vehiculoUpdateDTO) {
+        return vehiculoRepository.findById(patente)
+                .map(vehiculoExistente -> {
+                    vehiculoMapper.updateFromUpdateDTO(vehiculoUpdateDTO, vehiculoExistente);
+
+                    VehiculoEntity vehiculoActualizado = vehiculoRepository.save(vehiculoExistente);
+
+                    return vehiculoMapper.toResponseDTO(vehiculoActualizado);
+                })
+                .orElse(null);
     }
 
     @Override
-    public VehiculoEntity delete(String patente) {
-        vehiculoRepository.deleteById(patente);
-        return null;
+    public boolean delete(String patente) {
+        if (vehiculoRepository.existsById(patente)) {
+            vehiculoRepository.deleteById(patente);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public VehiculoEntity getById(String patente) {
-        return vehiculoRepository.findById(patente).get();
+    public VehiculoResponseDTO getById(String patente) {
+        return vehiculoRepository.findById(patente)
+                .map(vehiculoMapper::toResponseDTO)
+                .orElse(null);
     }
 
     @Override
-    public List<VehiculoEntity> getAll() {
-        return (List<VehiculoEntity>) vehiculoRepository.findAll();
+    public List<VehiculoResponseDTO> getAll() {
+        return vehiculoRepository.findAll().stream()
+                .map(vehiculoMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }

@@ -3,7 +3,6 @@ package cl.alcoholicos.gestorestacionamiento.usuario.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    @Autowired
     private final UsuarioService usuarioService;
 
     @GetMapping
@@ -51,7 +49,6 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<?> insert(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
         try {
-            
             UsuarioResponseDTO nuevoUsuario = usuarioService.insert(usuarioCreateDTO);
             return ResponseEntity.ok(nuevoUsuario);
         } catch (DataIntegrityViolationException e) {

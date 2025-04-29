@@ -9,28 +9,28 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-27T20:04:28-0400",
+    date = "2025-04-28T21:21:49-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.z20250331-1358, environment: Java 21.0.6 (Eclipse Adoptium)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
 
     @Override
-    public UsuarioResponseDTO toResponseDTO(UsuarioEntity usuario) {
-        if ( usuario == null ) {
+    public UsuarioResponseDTO toResponseDTO(UsuarioEntity usuarioEntity) {
+        if ( usuarioEntity == null ) {
             return null;
         }
 
         UsuarioResponseDTO.UsuarioResponseDTOBuilder usuarioResponseDTO = UsuarioResponseDTO.builder();
 
-        usuarioResponseDTO.apMaterno( usuario.getApMaterno() );
-        usuarioResponseDTO.apPaterno( usuario.getApPaterno() );
-        usuarioResponseDTO.correo( usuario.getCorreo() );
-        usuarioResponseDTO.dv( usuario.getDv() );
-        usuarioResponseDTO.nroCelular( usuario.getNroCelular() );
-        usuarioResponseDTO.primerNombre( usuario.getPrimerNombre() );
-        usuarioResponseDTO.rut( usuario.getRut() );
-        usuarioResponseDTO.segundoNombre( usuario.getSegundoNombre() );
+        usuarioResponseDTO.apMaterno( usuarioEntity.getApMaterno() );
+        usuarioResponseDTO.apPaterno( usuarioEntity.getApPaterno() );
+        usuarioResponseDTO.correo( usuarioEntity.getCorreo() );
+        usuarioResponseDTO.dv( usuarioEntity.getDv() );
+        usuarioResponseDTO.nroCelular( usuarioEntity.getNroCelular() );
+        usuarioResponseDTO.primerNombre( usuarioEntity.getPrimerNombre() );
+        usuarioResponseDTO.rut( usuarioEntity.getRut() );
+        usuarioResponseDTO.segundoNombre( usuarioEntity.getSegundoNombre() );
 
         return usuarioResponseDTO.build();
     }
@@ -71,8 +71,15 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         if ( updateDTO.getCorreo() != null ) {
             entity.setCorreo( updateDTO.getCorreo() );
         }
-        if ( updateDTO.getNroCelular() != null ) {
-            entity.setNroCelular( updateDTO.getNroCelular() );
+        entity.setNroCelular( updateDTO.getNroCelular() );
+        if ( updateDTO.getPassword() != null ) {
+            entity.setPassword( updateDTO.getPassword() );
+        }
+        if ( updateDTO.getPrimerNombre() != null ) {
+            entity.setPrimerNombre( updateDTO.getPrimerNombre() );
+        }
+        if ( updateDTO.getSegundoNombre() != null ) {
+            entity.setSegundoNombre( updateDTO.getSegundoNombre() );
         }
     }
 }

@@ -2,18 +2,20 @@ package cl.alcoholicos.gestorestacionamiento.vehiculo.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.vehiculo.entity.VehiculoEntity;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.vehiculo.dto.VehiculoUpdateDTO;
 
 public interface IVehiculo {
 
-    VehiculoEntity insert(VehiculoEntity vehiculo);
+    VehiculoResponseDTO insert(VehiculoCreateDTO vehiculo);
 
-    VehiculoEntity update(String patente, VehiculoEntity vehiculo);
+    VehiculoResponseDTO update(String patente, VehiculoUpdateDTO vehiculo);
 
-    VehiculoEntity delete(String patente);
+    boolean delete(String patente);
 
-    VehiculoEntity getById(String patente);
+    VehiculoResponseDTO getById(String patente);
 
-    List<VehiculoEntity> getAll();
+    List<VehiculoResponseDTO> getAll();
     
 }

@@ -3,7 +3,6 @@ package cl.alcoholicos.gestorestacionamiento.usuario.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioCreateDTO;
@@ -19,29 +18,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UsuarioService implements IUsuarioService {
-    @Autowired
     private final UsuarioRepository usuarioRepository;
-
-    @Autowired
     private final UsuarioMapper usuarioMapper;
 
     @Override
     public UsuarioResponseDTO insert(UsuarioCreateDTO usuarioCreateDTO) {
-        // Log antes de transformar
-        System.out.println("DTO de entrada - pNombre: " + usuarioCreateDTO.getPrimerNombre() + ", sNombre: " + usuarioCreateDTO.getSegundoNombre());
-        
         //DTO a Entity
         UsuarioEntity usuario = usuarioMapper.toEntity(usuarioCreateDTO);
-        System.out.println("Entity después de mapeo - pNombre: " + usuario.getPrimerNombre() + ", sNombre: " + usuario.getSegundoNombre());
 
         // Guardar en BD
         UsuarioEntity usuarioGuardado = usuarioRepository.save(usuario);
-        System.out.println("Entity después de guardar - pNombre: " + usuarioGuardado.getPrimerNombre() + ", sNombre: " + usuarioGuardado.getSegundoNombre());
 
         // Convertir a DTO de respuesta
-        UsuarioResponseDTO responseDTO = usuarioMapper.toResponseDTO(usuarioGuardado);
-        System.out.println("DTO de respuesta - pNombre: " + responseDTO.getPrimerNombre() + ", sNombre: " + responseDTO.getSegundoNombre());
-        
+        UsuarioResponseDTO responseDTO = usuarioMapper.toResponseDTO(usuarioGuardado);        
         return responseDTO;
     }
 
@@ -58,8 +47,7 @@ public class UsuarioService implements IUsuarioService {
                     // Retornar como DTO
                     return usuarioMapper.toResponseDTO(usuarioActualizado);
                 })
-                .orElse(null);
-            
+                .orElse(null);    
     }
 
     @Override

@@ -15,10 +15,4 @@ import lombok.NoArgsConstructor;
 public class VehiculoUpdateDTO {
     @NotBlank
     private String color;
-    
-    @Min(1900)
-    @Max(2025)
-    private Integer anio; // Integer permite null
-    
-    // No incluimos patente, rutUsuario ni idModelo porque no deberían cambiarse
 }
