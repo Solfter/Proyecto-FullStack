@@ -2,18 +2,17 @@ package cl.alcoholicos.gestorestacionamiento.marca.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.marca.entity.MarcaEntity;
-
+import cl.alcoholicos.gestorestacionamiento.marca.dto.MarcaResponseDTO;
 public interface IMarca {
     
-    MarcaEntity insert(MarcaEntity marca);
+    MarcaResponseDTO insert(MarcaResponseDTO marca);
 
-    MarcaEntity update(Integer idMarca, MarcaEntity marca);
+    MarcaResponseDTO update(Integer idMarca, MarcaResponseDTO marca);
 
-    MarcaEntity delete(Integer idMarca);
+    MarcaResponseDTO delete(Integer idMarca);
 
-    MarcaEntity getById(Integer idMarca);
+    MarcaResponseDTO getById(Integer idMarca);
 
-    List<MarcaEntity> getAll();
+    List<MarcaResponseDTO> getAll();
 
 }
