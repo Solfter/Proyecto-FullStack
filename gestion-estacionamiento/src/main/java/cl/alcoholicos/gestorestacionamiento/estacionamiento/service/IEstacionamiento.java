@@ -2,18 +2,12 @@ package cl.alcoholicos.gestorestacionamiento.estacionamiento.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoResponseDTO;
 
 public interface IEstacionamiento{
 
-    EstacionamientoEntity insert(EstacionamientoEntity estacionamiento);
+    EstacionamientoResponseDTO getById(Integer idEstacionamiento);
 
-    EstacionamientoEntity update(Integer idEstacionamiento, EstacionamientoEntity estacionamiento);
-
-    EstacionamientoEntity delete(Integer idEstacionamiento);
-
-    EstacionamientoEntity getById(Integer idEstacionamiento);
-
-    List<EstacionamientoEntity> getAll();
+    List<EstacionamientoResponseDTO> getAll();
 
 }

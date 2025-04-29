@@ -13,23 +13,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.estacionamiento.service.impl.EstacionamientoService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/estacionamiento")
+@RequestMapping("/estacionamientos")
+@RequiredArgsConstructor
 public class EstacionamientoController {
     
-    @Autowired
-    private EstacionamientoService estacionamientoService;
+    private final EstacionamientoService estacionamientoService;
 
     @GetMapping
-    public ResponseEntity<List<EstacionamientoEntity>> getAll() {
-        List<EstacionamientoEntity> estacionamientos = estacionamientoService.getAll();
+    public ResponseEntity<List<EstacionamientoResponseDTO>> getAll() {
+        List<EstacionamientoResponseDTO> estacionamientos = estacionamientoService.getAll();
         if (estacionamientos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(estacionamientos);
+    }
+
+    @GetMapping
+    public ResponseEntity<EstacionamientoResponseDTO> getById(@PathVariable Integer idEstacionamiento) {
+        EstacionamientoResponseDTO estacionamiento = estacionamientoService.getById(idEstacionamiento);
+        if (estacionamiento == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(estacionamiento);
     }
 
     @PostMapping
