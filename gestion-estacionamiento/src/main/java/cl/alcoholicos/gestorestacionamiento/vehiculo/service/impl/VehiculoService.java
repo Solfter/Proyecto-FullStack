@@ -22,9 +22,9 @@ public class VehiculoService implements IVehiculo {
 
     @Override
     public VehiculoResponseDTO insert(VehiculoCreateDTO vehiculoCreateDTO) {
-        VehiculoEntity vehiculo = vehiculoMapper.toEntity(vehiculoCreateDTO);
-        VehiculoEntity vehiculoGuardado = vehiculoRepository.save(vehiculo);
-        VehiculoResponseDTO responseDTO = vehiculoMapper.toResponseDTO(vehiculoGuardado);
+        VehiculoEntity vehiculo = vehiculoMapper.toEntity(vehiculoCreateDTO); // Entidad
+        VehiculoEntity vehiculoGuardado = vehiculoRepository.save(vehiculo); // Para guardar a la BD
+        VehiculoResponseDTO responseDTO = vehiculoMapper.toResponseDTO(vehiculoGuardado); // DTO
         return responseDTO;
     }
 

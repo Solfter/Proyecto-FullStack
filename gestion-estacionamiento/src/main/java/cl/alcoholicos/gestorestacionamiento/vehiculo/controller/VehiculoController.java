@@ -46,6 +46,7 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculo);
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<?> insert(@Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
         try {
