@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import cl.alcoholicos.gestorestacionamiento.zona.entity.ZonaEntity;
 
 @Repository
-public interface ZonaRepository extends JpaRepository<ZonaEntity, Character>{
+public interface ZonaRepository extends JpaRepository<ZonaEntity, String>{
 
 }

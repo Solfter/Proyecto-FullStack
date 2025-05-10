@@ -46,6 +46,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<?> insert(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
         try {

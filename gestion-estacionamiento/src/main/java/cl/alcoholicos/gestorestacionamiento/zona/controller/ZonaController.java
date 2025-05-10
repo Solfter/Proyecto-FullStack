@@ -2,7 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.zona.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,53 +13,64 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.alcoholicos.gestorestacionamiento.zona.dto.ZonaCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.zona.dto.ZonaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.zona.dto.ZonaUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.zona.entity.ZonaEntity;
 import cl.alcoholicos.gestorestacionamiento.zona.service.impl.ZonaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/zona")
 @RestController
+@RequiredArgsConstructor
 public class ZonaController {
-    @Autowired
-    private ZonaService zonaService;
+    private final ZonaService zonaService;
 
     @GetMapping
-    public ResponseEntity<List<ZonaEntity>> getAll() {
-        List<ZonaEntity> zonas = zonaService.getAll();
+    public ResponseEntity<List<ZonaResponseDTO>> getAll() {
+        List<ZonaResponseDTO> zonas = zonaService.getAll();
         if (zonas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(zonas);  
     }
 
-    @PostMapping
-    public ResponseEntity<ZonaEntity> insert(@RequestBody ZonaEntity zona) {
-        ZonaEntity nuevaZona = zonaService.insert(zona);
-        return ResponseEntity.ok(nuevaZona);
-    }
-
-    @PutMapping("/{idZona}")
-    public ResponseEntity<ZonaEntity> update(@PathVariable Character idZona, @RequestBody ZonaEntity zona) {
-        ZonaEntity zonaExistente = zonaService.getById(idZona);
-        if (zonaExistente == null) {
-            return ResponseEntity.notFound().build();
-        }
-        ZonaEntity zonaActualizada = zonaService.update(idZona, zona);
-        return ResponseEntity.ok(zonaActualizada);
-
-    }
-
-    @DeleteMapping("/{idZona}")
-    public ResponseEntity<ZonaEntity> delete (@PathVariable Character idZona) {
-        ZonaEntity zona = zonaService.getById(idZona);
+    @GetMapping("/{idZona}")
+    public ResponseEntity<ZonaResponseDTO> getById(@PathVariable String idZona) {
+        ZonaResponseDTO zona = zonaService.getById(idZona);
         if (zona == null) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(zona);
+    }
+    
+    @SuppressWarnings("null")
+    @PostMapping
+    public ResponseEntity<?> insert(@Valid @RequestBody ZonaCreateDTO zonaCreateDTO) {
+        try {
+            ZonaResponseDTO nuevaZona = zonaService.insert(zonaCreateDTO);
+            return ResponseEntity.ok(nuevaZona);   
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.badRequest().body("Error: Datos incompletos - " + e.getRootCause().getMessage());
+            }
+    }
 
-        ZonaEntity zonaBorrada = zonaService.delete(idZona);
-        if (zonaBorrada == null) {
-            return ResponseEntity.ok(zona);
+    @PutMapping("/{idZona}")
+    public ResponseEntity<ZonaResponseDTO> update(@PathVariable String idZona, @RequestBody ZonaUpdateDTO zonaUpdateDTO) {
+        ZonaResponseDTO zonaActualizada = zonaService.update(idZona, zonaUpdateDTO);
+        if (zonaActualizada == null) {
+           return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(zonaActualizada);
+    }
 
-        return ResponseEntity.badRequest().build();
+    @DeleteMapping("/{idZona}")
+    public ResponseEntity<ZonaEntity> delete (@PathVariable String idZona) {
+        boolean eliminado = zonaService.delete(idZona);
+        if (!eliminado) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 }

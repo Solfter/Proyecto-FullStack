@@ -5,18 +5,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ZONA")
 public class ZonaEntity {
     @Id
     @Column(name = "ID_ZONA")
-    private Character idZona;
+    private String idZona;
+
+    @Column(name = "NOMBRE_ZONA")
+    private String nombreZona;
+
+    @Column(name = "DESCRIPCION")
+    private String descripcion;
+
+    @Column(name = "CAPACIDAD")
+    private int capacidad;
 }
