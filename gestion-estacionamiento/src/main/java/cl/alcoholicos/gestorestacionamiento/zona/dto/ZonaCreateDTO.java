@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ZonaCreateDTO {
+    private String idZona;
     private String nombreZona;
     private String descripcion;
     private int capacidad;

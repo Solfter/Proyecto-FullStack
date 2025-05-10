@@ -21,7 +21,7 @@ import cl.alcoholicos.gestorestacionamiento.zona.service.impl.ZonaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/zona")
+@RequestMapping("/zonas")
 @RestController
 @RequiredArgsConstructor
 public class ZonaController {

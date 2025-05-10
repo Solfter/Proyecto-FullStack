@@ -34,8 +34,8 @@ public class ZonaService implements IZona {
         return zonaRepository.findById(idZona)
                 .map(zonaExistente -> {
                     zonaMapper.updateFromUpdateDTO(zonaUpdateDTO, zonaExistente);
-                    ZonaEntity zonaActuailizada = zonaRepository.save(zonaExistente);
-                    return zonaMapper.toResponseDTO(zonaActuailizada);
+                    ZonaEntity zonaActualizada = zonaRepository.save(zonaExistente);
+                    return zonaMapper.toResponseDTO(zonaActualizada);
                 })
                 .orElse(null);
     }
