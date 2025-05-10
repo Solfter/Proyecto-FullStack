@@ -1,15 +1,17 @@
 package cl.alcoholicos.gestorestacionamiento.estacionamiento.mapper;
 
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoCreateDTO;
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoResponseDTO;
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.dto.EstacionamientoUpdateDTO;
-import cl.alcoholicos.gestorestacionamiento.estacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.mapper.EstacionamientoMapper;
+
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-10T10:17:50-0400",
+    date = "2025-05-10T12:37:59-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.z20250331-1358, environment: Java 21.0.6 (Eclipse Adoptium)"
 )
 @Component

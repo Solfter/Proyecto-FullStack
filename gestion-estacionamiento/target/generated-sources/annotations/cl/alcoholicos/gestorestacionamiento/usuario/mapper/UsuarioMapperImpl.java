@@ -1,15 +1,17 @@
 package cl.alcoholicos.gestorestacionamiento.usuario.mapper;
 
-import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioCreateDTO;
-import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioResponseDTO;
-import cl.alcoholicos.gestorestacionamiento.usuario.dto.UsuarioUpdateDTO;
-import cl.alcoholicos.gestorestacionamiento.usuario.entity.UsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.mapper.UsuarioMapper;
+
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-10T09:11:18-0400",
+    date = "2025-05-10T12:55:06-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.z20250331-1358, environment: Java 21.0.6 (Eclipse Adoptium)"
 )
 @Component

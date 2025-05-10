@@ -1,0 +1,17 @@
+package cl.alcoholicos.gestorestacionamiento.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class EstacionamientoUpdateDTO {
+    private int nroEstacionamiento;
+    private int idEstadoEstacionamiento;
+    private int idSensor;
+    private String idZona;
+}
