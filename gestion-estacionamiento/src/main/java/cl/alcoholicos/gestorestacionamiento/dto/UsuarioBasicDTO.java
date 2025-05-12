@@ -12,4 +12,5 @@ public class UsuarioBasicDTO {
     private String sNombre;    
     private String apPaterno;  
     private String apMaterno;
+    private String correo;
 }

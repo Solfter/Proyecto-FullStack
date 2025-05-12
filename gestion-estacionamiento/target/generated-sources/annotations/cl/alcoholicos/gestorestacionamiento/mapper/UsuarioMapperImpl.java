@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-10T13:08:07-0400",
+    date = "2025-05-12T19:01:25-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.z20250331-1358, environment: Java 21.0.6 (Eclipse Adoptium)"
 )
 @Component
@@ -21,18 +21,19 @@ public class UsuarioMapperImpl implements UsuarioMapper {
             return null;
         }
 
-        UsuarioResponseDTO.UsuarioResponseDTOBuilder usuarioResponseDTO = UsuarioResponseDTO.builder();
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
 
-        usuarioResponseDTO.apMaterno( usuarioEntity.getApMaterno() );
-        usuarioResponseDTO.apPaterno( usuarioEntity.getApPaterno() );
-        usuarioResponseDTO.correo( usuarioEntity.getCorreo() );
-        usuarioResponseDTO.dv( usuarioEntity.getDv() );
-        usuarioResponseDTO.nroCelular( usuarioEntity.getNroCelular() );
-        usuarioResponseDTO.primerNombre( usuarioEntity.getPrimerNombre() );
-        usuarioResponseDTO.rut( usuarioEntity.getRut() );
-        usuarioResponseDTO.segundoNombre( usuarioEntity.getSegundoNombre() );
+        usuarioResponseDTO.setApMaterno( usuarioEntity.getApMaterno() );
+        usuarioResponseDTO.setApPaterno( usuarioEntity.getApPaterno() );
+        usuarioResponseDTO.setCorreo( usuarioEntity.getCorreo() );
+        usuarioResponseDTO.setDv( usuarioEntity.getDv() );
+        usuarioResponseDTO.setNroCelular( usuarioEntity.getNroCelular() );
+        usuarioResponseDTO.setPassword( usuarioEntity.getPassword() );
+        usuarioResponseDTO.setPrimerNombre( usuarioEntity.getPrimerNombre() );
+        usuarioResponseDTO.setRut( usuarioEntity.getRut() );
+        usuarioResponseDTO.setSegundoNombre( usuarioEntity.getSegundoNombre() );
 
-        return usuarioResponseDTO.build();
+        return usuarioResponseDTO;
     }
 
     @Override

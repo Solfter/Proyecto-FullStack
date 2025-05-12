@@ -23,5 +23,5 @@ public class SensorEntity {
     @Column(name = "ID_SENSOR")
     private int idSensor;
     @Column(name = "ID_ZONA")
-    private char idZona;
+    private String idZona;
 }

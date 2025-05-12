@@ -4,7 +4,9 @@ package cl.alcoholicos.gestorestacionamiento.controller;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.alcoholicos.gestorestacionamiento.dto.LoginRequest;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
@@ -27,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-
+    private final PasswordEncoder passwordEncoder;
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
         List<UsuarioResponseDTO> usuarios = usuarioService.getAll();
@@ -73,6 +77,24 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/validar")
+    public ResponseEntity<?> validarUsuario(@RequestBody LoginRequest loginRequest) {
+        // Buscar Usuario por correo
+        UsuarioResponseDTO usuario = usuarioService.findByCorreo(loginRequest.getCorreo());
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        if (passwordEncoder.matches(loginRequest.getPassword(), usuario.getPassword())) {
+            UsuarioBasicDTO usuarioBasic = new UsuarioBasicDTO();
+            usuarioBasic.setRut(usuario.getRut());
+            usuarioBasic.setCorreo(usuario.getCorreo());
+            usuarioBasic.setPNombre(usuario.getPrimerNombre());
+            return ResponseEntity.ok(usuarioBasic);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales Inválidas");
     }
 
 }

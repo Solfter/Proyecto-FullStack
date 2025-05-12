@@ -3,8 +3,12 @@ package cl.alcoholicos.gestorestacionamiento.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.LoginRequest;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
@@ -20,12 +24,13 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioService implements IUsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioResponseDTO insert(UsuarioCreateDTO usuarioCreateDTO) {
         //DTO a Entity
         UsuarioEntity usuario = usuarioMapper.toEntity(usuarioCreateDTO);
-
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         // Guardar en BD
         UsuarioEntity usuarioGuardado = usuarioRepository.save(usuario);
 
@@ -71,6 +76,27 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findAll().stream()
                 .map(usuarioMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public UsuarioResponseDTO findByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo)
+                .map(usuarioMapper::toResponseDTO)
+                .orElse(null); 
+    }
+
+    public UsuarioResponseDTO validateUser(LoginRequest loginRequest) {
+        // Buscar el usuario por email
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(loginRequest.getCorreo())
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        // Validar contraseña
+        if (!passwordEncoder.matches(loginRequest.getPassword(), usuario.getPassword())) {
+            throw new BadCredentialsException("Contraseña incorrecta");
+        }
+
+        return usuarioRepository.findByCorreo(loginRequest.getCorreo())
+                .map(usuarioMapper::toResponseDTO)
+                .orElse(null); 
     }
 
 }
