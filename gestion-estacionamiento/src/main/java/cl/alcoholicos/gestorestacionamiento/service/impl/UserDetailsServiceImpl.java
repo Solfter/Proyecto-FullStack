@@ -8,13 +8,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Implementación de UserDetailsService que carga usuarios desde la base de datos.
@@ -30,20 +28,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         // Buscar el usuario en la base de datos por correo
-        UsuarioEntity usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Correo no encontrado: " + correo));
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(correo).orElseThrow(() -> new UsernameNotFoundException("Correo no encontrado: " + correo));
 
         // Convertir roles/permisos a formato de Spring Security
         List<SimpleGrantedAuthority> authorities = Collections.emptyList();
 
         // Crear un UserDetails con la información del usuario
         return new User(
-                usuario.getCorreo(),            // Aquí usamos el correo como username
+                usuario.getCorreo(), // Correo como Username
                 usuario.getPassword(),
-                true,                           // enabled
-                true,                           // accountNonExpired
-                true,                           // credentialsNonExpired
-                true,                           // accountNonLocked
+                true,
+                true,
+                true,
+                true,
                 authorities
         );
     }
