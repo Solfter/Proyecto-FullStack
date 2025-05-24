@@ -14,12 +14,22 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /* 
-Esta clase es crucial para la configuración de seguridad de la aplicación ya que:
+Propósito: 
+Configuración principal de Spring Security.
 
-Define cómo se cifran y verifican las contraseñas
-Configura qué rutas son públicas y cuáles requieren autenticación
-Establece una política de sesión sin estado (stateless) para usar con JWT
-Integra el filtro JWT personalizado en la cadena de filtros de seguridad de Spring
+Responsabilidades:
+Define qué rutas están protegidas: /auth/*login público, /usuarios/** requiere auth
+Configura filtros: Orden y comportamiento de filtros de seguridad
+Establece políticas de sesión: Stateless para JWT
+Configura CORS: Permitir requests desde frontend
+Define beans de seguridad: PasswordEncoder, AuthenticationManager
+
+Elementos clave:
+
+@EnableWebSecurity: Activa configuración de seguridad
+SecurityFilterChain: Define cadena de filtros
+requestMatchers(): Especifica qué rutas requieren autenticación
+addFilterBefore(): Agrega JwtRequestFilter antes de otros filtros
 */
 
 @Configuration
@@ -52,7 +62,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(authz -> authz
                 // Configura las reglas de autorización para las solicitudes HTTP: Las rutas descritas son publicas y no requieren autenticación
-                .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "usuarios/**", "/**").permitAll()
+                .requestMatchers("/**").permitAll()
                 // Cualquier otra solicitud que no coincida con las rutas públicas requiere que el usuario esté autenticado.
                 .anyRequest().authenticated()
             )

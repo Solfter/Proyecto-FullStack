@@ -39,7 +39,7 @@ public class UserServiceClient {
         this.restTemplate = new RestTemplate();
     }
     
-    public UsuarioResponseDTO getUserDetails(Long userId, String token) {
+    public UsuarioResponseDTO getUserDetails(int rut, String token) {
         try {
             // Crea un objeto HttpHeaders y establece el encabezado de autorización con el token JWT proporcionado. Luego crea una entidad HTTP con estos encabezados.
             HttpHeaders headers = new HttpHeaders();
@@ -47,7 +47,7 @@ public class UserServiceClient {
             HttpEntity<String> entity = new HttpEntity<>(headers);
             
             // Construye la URL completa para la petición y registra un mensaje informativo en el log.
-            String url = userServiceUrl + "/usuarios/" + userId;
+            String url = userServiceUrl + rut;
             logger.info("Solicitando detalles de usuario desde: {}", url);
             
             // Realiza una petición HTTP GET al servicio de usuarios, pasando la entidad con los encabezados de autorización. Espera recibir un objeto UsuarioResponseDTO como respuesta.
@@ -60,14 +60,14 @@ public class UserServiceClient {
             
             // Verifica que el cuerpo de la respuesta no sea nulo. Si es nulo, lanza una excepción indicando que el usuario no se encontró.
             if (response.getBody() == null) {
-                throw new ResourceNotFoundException("No se encontró información para el usuario con ID: " + userId);
+                throw new ResourceNotFoundException("No se encontró información para el usuario con ID: " + rut);
             }
             
             return response.getBody(); // Devuelve el cuerpo de la respuesta, que contiene los detalles del usuario.
             
         } catch (HttpClientErrorException.NotFound e) { // Captura la excepción específica para el caso de que el recurso no se encuentre (404), registra el error y lanza una excepción más específica de la aplicación.
-            logger.error("Usuario no encontrado: {}", e.getMessage());
-            throw new ResourceNotFoundException("Usuario no encontrado con ID: " + userId);
+            logger.error("UserServiceClient: Usuario no encontrado: {}", e.getMessage());
+            throw new ResourceNotFoundException("Usuario no encontrado con ID: " + rut);
         } catch (HttpClientErrorException.Unauthorized | HttpClientErrorException.Forbidden e) { // Captura las excepciones relacionadas con problemas de autorización (401 o 403), registra el error y lanza una excepción de seguridad.
             logger.error("Error de autorización al acceder al servicio de usuarios: {}", e.getMessage());
             throw new SecurityException("No autorizado para acceder a la información del usuario");

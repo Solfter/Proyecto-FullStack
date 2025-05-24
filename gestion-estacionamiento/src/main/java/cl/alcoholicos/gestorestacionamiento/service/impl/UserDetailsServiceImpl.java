@@ -37,10 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new User(
                 usuario.getCorreo(), // Correo como Username
                 usuario.getPassword(),
-                true,
-                true,
-                true,
-                true,
                 authorities
         );
     }

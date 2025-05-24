@@ -5,7 +5,7 @@ import javax.naming.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.security.JwtTokenProvider;
+import cl.alcoholicos.gestorestacionamiento.config.JwtTokenUtil;
 import cl.alcoholicos.gestorestacionamiento.dto.LoginRequest;
 import cl.alcoholicos.gestorestacionamiento.dto.LoginResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
@@ -18,15 +18,15 @@ public class AuthService {
     private UsuarioService usuarioService;
     
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtTokenUtil jwtTokenUtil;
     
     public LoginResponse login(LoginRequest loginRequest) throws Exception {
         // Validar usuario contra el servicio principal
         UsuarioResponseDTO usuario = usuarioService.validateUser(loginRequest);
         
         if (usuario != null) {
-            // Generar token JWT
-            String jwt = jwtTokenProvider.generateToken(usuario);
+            // Generar token JWT usando jwtTokenUtil
+            String jwt = jwtTokenUtil.generateToken(usuario);
             
             // Crear respuesta
             LoginResponse response = new LoginResponse();
