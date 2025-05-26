@@ -1,5 +1,8 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
+import java.util.List;
+
+import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -44,5 +47,6 @@ public class UsuarioUpdateDTO {
     @NotNull(message = "Debes ingresar una contraseña")
     @Size(min = 8, message = "La contraseña debe contener 8 caracteres")
     private String password;
+
 }
 

@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ZonaResponseDTO {
-    private String idZona;
+public class TipoEstadoReservaResponseDTO {
 
-    private String nombreZona;
+    private int idTipoEstadoReserva;
+    
+    private String descTipoEstadoReserva;
 
-    private String descripcion;
-
-    private int capacidad;
 }

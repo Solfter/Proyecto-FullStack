@@ -1,8 +1,14 @@
 package cl.alcoholicos.gestorestacionamiento.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,4 +47,24 @@ public class UsuarioEntity {
 
     @Column(name = "PASSWORD")
     private String password;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<VehiculoEntity> vehiculos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<IncidenteEntity> incidentes;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<FeedbackEntity> feedbacks;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<ReservaEntity> reservas;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_TIPO_USUARIO")
+    private TipoUsuarioEntity tipoUsuario;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<EspacioFavoritoEntity> espaciosFavoritos;
+
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-24T18:06:38-0400",
+    date = "2025-05-25T20:04:20-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -25,9 +25,7 @@ public class VehiculoMapperImpl implements VehiculoMapper {
 
         vehiculoResponseDTO.anio( vehiculo.getAnio() );
         vehiculoResponseDTO.color( vehiculo.getColor() );
-        vehiculoResponseDTO.idModelo( vehiculo.getIdModelo() );
         vehiculoResponseDTO.patente( vehiculo.getPatente() );
-        vehiculoResponseDTO.rutUsuario( vehiculo.getRutUsuario() );
 
         return vehiculoResponseDTO.build();
     }
@@ -42,9 +40,9 @@ public class VehiculoMapperImpl implements VehiculoMapper {
 
         vehiculoEntity.setAnio( vehiculoCreateDTO.getAnio() );
         vehiculoEntity.setColor( vehiculoCreateDTO.getColor() );
-        vehiculoEntity.setIdModelo( vehiculoCreateDTO.getIdModelo() );
+        vehiculoEntity.setModelo( vehiculoCreateDTO.getModelo() );
         vehiculoEntity.setPatente( vehiculoCreateDTO.getPatente() );
-        vehiculoEntity.setRutUsuario( vehiculoCreateDTO.getRutUsuario() );
+        vehiculoEntity.setUsuario( vehiculoCreateDTO.getUsuario() );
 
         return vehiculoEntity;
     }

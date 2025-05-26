@@ -1,5 +1,6 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
+import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EstacionamientoCreateDTO {
     private int nroEstacionamiento;
-    private int idEstadoEstacionamiento;
-    private int idSensor;
-    private String idZona;
+
+    private SensorEntity sensor;
+
 }

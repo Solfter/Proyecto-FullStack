@@ -1,4 +1,4 @@
-package cl.alcoholicos.gestorestacionamiento.service;
+package cl.alcoholicos.gestorestacionamiento.service.impl;
 
 import javax.naming.AuthenticationException;
 
@@ -9,7 +9,6 @@ import cl.alcoholicos.gestorestacionamiento.config.JwtTokenUtil;
 import cl.alcoholicos.gestorestacionamiento.dto.LoginRequest;
 import cl.alcoholicos.gestorestacionamiento.dto.LoginResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
-import cl.alcoholicos.gestorestacionamiento.service.impl.UsuarioService;
 
 @Service
 public class AuthService {

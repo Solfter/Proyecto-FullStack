@@ -1,15 +1,27 @@
 package cl.alcoholicos.gestorestacionamiento.mapper;
 
+import cl.alcoholicos.gestorestacionamiento.dto.EspacioFavoritoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.IncidenteResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.EspacioFavoritoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.IncidenteEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.VehiculoEntity;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-24T18:06:38-0400",
+    date = "2025-05-25T21:01:24-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -27,11 +39,16 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         usuarioResponseDTO.setApPaterno( usuarioEntity.getApPaterno() );
         usuarioResponseDTO.setCorreo( usuarioEntity.getCorreo() );
         usuarioResponseDTO.setDv( usuarioEntity.getDv() );
+        usuarioResponseDTO.setEspaciosFavoritos( espacioFavoritoEntityListToEspacioFavoritoResponseDTOList( usuarioEntity.getEspaciosFavoritos() ) );
+        usuarioResponseDTO.setIncidentes( incidenteEntityListToIncidenteResponseDTOList( usuarioEntity.getIncidentes() ) );
         usuarioResponseDTO.setNroCelular( usuarioEntity.getNroCelular() );
         usuarioResponseDTO.setPassword( usuarioEntity.getPassword() );
         usuarioResponseDTO.setPrimerNombre( usuarioEntity.getPrimerNombre() );
+        usuarioResponseDTO.setReservas( reservaEntityListToReservaResponseDTOList( usuarioEntity.getReservas() ) );
         usuarioResponseDTO.setRut( usuarioEntity.getRut() );
         usuarioResponseDTO.setSegundoNombre( usuarioEntity.getSegundoNombre() );
+        usuarioResponseDTO.setTipoUsuario( tipoUsuarioEntityToTipoUsuarioResponseDTO( usuarioEntity.getTipoUsuario() ) );
+        usuarioResponseDTO.setVehiculos( vehiculoEntityListToVehiculoResponseDTOList( usuarioEntity.getVehiculos() ) );
 
         return usuarioResponseDTO;
     }
@@ -82,5 +99,126 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         if ( updateDTO.getSegundoNombre() != null ) {
             entity.setSegundoNombre( updateDTO.getSegundoNombre() );
         }
+    }
+
+    protected EspacioFavoritoResponseDTO espacioFavoritoEntityToEspacioFavoritoResponseDTO(EspacioFavoritoEntity espacioFavoritoEntity) {
+        if ( espacioFavoritoEntity == null ) {
+            return null;
+        }
+
+        EspacioFavoritoResponseDTO.EspacioFavoritoResponseDTOBuilder espacioFavoritoResponseDTO = EspacioFavoritoResponseDTO.builder();
+
+        espacioFavoritoResponseDTO.idEspacioFavorito( espacioFavoritoEntity.getIdEspacioFavorito() );
+
+        return espacioFavoritoResponseDTO.build();
+    }
+
+    protected List<EspacioFavoritoResponseDTO> espacioFavoritoEntityListToEspacioFavoritoResponseDTOList(List<EspacioFavoritoEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<EspacioFavoritoResponseDTO> list1 = new ArrayList<EspacioFavoritoResponseDTO>( list.size() );
+        for ( EspacioFavoritoEntity espacioFavoritoEntity : list ) {
+            list1.add( espacioFavoritoEntityToEspacioFavoritoResponseDTO( espacioFavoritoEntity ) );
+        }
+
+        return list1;
+    }
+
+    protected IncidenteResponseDTO incidenteEntityToIncidenteResponseDTO(IncidenteEntity incidenteEntity) {
+        if ( incidenteEntity == null ) {
+            return null;
+        }
+
+        IncidenteResponseDTO.IncidenteResponseDTOBuilder incidenteResponseDTO = IncidenteResponseDTO.builder();
+
+        incidenteResponseDTO.descripcion( incidenteEntity.getDescripcion() );
+        incidenteResponseDTO.fechaIncidente( incidenteEntity.getFechaIncidente() );
+        incidenteResponseDTO.idIncidente( incidenteEntity.getIdIncidente() );
+
+        return incidenteResponseDTO.build();
+    }
+
+    protected List<IncidenteResponseDTO> incidenteEntityListToIncidenteResponseDTOList(List<IncidenteEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<IncidenteResponseDTO> list1 = new ArrayList<IncidenteResponseDTO>( list.size() );
+        for ( IncidenteEntity incidenteEntity : list ) {
+            list1.add( incidenteEntityToIncidenteResponseDTO( incidenteEntity ) );
+        }
+
+        return list1;
+    }
+
+    protected ReservaResponseDTO reservaEntityToReservaResponseDTO(ReservaEntity reservaEntity) {
+        if ( reservaEntity == null ) {
+            return null;
+        }
+
+        ReservaResponseDTO.ReservaResponseDTOBuilder reservaResponseDTO = ReservaResponseDTO.builder();
+
+        reservaResponseDTO.fechaCreacionReserva( reservaEntity.getFechaCreacionReserva() );
+        reservaResponseDTO.fechaReserva( reservaEntity.getFechaReserva() );
+        reservaResponseDTO.horaFin( reservaEntity.getHoraFin() );
+        reservaResponseDTO.horaInicio( reservaEntity.getHoraInicio() );
+        reservaResponseDTO.idReserva( reservaEntity.getIdReserva() );
+
+        return reservaResponseDTO.build();
+    }
+
+    protected List<ReservaResponseDTO> reservaEntityListToReservaResponseDTOList(List<ReservaEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ReservaResponseDTO> list1 = new ArrayList<ReservaResponseDTO>( list.size() );
+        for ( ReservaEntity reservaEntity : list ) {
+            list1.add( reservaEntityToReservaResponseDTO( reservaEntity ) );
+        }
+
+        return list1;
+    }
+
+    protected TipoUsuarioResponseDTO tipoUsuarioEntityToTipoUsuarioResponseDTO(TipoUsuarioEntity tipoUsuarioEntity) {
+        if ( tipoUsuarioEntity == null ) {
+            return null;
+        }
+
+        TipoUsuarioResponseDTO tipoUsuarioResponseDTO = new TipoUsuarioResponseDTO();
+
+        tipoUsuarioResponseDTO.setDescTipoUsuario( tipoUsuarioEntity.getDescTipoUsuario() );
+        tipoUsuarioResponseDTO.setIdTipoUsuario( tipoUsuarioEntity.getIdTipoUsuario() );
+
+        return tipoUsuarioResponseDTO;
+    }
+
+    protected VehiculoResponseDTO vehiculoEntityToVehiculoResponseDTO(VehiculoEntity vehiculoEntity) {
+        if ( vehiculoEntity == null ) {
+            return null;
+        }
+
+        VehiculoResponseDTO.VehiculoResponseDTOBuilder vehiculoResponseDTO = VehiculoResponseDTO.builder();
+
+        vehiculoResponseDTO.anio( vehiculoEntity.getAnio() );
+        vehiculoResponseDTO.color( vehiculoEntity.getColor() );
+        vehiculoResponseDTO.patente( vehiculoEntity.getPatente() );
+
+        return vehiculoResponseDTO.build();
+    }
+
+    protected List<VehiculoResponseDTO> vehiculoEntityListToVehiculoResponseDTOList(List<VehiculoEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<VehiculoResponseDTO> list1 = new ArrayList<VehiculoResponseDTO>( list.size() );
+        for ( VehiculoEntity vehiculoEntity : list ) {
+            list1.add( vehiculoEntityToVehiculoResponseDTO( vehiculoEntity ) );
+        }
+
+        return list1;
     }
 }

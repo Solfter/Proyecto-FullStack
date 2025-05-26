@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ZonaUpdateDTO {
+public class EspacioFavoritoResponseDTO {
 
-    private String nombreZona;
+    private int idEspacioFavorito;
 
-    private String descripcion;
-
-    private int capacidad;
 }

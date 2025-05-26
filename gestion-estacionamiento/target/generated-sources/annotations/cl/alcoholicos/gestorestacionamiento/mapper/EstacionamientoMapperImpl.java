@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-24T18:06:38-0400",
+    date = "2025-05-25T20:04:20-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -24,9 +24,6 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
         EstacionamientoResponseDTO.EstacionamientoResponseDTOBuilder estacionamientoResponseDTO = EstacionamientoResponseDTO.builder();
 
         estacionamientoResponseDTO.idEstacionamiento( estacionamientoEntity.getIdEstacionamiento() );
-        estacionamientoResponseDTO.idEstadoEstacionamiento( estacionamientoEntity.getIdEstadoEstacionamiento() );
-        estacionamientoResponseDTO.idSensor( estacionamientoEntity.getIdSensor() );
-        estacionamientoResponseDTO.idZona( estacionamientoEntity.getIdZona() );
         estacionamientoResponseDTO.nroEstacionamiento( estacionamientoEntity.getNroEstacionamiento() );
 
         return estacionamientoResponseDTO.build();
@@ -40,10 +37,8 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
 
         EstacionamientoEntity estacionamientoEntity = new EstacionamientoEntity();
 
-        estacionamientoEntity.setIdEstadoEstacionamiento( estacionamiento.getIdEstadoEstacionamiento() );
-        estacionamientoEntity.setIdSensor( estacionamiento.getIdSensor() );
-        estacionamientoEntity.setIdZona( estacionamiento.getIdZona() );
         estacionamientoEntity.setNroEstacionamiento( estacionamiento.getNroEstacionamiento() );
+        estacionamientoEntity.setSensor( estacionamiento.getSensor() );
 
         return estacionamientoEntity;
     }
@@ -54,11 +49,6 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
             return;
         }
 
-        entity.setIdEstadoEstacionamiento( updateDTO.getIdEstadoEstacionamiento() );
-        entity.setIdSensor( updateDTO.getIdSensor() );
-        if ( updateDTO.getIdZona() != null ) {
-            entity.setIdZona( updateDTO.getIdZona() );
-        }
         entity.setNroEstacionamiento( updateDTO.getNroEstacionamiento() );
     }
 }

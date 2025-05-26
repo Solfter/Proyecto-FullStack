@@ -62,7 +62,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(authz -> authz
                 // Configura las reglas de autorización para las solicitudes HTTP: Las rutas descritas son publicas y no requieren autenticación
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/auth/login").permitAll()
                 // Cualquier otra solicitud que no coincida con las rutas públicas requiere que el usuario esté autenticado.
                 .anyRequest().authenticated()
             )

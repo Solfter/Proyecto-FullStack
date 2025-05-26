@@ -1,5 +1,7 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
+import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,12 +27,13 @@ public class VehiculoCreateDTO {
     private String color;
     
     @NotNull
-    private int rutUsuario;
+    private UsuarioEntity usuario;
     
     @NotNull
-    private int idModelo;
+    private ModeloEntity modelo;
     
     @Min(1900)
     @Max(2025)
     private int anio;
+
 }

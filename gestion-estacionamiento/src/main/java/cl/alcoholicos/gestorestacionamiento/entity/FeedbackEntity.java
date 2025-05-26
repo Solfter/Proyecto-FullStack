@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +26,15 @@ public class FeedbackEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_FEEDBACK")
     private int idFeedback;
+
     @Column(name = "FECHA_FEEDBACK")
     private Date fechaFeedback;
+
     @Column(name = "DESC_FEEDBACK")
     private String descFeedback;
-    @Column(name = "RUT_USUARIO")
-    private int rutUsuario;
+
+    @ManyToOne
+    @JoinColumn(name = "RUT_USUARIO")
+    private UsuarioEntity usuario;
 
 }

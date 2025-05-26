@@ -1,5 +1,7 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ZonaCreateDTO {
-    private String idZona;
-    private String nombreZona;
-    private String descripcion;
-    private int capacidad;
+public class EstadoReservaResponseDTO {
+
+    private int idEstadoReserva;
+
+    private LocalDate fechaEstadoReserva;
 }

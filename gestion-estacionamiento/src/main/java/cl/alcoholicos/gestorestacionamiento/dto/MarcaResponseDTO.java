@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MarcaResponseDTO {
+
     private int idMarca;
+
     private String nombreMarca;
 }

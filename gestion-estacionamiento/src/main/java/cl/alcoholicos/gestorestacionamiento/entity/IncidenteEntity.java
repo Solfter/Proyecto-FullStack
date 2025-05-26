@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +26,15 @@ public class IncidenteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_INCIDENTE")
     private int idIncidente;
+
     @Column(name = "FECHA_INCIDENTE")
     private Date fechaIncidente;
+
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Column(name = "ID_ESTADO_INCIDENTE")
-    private int idEstadoIncidente;
-    @Column(name = "RUT_USUARIO")
-    private int rutUsuario;
+
+    @ManyToOne
+    @JoinColumn(name = "RUT_USUARIO")
+    private UsuarioEntity usuario;
+    
 }

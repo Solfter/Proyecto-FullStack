@@ -19,12 +19,6 @@ public class EstadoReservaService implements IEstadoReserva{
     }
 
     @Override
-    public EstadoReservaEntity update(Integer idEstadoReserva, EstadoReservaEntity estadoReserva) {
-        estadoReserva.setIdReserva(idEstadoReserva);
-        return estadoReservaRepository.save(estadoReserva);
-    }
-
-    @Override
     public EstadoReservaEntity delete(Integer idEstadoReserva) {
         estadoReservaRepository.deleteById(idEstadoReserva);
         return null;
@@ -38,6 +32,15 @@ public class EstadoReservaService implements IEstadoReserva{
     @Override
     public List<EstadoReservaEntity> getAll() {
         return (List<EstadoReservaEntity>) estadoReservaRepository.findAll();
+    }
+
+
+
+
+    @Override
+    public EstadoReservaEntity update(Integer idEstadoReserva, EstadoReservaEntity estadoReserva) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
 }

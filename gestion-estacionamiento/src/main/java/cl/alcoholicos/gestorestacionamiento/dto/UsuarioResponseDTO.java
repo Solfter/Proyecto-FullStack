@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,12 @@ public class UsuarioResponseDTO implements UserDetails {
     private String correo;
     private int nroCelular;
     private String password;
+    private List<VehiculoResponseDTO> vehiculos; 
+    private List<IncidenteResponseDTO> incidentes;
+    private List<FeedbackResponseDTO> feedbaks;
+    private List<ReservaResponseDTO> reservas;
+    private TipoUsuarioResponseDTO tipoUsuario;
+    private List<EspacioFavoritoResponseDTO> espaciosFavoritos;
     private boolean activo;
     private List<String> roles = new ArrayList<>();
 

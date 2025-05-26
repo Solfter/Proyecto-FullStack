@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class EstacionamientoUpdateDTO {
+
     private int nroEstacionamiento;
-    private int idEstadoEstacionamiento;
-    private int idSensor;
-    private String idZona;
+
 }

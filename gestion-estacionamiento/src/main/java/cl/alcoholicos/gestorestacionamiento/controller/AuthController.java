@@ -17,9 +17,8 @@ import cl.alcoholicos.gestorestacionamiento.dto.MessageResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.exception.ResourceNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ServiceUnavailableException;
-import cl.alcoholicos.gestorestacionamiento.service.AuthService;
-import cl.alcoholicos.gestorestacionamiento.service.UserServiceClient;
-
+import cl.alcoholicos.gestorestacionamiento.service.impl.AuthService;
+import cl.alcoholicos.gestorestacionamiento.service.impl.UserServiceClient;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;

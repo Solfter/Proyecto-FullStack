@@ -53,4 +53,5 @@ public class UsuarioCreateDTO {
     @NotNull(message = "Debes ingresar una contraseña")
     @Size(min = 8, message = "La contraseña debe contener 8 caracteres")
     private String password;
+
 }

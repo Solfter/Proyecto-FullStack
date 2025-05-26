@@ -2,8 +2,11 @@ package cl.alcoholicos.gestorestacionamiento.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,16 +18,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(EspacioFavoritoId.class)
 @Table(name = "ESPACIO_FAVORITO")
 public class EspacioFavoritoEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_ESPACIO_FAVORITO")
+    private int idEspacioFavorito;
 
-    @Id
-    @Column(name = "RUT_USUARIO")
-    private int rutUsuario;
-    @Id
-    @Column(name = "ID_ESTACIONAMIENTO")
-    private int idEstacionamiento;
+    @ManyToOne
+    @JoinColumn(name = "RUT_USUARIO")
+    private UsuarioEntity usuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_ESTACIONAMIENTO")
+    private EstacionamientoEntity estacionamiento;
+
 
 }
 
