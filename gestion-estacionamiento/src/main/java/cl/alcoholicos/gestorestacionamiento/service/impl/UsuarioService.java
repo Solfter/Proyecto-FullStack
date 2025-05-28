@@ -12,10 +12,13 @@ import cl.alcoholicos.gestorestacionamiento.dto.LoginRequest;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.UsuarioMapper;
+import cl.alcoholicos.gestorestacionamiento.repository.TipoUsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IUsuarioService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 
@@ -25,14 +28,22 @@ public class UsuarioService implements IUsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TipoUsuarioRepository tipoUsuarioRepository;
 
     @Override
-    public UsuarioResponseDTO insert(UsuarioCreateDTO usuarioCreateDTO) {
+    public UsuarioResponseDTO insert(UsuarioCreateDTO createDTO) {
         //DTO a Entity
-        UsuarioEntity usuario = usuarioMapper.toEntity(usuarioCreateDTO);
+        UsuarioEntity usuario = usuarioMapper.toEntity(createDTO);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        TipoUsuarioEntity tipoUsuario = tipoUsuarioRepository.findById(createDTO.getIdTipoUsuario())
+                        .orElseThrow(() -> new EntityNotFoundException("Tipo de Usuario no encontrado"));
+
+        usuario.setTipoUsuario(tipoUsuario);
         // Guardar en BD
         UsuarioEntity usuarioGuardado = usuarioRepository.save(usuario);
+
+
 
         // Convertir a DTO de respuesta
         UsuarioResponseDTO responseDTO = usuarioMapper.toResponseDTO(usuarioGuardado);        

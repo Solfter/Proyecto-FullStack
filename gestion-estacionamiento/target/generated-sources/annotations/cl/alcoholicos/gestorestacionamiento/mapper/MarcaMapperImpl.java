@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-25T20:04:20-0400",
+    date = "2025-05-28T17:32:56-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -21,23 +21,23 @@ public class MarcaMapperImpl implements MarcaMapper {
             return null;
         }
 
-        MarcaResponseDTO.MarcaResponseDTOBuilder marcaResponseDTO = MarcaResponseDTO.builder();
+        MarcaResponseDTO marcaResponseDTO = new MarcaResponseDTO();
 
-        marcaResponseDTO.idMarca( marcaEntity.getIdMarca() );
-        marcaResponseDTO.nombreMarca( marcaEntity.getNombreMarca() );
+        marcaResponseDTO.setIdMarca( marcaEntity.getIdMarca() );
+        marcaResponseDTO.setNombreMarca( marcaEntity.getNombreMarca() );
 
-        return marcaResponseDTO.build();
+        return marcaResponseDTO;
     }
 
     @Override
-    public MarcaEntity toEntity(MarcaCreateDTO marcaResponseDTO) {
-        if ( marcaResponseDTO == null ) {
+    public MarcaEntity toEntity(MarcaCreateDTO marcaCreateDTO) {
+        if ( marcaCreateDTO == null ) {
             return null;
         }
 
         MarcaEntity marcaEntity = new MarcaEntity();
 
-        marcaEntity.setNombreMarca( marcaResponseDTO.getNombreMarca() );
+        marcaEntity.setNombreMarca( marcaCreateDTO.getNombreMarca() );
 
         return marcaEntity;
     }

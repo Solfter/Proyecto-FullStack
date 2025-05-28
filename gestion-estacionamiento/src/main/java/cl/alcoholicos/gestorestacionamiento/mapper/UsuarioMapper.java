@@ -11,7 +11,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {FeedbackMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapper {
     UsuarioResponseDTO toResponseDTO(UsuarioEntity usuarioEntity);
     UsuarioEntity toEntity(UsuarioCreateDTO usuarioCreateDTO);

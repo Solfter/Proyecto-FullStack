@@ -1,44 +1,69 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.mapper.TipoUsuarioMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.TipoUsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.service.ITipoUsuario;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class TipoUsuarioService implements ITipoUsuario {
+
+    private final TipoUsuarioMapper tipoUsuarioMapper;
 
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
     @Override
-    public TipoUsuarioEntity insert(TipoUsuarioEntity usuario) {
-        return tipoUsuarioRepository.save(usuario);
+    public TipoUsuarioResponseDTO insert(TipoUsuarioResponseDTO tipoUsuarioResponseDTO) {
+        TipoUsuarioEntity tipoUsuario = tipoUsuarioMapper.toEntity(tipoUsuarioResponseDTO);
+        TipoUsuarioEntity tipoUsuarioGuardado = tipoUsuarioRepository.save(tipoUsuario);
+        TipoUsuarioResponseDTO responseDTO = tipoUsuarioMapper.toResponseDTO(tipoUsuarioGuardado);
+        return responseDTO;
     }
 
     @Override
-    public TipoUsuarioEntity update(Integer idTipoUsuario, TipoUsuarioEntity usuario) {
-        usuario.setIdTipoUsuario(idTipoUsuario);
-        return tipoUsuarioRepository.save(usuario);
+    public TipoUsuarioResponseDTO update(Integer idTipoUsuario, TipoUsuarioResponseDTO tipoUsuarioResponseDTO) {
+        return tipoUsuarioRepository.findById(idTipoUsuario)
+            .map(tipoUsuarioExistente -> {
+                tipoUsuarioMapper.updateFromUpdateDTO(tipoUsuarioResponseDTO, tipoUsuarioExistente);
+                TipoUsuarioEntity tipoUsuarioActualizado = tipoUsuarioRepository.save(tipoUsuarioExistente);
+
+                return tipoUsuarioMapper.toResponseDTO(tipoUsuarioActualizado);
+            })
+            .orElse(null);
     }
 
     @Override
-    public TipoUsuarioEntity delete(Integer idTipoUsuario) {
-        tipoUsuarioRepository.deleteById(idTipoUsuario);
-        return null;
+    public boolean delete(Integer idTipoUsuario) {
+        if (tipoUsuarioRepository.existsById(idTipoUsuario)) {
+            tipoUsuarioRepository.deleteById(idTipoUsuario);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public TipoUsuarioEntity getById(Integer idTipoUsuario) {
-        return tipoUsuarioRepository.findById(idTipoUsuario).get();
+    public TipoUsuarioResponseDTO getById(Integer idTipoUsuario) {
+        return tipoUsuarioRepository.findById(idTipoUsuario)
+                .map(tipoUsuarioMapper::toResponseDTO)
+                .orElse(null);
     }
 
     @Override
-    public List<TipoUsuarioEntity> getAll() {
-        return (List<TipoUsuarioEntity>) tipoUsuarioRepository.findAll();
+    public List<TipoUsuarioResponseDTO> getAll() {
+        return tipoUsuarioRepository.findAll().stream()
+                .map(tipoUsuarioMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
+
+    
 
 }

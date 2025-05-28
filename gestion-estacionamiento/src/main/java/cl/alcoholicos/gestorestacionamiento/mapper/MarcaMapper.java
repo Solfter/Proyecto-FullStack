@@ -14,7 +14,7 @@ import cl.alcoholicos.gestorestacionamiento.entity.MarcaEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MarcaMapper {
     MarcaResponseDTO toResponseDTO (MarcaEntity marcaEntity);
-    MarcaEntity toEntity (MarcaCreateDTO marcaResponseDTO);
+    MarcaEntity toEntity (MarcaCreateDTO marcaCreateDTO);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromUpdateDTO(MarcaUpdateDTO updateDTO, @MappingTarget MarcaEntity marca);

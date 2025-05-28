@@ -30,7 +30,7 @@ public class AuthService {
             // Crear respuesta
             LoginResponse response = new LoginResponse();
             response.setToken(jwt);
-            response.setId(usuario.getRut());
+            response.setRut(usuario.getRut());
             response.setCorreo(usuario.getCorreo());
             response.setNombre(usuario.getPrimerNombre());
             

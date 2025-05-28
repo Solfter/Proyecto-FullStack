@@ -1,5 +1,5 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
-public class ModeloUpdateDRO {
+public class ModeloUpdateDTO {
 
 }

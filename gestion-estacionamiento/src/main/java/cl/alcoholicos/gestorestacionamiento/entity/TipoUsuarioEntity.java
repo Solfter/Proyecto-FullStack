@@ -2,8 +2,6 @@ package cl.alcoholicos.gestorestacionamiento.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,4 +31,5 @@ public class TipoUsuarioEntity {
 
     @OneToMany(mappedBy = "tipoUsuario")
     private List<UsuarioEntity> usuarios;
+    
 }

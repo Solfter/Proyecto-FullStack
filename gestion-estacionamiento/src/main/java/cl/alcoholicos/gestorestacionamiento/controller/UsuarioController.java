@@ -52,9 +52,9 @@ public class UsuarioController {
 
     @SuppressWarnings("null")
     @PostMapping
-    public ResponseEntity<?> insert(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
+    public ResponseEntity<?> insert(@Valid @RequestBody UsuarioCreateDTO createDTO) {
         try {
-            UsuarioResponseDTO nuevoUsuario = usuarioService.insert(usuarioCreateDTO);
+            UsuarioResponseDTO nuevoUsuario = usuarioService.insert(createDTO);
             return ResponseEntity.ok(nuevoUsuario);
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("Error: Datos incompletos - " + e.getRootCause().getMessage());

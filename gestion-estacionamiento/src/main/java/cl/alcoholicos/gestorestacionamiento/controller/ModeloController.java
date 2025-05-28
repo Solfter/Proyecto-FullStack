@@ -3,6 +3,7 @@ package cl.alcoholicos.gestorestacionamiento.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.alcoholicos.gestorestacionamiento.dto.ModeloCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
 import cl.alcoholicos.gestorestacionamiento.service.impl.ModeloService;
 
@@ -24,8 +27,8 @@ public class ModeloController {
     private ModeloService modeloService;
 
     @GetMapping
-    public ResponseEntity<List<ModeloEntity>> getAll() {
-        List<ModeloEntity> modelos = modeloService.getAll();
+    public ResponseEntity<List<ModeloResponseDTO>> getAll() {
+        List<ModeloResponseDTO> modelos = modeloService.getAll();
         if (modelos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -33,34 +36,31 @@ public class ModeloController {
     }
 
     @PostMapping
-    public ResponseEntity<ModeloEntity> insert(@RequestBody ModeloEntity modelo) {
-        ModeloEntity nuevaMarca = modeloService.insert(modelo);
-        return ResponseEntity.ok(nuevaMarca);
+    public ResponseEntity<?> insert(@RequestBody ModeloCreateDTO modelo) {
+        try {
+            ModeloResponseDTO nuevoModelo = modeloService.insert(modelo);
+            return ResponseEntity.ok(nuevoModelo);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("Error: Datos incompletos - " + e.getRootCause().getMessage());
+        }
     }
 
     @PutMapping("/{idModelo}")
-    public ResponseEntity<ModeloEntity> update(@PathVariable Integer idModelo, @RequestBody ModeloEntity modelo) {
-        ModeloEntity modeloExistente = modeloService.getById(idModelo);
-        if (modeloExistente == null) {
+    public ResponseEntity<ModeloResponseDTO> update(@PathVariable Integer idModelo, @RequestBody ModeloResponseDTO modelo) {
+        ModeloResponseDTO modeloActualizado = modeloService.update(idModelo, modelo);
+        if (modeloActualizado == null) {
             return ResponseEntity.notFound().build();
         }
-        ModeloEntity modeloActualizado = modeloService.update(idModelo, modelo);
         return ResponseEntity.ok(modeloActualizado);
 
     }
 
     @DeleteMapping("/{idModelo}")
     public ResponseEntity<ModeloEntity> delete (@PathVariable Integer idModelo) {
-        ModeloEntity modelo = modeloService.getById(idModelo);
-        if (modelo == null) {
+        boolean eliminado = modeloService.delete(idModelo);
+        if (!eliminado) {
             return ResponseEntity.notFound().build();
         }
-
-        ModeloEntity modeloBorrado = modeloService.delete(idModelo);
-        if (modeloBorrado == null) {
-            return ResponseEntity.ok(modelo);
-        }
-
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.noContent().build();
     }
 }

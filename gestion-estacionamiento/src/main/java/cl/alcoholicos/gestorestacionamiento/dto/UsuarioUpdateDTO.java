@@ -1,8 +1,5 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
-import java.util.List;
-
-import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

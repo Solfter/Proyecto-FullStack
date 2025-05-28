@@ -2,18 +2,19 @@ package cl.alcoholicos.gestorestacionamiento.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.ModeloCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 
 public interface IModelo {
     
-    ModeloEntity insert(ModeloEntity modelo);
+    ModeloResponseDTO insert(ModeloCreateDTO modelo);
 
-    ModeloEntity update(Integer idModelo, ModeloEntity modelo);
+    ModeloResponseDTO update(Integer idModelo, ModeloResponseDTO modelo);
 
-    ModeloEntity delete(Integer idModelo);
+    boolean delete(Integer idModelo);
 
-    ModeloEntity getById(Integer idModelo);
+    ModeloResponseDTO getById(Integer idModelo);
 
-    List<ModeloEntity> getAll();
+    List<ModeloResponseDTO> getAll();
 
 }

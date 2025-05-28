@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EspacioFavoritoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.IncidenteResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
@@ -10,6 +11,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EspacioFavoritoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.IncidenteEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-25T21:01:24-0400",
+    date = "2025-05-28T17:32:55-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -195,6 +197,19 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         return tipoUsuarioResponseDTO;
     }
 
+    protected ModeloResponseDTO modeloEntityToModeloResponseDTO(ModeloEntity modeloEntity) {
+        if ( modeloEntity == null ) {
+            return null;
+        }
+
+        ModeloResponseDTO modeloResponseDTO = new ModeloResponseDTO();
+
+        modeloResponseDTO.setIdModelo( modeloEntity.getIdModelo() );
+        modeloResponseDTO.setNombreModelo( modeloEntity.getNombreModelo() );
+
+        return modeloResponseDTO;
+    }
+
     protected VehiculoResponseDTO vehiculoEntityToVehiculoResponseDTO(VehiculoEntity vehiculoEntity) {
         if ( vehiculoEntity == null ) {
             return null;
@@ -204,6 +219,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         vehiculoResponseDTO.anio( vehiculoEntity.getAnio() );
         vehiculoResponseDTO.color( vehiculoEntity.getColor() );
+        vehiculoResponseDTO.modelo( modeloEntityToModeloResponseDTO( vehiculoEntity.getModelo() ) );
         vehiculoResponseDTO.patente( vehiculoEntity.getPatente() );
 
         return vehiculoResponseDTO.build();

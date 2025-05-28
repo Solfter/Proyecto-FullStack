@@ -16,4 +16,7 @@ public class VehiculoResponseDTO {
     private String color;
 
     private int anio;
+
+    private ModeloResponseDTO modelo;
+    
 }
