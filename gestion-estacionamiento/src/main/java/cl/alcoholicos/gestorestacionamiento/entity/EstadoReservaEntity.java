@@ -25,7 +25,7 @@ public class EstadoReservaEntity {
     private int idEstadoReserva;
 
     @ManyToOne
-    @JoinColumn(name = "ID_TPO_EST_RESERVA")
+    @JoinColumn(name = "ID_TIPO_ESTADO_RESERVA")
     private TipoEstadoReservaEntity tipoEstadoReserva;
 
     @ManyToOne

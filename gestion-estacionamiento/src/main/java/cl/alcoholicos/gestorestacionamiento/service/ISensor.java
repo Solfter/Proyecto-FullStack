@@ -2,18 +2,19 @@ package cl.alcoholicos.gestorestacionamiento.service;
 
 import java.util.List;
 
-import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.SensorCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.SensorResponseDTO;
 
 public interface ISensor {
 
-    SensorEntity insert(SensorEntity sensor);
+    SensorResponseDTO insert(SensorCreateDTO sensor);
 
-    SensorEntity update(Integer idSensor, SensorEntity sensor);
+    SensorResponseDTO update(Integer idSensor, SensorResponseDTO sensor);
 
-    SensorEntity delete(Integer idSensor);
+    boolean delete(Integer idSensor);
 
-    SensorEntity getById(Integer idSensor);
+    SensorResponseDTO getById(Integer idSensor);
 
-    List<SensorEntity> getAll();
+    List<SensorResponseDTO> getAll();
 
 }

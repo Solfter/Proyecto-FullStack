@@ -21,25 +21,25 @@ import lombok.NoArgsConstructor;
 @Table(name = "USUARIO")
 public class UsuarioEntity {
     @Id
-    @Column(name = "RUT")
+    @Column(name = "RUT_USUARIO")
     private int rut;
     
-    @Column(name = "DV")
+    @Column(name = "DV", length = 1)
     private String dv;
     
-    @Column(name = "P_NOMBRE") 
+    @Column(name = "PNOMBRE_USUARIO", length = 50) 
     private String primerNombre;    
     
-    @Column(name = "S_NOMBRE") 
+    @Column(name = "SNOMBRE_USUARIO", length = 50) 
     private String segundoNombre;    
     
-    @Column(name = "AP_PATERNO")
+    @Column(name = "APELLIDO_PATERNO_USUARIO", length = 50)
     private String apPaterno;  
     
-    @Column(name = "AP_MATERNO")
+    @Column(name = "APELLIDO_MATERNO_USUARIO", length = 50)
     private String apMaterno;  
     
-    @Column(name = "CORREO")
+    @Column(name = "CORREO", length = 50)
     private String correo;
     
     @Column(name = "NRO_CELULAR")

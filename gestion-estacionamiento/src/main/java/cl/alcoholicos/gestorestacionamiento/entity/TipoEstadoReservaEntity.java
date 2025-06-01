@@ -23,10 +23,10 @@ import lombok.Setter;
 public class TipoEstadoReservaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TPO_EST_RESERVA")
+    @Column(name = "ID_TIPO_ESTADO_RESERVA")
     private int idTipoEstadoReserva;
     
-    @Column(name = "DESC_TPO_EST_RESERVA")
+    @Column(name = "DESCRIPCION_TIPO_ESTADO_RESERVA")
     private String descTipoEstadoReserva;
 
     @OneToMany(mappedBy = "tipoEstadoReserva")

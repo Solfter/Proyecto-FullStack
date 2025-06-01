@@ -9,9 +9,14 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.EstacionamientoMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstacionamientoRepository;
+import cl.alcoholicos.gestorestacionamiento.repository.EstadoEstacionamientoRepository;
+import cl.alcoholicos.gestorestacionamiento.repository.SensorRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IEstacionamiento;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,10 +25,22 @@ public class EstacionamientoService implements IEstacionamiento {
 
     private final EstacionamientoRepository estacionamientoRepository;
     private final EstacionamientoMapper estacionamientoMapper;
+    private final EstadoEstacionamientoRepository estadoEstacionamientoRepository;
+    private final SensorRepository sensorRepository;
 
     @Override
     public EstacionamientoResponseDTO insert(EstacionamientoCreateDTO estacionamientoCreateDTO) {
         EstacionamientoEntity estacionamiento = estacionamientoMapper.toEntity(estacionamientoCreateDTO);
+
+        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository.findById(estacionamientoCreateDTO.getIdEstadoEstacionamiento())
+            .orElseThrow(() -> new EntityNotFoundException("Estado de Estacionamiento no encontrado"));
+
+        SensorEntity sensor = sensorRepository.findById(estacionamientoCreateDTO.getIdSensor())
+            .orElseThrow(() -> new EntityNotFoundException("Sensor no encontrado"));
+
+        estacionamiento.setSensor(sensor);
+        estacionamiento.setEstadoEstacionamiento(estadoEstacionamiento);
+
         EstacionamientoEntity estacionamientoGuardado = estacionamientoRepository.save(estacionamiento);
         EstacionamientoResponseDTO responseDTO = estacionamientoMapper.toResponseDTO(estacionamientoGuardado);
         return responseDTO;

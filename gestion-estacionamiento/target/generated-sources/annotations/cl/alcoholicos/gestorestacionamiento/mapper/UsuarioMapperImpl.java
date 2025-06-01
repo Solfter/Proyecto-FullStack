@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EspacioFavoritoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.IncidenteResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.MarcaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
@@ -11,6 +12,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EspacioFavoritoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.IncidenteEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-28T17:32:55-0400",
+    date = "2025-06-01T16:11:55-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -197,6 +199,19 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         return tipoUsuarioResponseDTO;
     }
 
+    protected MarcaResponseDTO marcaEntityToMarcaResponseDTO(MarcaEntity marcaEntity) {
+        if ( marcaEntity == null ) {
+            return null;
+        }
+
+        MarcaResponseDTO marcaResponseDTO = new MarcaResponseDTO();
+
+        marcaResponseDTO.setIdMarca( marcaEntity.getIdMarca() );
+        marcaResponseDTO.setNombreMarca( marcaEntity.getNombreMarca() );
+
+        return marcaResponseDTO;
+    }
+
     protected ModeloResponseDTO modeloEntityToModeloResponseDTO(ModeloEntity modeloEntity) {
         if ( modeloEntity == null ) {
             return null;
@@ -205,6 +220,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         ModeloResponseDTO modeloResponseDTO = new ModeloResponseDTO();
 
         modeloResponseDTO.setIdModelo( modeloEntity.getIdModelo() );
+        modeloResponseDTO.setMarca( marcaEntityToMarcaResponseDTO( modeloEntity.getMarca() ) );
         modeloResponseDTO.setNombreModelo( modeloEntity.getNombreModelo() );
 
         return modeloResponseDTO;

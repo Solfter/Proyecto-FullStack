@@ -23,10 +23,10 @@ import lombok.Setter;
 public class TipoEstadoIncienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TPO_EST_INCIDENTE")
+    @Column(name = "id_tipo_estado_incidente")
     private int idTipoEstadoIncidente;
     
-    @Column(name = "DESC_TPO_EST_INCIDENTE")
+    @Column(name = "descripcion_estado_incidente")
     private String descTipoEstadoIncidente;
 
     @OneToMany(mappedBy = "tipoEstadoIncidente")

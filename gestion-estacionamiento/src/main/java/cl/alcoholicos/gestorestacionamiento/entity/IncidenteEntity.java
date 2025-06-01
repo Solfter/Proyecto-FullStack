@@ -30,7 +30,7 @@ public class IncidenteEntity {
     @Column(name = "FECHA_INCIDENTE")
     private Date fechaIncidente;
 
-    @Column(name = "DESCRIPCION")
+    @Column(name = "DESCRIPCION_INCIDENTE")
     private String descripcion;
 
     @ManyToOne

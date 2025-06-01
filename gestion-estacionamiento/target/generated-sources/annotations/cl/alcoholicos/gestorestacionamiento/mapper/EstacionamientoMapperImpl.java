@@ -3,13 +3,17 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoEstacionamientoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.SensorResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-28T17:32:56-0400",
+    date = "2025-06-01T16:11:56-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -23,8 +27,10 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
 
         EstacionamientoResponseDTO.EstacionamientoResponseDTOBuilder estacionamientoResponseDTO = EstacionamientoResponseDTO.builder();
 
+        estacionamientoResponseDTO.estadoEstacionamiento( estadoEstacionamientoEntityToEstadoEstacionamientoResponseDTO( estacionamientoEntity.getEstadoEstacionamiento() ) );
         estacionamientoResponseDTO.idEstacionamiento( estacionamientoEntity.getIdEstacionamiento() );
         estacionamientoResponseDTO.nroEstacionamiento( estacionamientoEntity.getNroEstacionamiento() );
+        estacionamientoResponseDTO.sensor( sensorEntityToSensorResponseDTO( estacionamientoEntity.getSensor() ) );
 
         return estacionamientoResponseDTO.build();
     }
@@ -38,7 +44,6 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
         EstacionamientoEntity estacionamientoEntity = new EstacionamientoEntity();
 
         estacionamientoEntity.setNroEstacionamiento( estacionamiento.getNroEstacionamiento() );
-        estacionamientoEntity.setSensor( estacionamiento.getSensor() );
 
         return estacionamientoEntity;
     }
@@ -50,5 +55,30 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
         }
 
         entity.setNroEstacionamiento( updateDTO.getNroEstacionamiento() );
+    }
+
+    protected EstadoEstacionamientoResponseDTO estadoEstacionamientoEntityToEstadoEstacionamientoResponseDTO(EstadoEstacionamientoEntity estadoEstacionamientoEntity) {
+        if ( estadoEstacionamientoEntity == null ) {
+            return null;
+        }
+
+        EstadoEstacionamientoResponseDTO estadoEstacionamientoResponseDTO = new EstadoEstacionamientoResponseDTO();
+
+        estadoEstacionamientoResponseDTO.setDescEstadoEstacionamiento( estadoEstacionamientoEntity.getDescEstadoEstacionamiento() );
+        estadoEstacionamientoResponseDTO.setIdEstadoEstacionamiento( estadoEstacionamientoEntity.getIdEstadoEstacionamiento() );
+
+        return estadoEstacionamientoResponseDTO;
+    }
+
+    protected SensorResponseDTO sensorEntityToSensorResponseDTO(SensorEntity sensorEntity) {
+        if ( sensorEntity == null ) {
+            return null;
+        }
+
+        SensorResponseDTO sensorResponseDTO = new SensorResponseDTO();
+
+        sensorResponseDTO.setIdSensor( sensorEntity.getIdSensor() );
+
+        return sensorResponseDTO;
     }
 }

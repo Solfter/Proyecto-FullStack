@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class SensorEntity {
     @Column(name = "ID_SENSOR")
     private int idSensor;
 
-    @OneToMany(mappedBy = "sensor")
-    private List<EstacionamientoEntity> estacionamientos;
+    @OneToOne(mappedBy = "sensor")
+    private EstacionamientoEntity estacionamientos;
 
 }

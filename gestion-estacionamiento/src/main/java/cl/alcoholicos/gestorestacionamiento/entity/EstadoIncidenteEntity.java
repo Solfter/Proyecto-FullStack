@@ -26,7 +26,7 @@ public class EstadoIncidenteEntity {
     private int idEstadoIncidente;
 
     @ManyToOne
-    @JoinColumn(name = "ID_TPO_EST_INCIDENTE")
+    @JoinColumn(name = "ID_TIPO_ESTADO_INCIDENTE")
     private TipoEstadoIncienteEntity tipoEstadoIncidente;
 
     @ManyToOne
