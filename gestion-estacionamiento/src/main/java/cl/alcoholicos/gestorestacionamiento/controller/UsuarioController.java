@@ -32,6 +32,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
+    
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
         List<UsuarioResponseDTO> usuarios = usuarioService.getAll();

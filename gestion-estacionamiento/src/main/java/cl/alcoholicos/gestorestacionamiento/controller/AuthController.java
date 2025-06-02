@@ -66,7 +66,7 @@ public class AuthController {
             String token = authHeader.substring(7);
             logger.debug("Token recibido en /user: {}", token.length() > 20 ? token.substring(0, 20) + "..." : token);
             
-            // Usar jwtTokenUtil en lugar de jwtTokenProvider
+            
             if (!jwtTokenUtil.validateToken(token)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new MessageResponse("Token inválido o expirado"));

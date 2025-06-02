@@ -12,7 +12,6 @@ import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstadoEstacionamientoMapper {
     EstadoEstacionamientoResponseDTO toResponseDTO(EstadoEstacionamientoEntity estadoEstacionamientoEntity);
-    EstadoEstacionamientoEntity toEntity(EstadoEstacionamientoResponseDTO estacionamiento);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromUpdateDTO(EstadoEstacionamientoResponseDTO updateDTO, @MappingTarget EstadoEstacionamientoEntity entity);

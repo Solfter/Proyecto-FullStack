@@ -6,7 +6,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 
-public interface IUsuarioService {
+public interface IUsuario {
 
     UsuarioResponseDTO insert(UsuarioCreateDTO usuarioCreateDTO);
 

@@ -31,7 +31,7 @@ public class SensorService implements ISensor {
 
         EstacionamientoEntity estacionamiento = estacionamientoRepository.findById(createDTO.getIdEstacionamiento())
                         .orElseThrow(() -> new EntityNotFoundException("Tipo de Usuario no encontrado"));
-        sensor.setEstacionamientos(estacionamiento);
+        sensor.setEstacionamiento(estacionamiento);
         // Guardar en BD
         SensorEntity sensorGuardado = sensorRepository.save(sensor);
         // Convertir a DTO de respuesta

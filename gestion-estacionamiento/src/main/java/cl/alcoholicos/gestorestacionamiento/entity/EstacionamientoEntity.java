@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,12 +32,12 @@ public class EstacionamientoEntity {
     @Column(name = "NRO_ESTACIONAMIENTO")
     private int nroEstacionamiento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_est_estacionamiento")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EST_ESTACIONAMIENTO")
     private EstadoEstacionamientoEntity estadoEstacionamiento;
 
     @OneToOne
-    @JoinColumn(name = "ID_SENSOR")
+    @JoinColumn(name = "ID_SENSOR", unique = true)
     private SensorEntity sensor;
 
     @OneToMany(mappedBy = "estacionamiento", cascade = CascadeType.ALL)

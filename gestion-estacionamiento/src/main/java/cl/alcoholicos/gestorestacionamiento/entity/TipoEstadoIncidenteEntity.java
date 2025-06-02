@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "TIPO_ESTADO_INCIDENTE")
-public class TipoEstadoIncienteEntity {
+public class TipoEstadoIncidenteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipo_estado_incidente")

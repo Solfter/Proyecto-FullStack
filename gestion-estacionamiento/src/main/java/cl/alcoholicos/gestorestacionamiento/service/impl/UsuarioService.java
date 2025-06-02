@@ -17,14 +17,14 @@ import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.UsuarioMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.TipoUsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
-import cl.alcoholicos.gestorestacionamiento.service.IUsuarioService;
+import cl.alcoholicos.gestorestacionamiento.service.IUsuario;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService implements IUsuarioService {
+public class UsuarioService implements IUsuario {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
     private final PasswordEncoder passwordEncoder;
@@ -42,8 +42,6 @@ public class UsuarioService implements IUsuarioService {
         usuario.setTipoUsuario(tipoUsuario);
         // Guardar en BD
         UsuarioEntity usuarioGuardado = usuarioRepository.save(usuario);
-
-
 
         // Convertir a DTO de respuesta
         UsuarioResponseDTO responseDTO = usuarioMapper.toResponseDTO(usuarioGuardado);        

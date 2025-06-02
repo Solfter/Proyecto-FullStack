@@ -1,44 +1,34 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoEstacionamientoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.mapper.EstadoEstacionamientoMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoEstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IEstadoEstacionamiento;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class EstadoEstacionamientoService implements IEstadoEstacionamiento {
     
-    @Autowired
-    private EstadoEstacionamientoRepository estadoEstacionamientoRepository;
+    private final EstadoEstacionamientoRepository estadoEstacionamientoRepository;
+    private final EstadoEstacionamientoMapper estadoEstacionamientoMapper;
 
     @Override
-    public EstadoEstacionamientoEntity insert(EstadoEstacionamientoEntity estadoEstacionamientoDTO) {
-        return estadoEstacionamientoRepository.save(estadoEstacionamientoDTO);
+    public EstadoEstacionamientoResponseDTO getById(Integer idEstadoEstacionamiento) {
+        return estadoEstacionamientoRepository.findById(idEstadoEstacionamiento)
+            .map(estadoEstacionamientoMapper::toResponseDTO)
+            .orElse(null);
     }
 
     @Override
-    public EstadoEstacionamientoEntity update(Integer idEstadoEstacionamiento, EstadoEstacionamientoEntity estadoEstacionamientoDTO) {
-        estadoEstacionamientoDTO.setIdEstadoEstacionamiento(idEstadoEstacionamiento);
-        return estadoEstacionamientoRepository.save(estadoEstacionamientoDTO);
-    }
-
-    @Override
-    public EstadoEstacionamientoEntity delete(Integer idEstacionamiento) {
-        estadoEstacionamientoRepository.deleteById(idEstacionamiento);
-        return null;
-    }
-
-    @Override
-    public EstadoEstacionamientoEntity getById(Integer idEstadoEstacionamiento) {
-        return estadoEstacionamientoRepository.findById(idEstadoEstacionamiento).get();
-    }
-
-    @Override
-    public List<EstadoEstacionamientoEntity> getAll() {
-        return (List<EstadoEstacionamientoEntity>) estadoEstacionamientoRepository.findAll();
+    public List<EstadoEstacionamientoResponseDTO> getAll() {
+        return estadoEstacionamientoRepository.findAll().stream()
+            .map(estadoEstacionamientoMapper::toResponseDTO)
+            .collect(Collectors.toList());
     }
 }

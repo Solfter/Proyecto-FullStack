@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class SensorResponseDTO {
 
     private int idSensor;
-
-    private EstacionamientoResponseDTO estacionamiento;
+    
 }

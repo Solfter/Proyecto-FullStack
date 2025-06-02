@@ -21,6 +21,6 @@ public class EstacionamientoResponseDTO {
 
     private SensorResponseDTO sensor;
 
-    private List<EspacioFavoritoResponseDTO> espacioFavoritoResponseDTOs;
+    private List<EspacioFavoritoResponseDTO> espacioFavoritos;
 
 }

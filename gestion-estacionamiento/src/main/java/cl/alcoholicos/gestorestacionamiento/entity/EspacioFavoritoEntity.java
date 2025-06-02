@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +30,7 @@ public class EspacioFavoritoEntity {
     @JoinColumn(name = "RUT_USUARIO")
     private UsuarioEntity usuario;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ESTACIONAMIENTO")
     private EstacionamientoEntity estacionamiento;
 
