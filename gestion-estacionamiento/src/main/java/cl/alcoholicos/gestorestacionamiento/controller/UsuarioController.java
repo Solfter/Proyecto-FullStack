@@ -92,7 +92,7 @@ public class UsuarioController {
             UsuarioBasicDTO usuarioBasic = new UsuarioBasicDTO();
             usuarioBasic.setRut(usuario.getRut());
             usuarioBasic.setCorreo(usuario.getCorreo());
-            usuarioBasic.setPNombre(usuario.getPrimerNombre());
+            usuarioBasic.setPrimerNombre(usuario.getPrimerNombre());
             return ResponseEntity.ok(usuarioBasic);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales Inválidas");

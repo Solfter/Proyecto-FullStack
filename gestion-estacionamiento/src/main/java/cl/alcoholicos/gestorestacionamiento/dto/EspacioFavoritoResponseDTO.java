@@ -13,4 +13,8 @@ public class EspacioFavoritoResponseDTO {
 
     private int idEspacioFavorito;
 
+    private UsuarioBasicDTO usuario;
+
+    private EstacionamientoBasicDTO estacionamiento;
+
 }

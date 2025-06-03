@@ -1,46 +1,36 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.mapper.EstadoReservaMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IEstadoReserva;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
+@Service
 public class EstadoReservaService implements IEstadoReserva{
 
-    @Autowired
-    private EstadoReservaRepository estadoReservaRepository;
+    private final EstadoReservaRepository estadoReservaRepository;
+    private final EstadoReservaMapper estadoReservaMapper;
 
     @Override
-    public EstadoReservaEntity insert(EstadoReservaEntity estadoReserva) {
-        return estadoReservaRepository.save(estadoReserva);
+    public EstadoReservaResponseDTO getById(Integer idEstadoReserva) {
+        return estadoReservaRepository.findById(idEstadoReserva)
+                .map(estadoReservaMapper::toResponseDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Estado de reserva no encontrado"));
     }
 
     @Override
-    public EstadoReservaEntity delete(Integer idEstadoReserva) {
-        estadoReservaRepository.deleteById(idEstadoReserva);
-        return null;
-    }
-
-    @Override
-    public EstadoReservaEntity getById(Integer idEstadoReserva) {
-        return estadoReservaRepository.findById(idEstadoReserva).get();
-    }
-
-    @Override
-    public List<EstadoReservaEntity> getAll() {
-        return (List<EstadoReservaEntity>) estadoReservaRepository.findAll();
-    }
-
-
-
-
-    @Override
-    public EstadoReservaEntity update(Integer idEstadoReserva, EstadoReservaEntity estadoReserva) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public List<EstadoReservaResponseDTO> getAll() {
+        return estadoReservaRepository.findAll().stream()
+                .map(estadoReservaMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }

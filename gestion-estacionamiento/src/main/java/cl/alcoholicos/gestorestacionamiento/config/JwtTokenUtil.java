@@ -3,7 +3,6 @@ package cl.alcoholicos.gestorestacionamiento.config;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import lombok.AllArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioDetails;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 
 import javax.crypto.SecretKey;

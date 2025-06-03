@@ -1,16 +1,19 @@
 package cl.alcoholicos.gestorestacionamiento.mapper;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EspacioFavoritoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.IncidenteResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.MarcaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EspacioFavoritoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.IncidenteEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
@@ -25,7 +28,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-02T18:31:14-0400",
+    date = "2025-06-03T18:53:04-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -105,6 +108,37 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         }
     }
 
+    protected EstacionamientoBasicDTO estacionamientoEntityToEstacionamientoBasicDTO(EstacionamientoEntity estacionamientoEntity) {
+        if ( estacionamientoEntity == null ) {
+            return null;
+        }
+
+        EstacionamientoBasicDTO estacionamientoBasicDTO = new EstacionamientoBasicDTO();
+
+        estacionamientoBasicDTO.setNroEstacionamiento( estacionamientoEntity.getNroEstacionamiento() );
+
+        return estacionamientoBasicDTO;
+    }
+
+    protected UsuarioBasicDTO usuarioEntityToUsuarioBasicDTO(UsuarioEntity usuarioEntity) {
+        if ( usuarioEntity == null ) {
+            return null;
+        }
+
+        UsuarioBasicDTO usuarioBasicDTO = new UsuarioBasicDTO();
+
+        usuarioBasicDTO.setApMaterno( usuarioEntity.getApMaterno() );
+        usuarioBasicDTO.setApPaterno( usuarioEntity.getApPaterno() );
+        usuarioBasicDTO.setCorreo( usuarioEntity.getCorreo() );
+        usuarioBasicDTO.setDv( usuarioEntity.getDv() );
+        usuarioBasicDTO.setNroCelular( usuarioEntity.getNroCelular() );
+        usuarioBasicDTO.setPrimerNombre( usuarioEntity.getPrimerNombre() );
+        usuarioBasicDTO.setRut( usuarioEntity.getRut() );
+        usuarioBasicDTO.setSegundoNombre( usuarioEntity.getSegundoNombre() );
+
+        return usuarioBasicDTO;
+    }
+
     protected EspacioFavoritoResponseDTO espacioFavoritoEntityToEspacioFavoritoResponseDTO(EspacioFavoritoEntity espacioFavoritoEntity) {
         if ( espacioFavoritoEntity == null ) {
             return null;
@@ -112,7 +146,9 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         EspacioFavoritoResponseDTO.EspacioFavoritoResponseDTOBuilder espacioFavoritoResponseDTO = EspacioFavoritoResponseDTO.builder();
 
+        espacioFavoritoResponseDTO.estacionamiento( estacionamientoEntityToEstacionamientoBasicDTO( espacioFavoritoEntity.getEstacionamiento() ) );
         espacioFavoritoResponseDTO.idEspacioFavorito( espacioFavoritoEntity.getIdEspacioFavorito() );
+        espacioFavoritoResponseDTO.usuario( usuarioEntityToUsuarioBasicDTO( espacioFavoritoEntity.getUsuario() ) );
 
         return espacioFavoritoResponseDTO.build();
     }
@@ -164,11 +200,13 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         ReservaResponseDTO.ReservaResponseDTOBuilder reservaResponseDTO = ReservaResponseDTO.builder();
 
+        reservaResponseDTO.estacionamiento( estacionamientoEntityToEstacionamientoBasicDTO( reservaEntity.getEstacionamiento() ) );
         reservaResponseDTO.fechaCreacionReserva( reservaEntity.getFechaCreacionReserva() );
         reservaResponseDTO.fechaReserva( reservaEntity.getFechaReserva() );
         reservaResponseDTO.horaFin( reservaEntity.getHoraFin() );
         reservaResponseDTO.horaInicio( reservaEntity.getHoraInicio() );
         reservaResponseDTO.idReserva( reservaEntity.getIdReserva() );
+        reservaResponseDTO.usuario( usuarioEntityToUsuarioBasicDTO( reservaEntity.getUsuario() ) );
 
         return reservaResponseDTO.build();
     }

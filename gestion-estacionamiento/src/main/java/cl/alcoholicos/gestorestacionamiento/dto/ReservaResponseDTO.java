@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,12 @@ public class ReservaResponseDTO {
     private LocalTime horaInicio;
 
     private LocalTime horaFin;
+
+    private UsuarioBasicDTO usuario;
+
+    private EstacionamientoBasicDTO estacionamiento;
+
+    private List<EstadoReservaResponseDTO> estadosReserva;
     
 }
 

@@ -35,6 +35,7 @@ public class ModeloController {
         return ResponseEntity.ok(modelos);  
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<?> insert(@RequestBody ModeloCreateDTO modelo) {
         try {

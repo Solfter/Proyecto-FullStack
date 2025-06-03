@@ -11,6 +11,10 @@ public class EstadoIncidenteResponseDTO {
 
     private int idEstadoIncidente;
 
+    private TipoEstadoIncidenteBasicDTO tipoEstadoIncidente;
+
+    private IncidenteBasicDTO incidente;
+
 }
 
 
