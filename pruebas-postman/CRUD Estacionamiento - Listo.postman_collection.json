@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "1b49addf-9d24-457e-9361-98bd69f21e3e",
+		"name": "CRUD Estacionamiento - Listo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar Estacionamiento (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nroEstacionamiento\": 666,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 101\n}"
+				},
+				"url": "http://localhost:8001/estacionamientos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Etacionamiento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/estacionamientos/6"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los Estacionamientos (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/estacionamientos"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Estacionamiento (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nroEstacionamiento\": 999,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 102,\n  \"idZona\": \"B\"\n}"
+				},
+				"url": "http://localhost:8001/estacionamientos/6"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Estacionamiento (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/estacionamientos/6"
+			},
+			"response": []
+		}
+	]
+}

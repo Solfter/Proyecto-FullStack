@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "631b2aa5-5047-4a5f-8e2f-fdf82b88d09e",
+		"name": "CRUD TipoUsuario - Listo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Insertar TipoUsuario (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idTipoUsuario\": 3,\n  \"descTipoUsuario\": \"Prueba\"\n}"
+				},
+				"url": "http://localhost:8001/tipousuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los TipoUsuario (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/tipousuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar TipoUsuario (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idTipoUsuario\": 3,\n  \"descTipoUsuario\": \"Prueba Put\"\n}"
+				},
+				"url": "http://localhost:8001/tipousuario/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar TipoUsuario (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8001/tipousuario/3"
+			},
+			"response": []
+		}
+	]
+}
