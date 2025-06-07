@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "1b49addf-9d24-457e-9361-98bd69f21e3e",
-		"name": "CRUD Estacionamiento",
+		"name": "CRUD Estacionamiento - Listo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "43061760"
 	},
@@ -18,9 +18,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idEstacionamiento\": 3,\n  \"nroEstacionamiento\": 103,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 101,\n  \"idZona\": \"A\"\n}"
+					"raw": "{\n  \"nroEstacionamiento\": 666,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 101\n}"
 				},
-				"url": "http://localhost:8001/estacionamiento"
+				"url": "http://localhost:8001/estacionamientos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Etacionamiento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/estacionamientos/6"
 			},
 			"response": []
 		},
@@ -29,7 +38,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8001/estacionamiento"
+				"url": "http://localhost:8001/estacionamientos"
 			},
 			"response": []
 		},
@@ -45,9 +54,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idEstacionamiento\": 3,\n  \"nroEstacionamiento\": 104,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 102,\n  \"idZona\": \"B\"\n}"
+					"raw": "{\n  \"nroEstacionamiento\": 999,\n  \"idEstadoEstacionamiento\": 1,\n  \"idSensor\": 102,\n  \"idZona\": \"B\"\n}"
 				},
-				"url": "http://localhost:8001/estacionamiento/3"
+				"url": "http://localhost:8001/estacionamientos/6"
 			},
 			"response": []
 		},
@@ -56,7 +65,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8001/estacionamiento/3"
+				"url": "http://localhost:8001/estacionamientos/6"
 			},
 			"response": []
 		}

@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "1549c65e-2b7c-474e-8636-4a090c50aac9",
+		"name": "CRUD EstadoReserva",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43061760"
+	},
+	"item": [
+		{
+			"name": "Obtener EstadoReserva",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/vehiculos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los EstadoReserva",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/estadoreserva"
+			},
+			"response": []
+		}
+	]
+}

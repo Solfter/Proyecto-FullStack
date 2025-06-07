@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "5319696e-7ed3-4af1-9974-1aa608bfc4e1",
-		"name": "CRUD Modelo",
+		"_postman_id": "80ee0f89-45f0-4940-a5b9-aa8835eafc0c",
+		"name": "CRUD TipoEstadoReserva - Listo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "43061760"
 	},
 	"item": [
 		{
-			"name": "Insertar Modelo (POST)",
+			"name": "Insertar TipoEstadoReserva (POST)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -18,23 +18,23 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idModelo\": 3,\n  \"nombreModelo\": \"Rio 4\",\n  \"idMarca\": 1\n}"
+					"raw": "{\n  \"idTipoEstadoReserva\": 1,\n  \"descTipoEstadoReserva\": \"Activa\"\n}"
 				},
-				"url": "http://localhost:8001/modelo"
+				"url": "http://localhost:8001/tipoestadoreserva"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los Modelos (GET)",
+			"name": "Obtener todos los TipoEstadoReserva (GET)",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8001/modelo"
+				"url": "http://localhost:8001/tipoestadoreserva"
 			},
 			"response": []
 		},
 		{
-			"name": "Actualizar Modelo (PUT)",
+			"name": "Actualizar TipoEstadoReserva (PUT)",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -45,18 +45,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idModelo\": 3,\n  \"nombreModelo\": \"Yaris\",\n  \"idMarca\": 1\n}"
+					"raw": "{\n  \"idTipoEstadoReserva\": 1,\n  \"descTipoEstadoReserva\": \"Cancelada\"\n}"
 				},
-				"url": "http://localhost:8001/modelo/3"
+				"url": "http://localhost:8001/tipoestadoreserva/1"
 			},
 			"response": []
 		},
 		{
-			"name": "Eliminar Modelo (DELETE)",
+			"name": "Eliminar TipoEstadoReserva (DELETE)",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8001/modelo/3"
+				"url": "http://localhost:8001/tipoestadoreserva/1"
 			},
 			"response": []
 		}

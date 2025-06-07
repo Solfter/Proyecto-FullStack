@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "cb3ea050-babc-4632-8731-e86f0f629231",
-		"name": "CRUD Usuario",
+		"name": "CRUD Usuario - Listo",
 		"description": "Colección para probar el controlador UsuarioController de Spring Boot.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "43061760"
@@ -19,9 +19,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"rut\": 15975312,\n    \"dv\": \"K\",\n    \"pNombre\": \"Juan\",\n    \"sNombre\": \"Carlos\",\n    \"apPaterno\": \"Pérez\",\n    \"apMaterno\": \"Gómez\",\n    \"correo\": \"juan.perez@example.com\",\n    \"nroCelular\": 12345678\n}"
+					"raw": "{\n  \"rut\": 19423324,\n  \"dv\": \"8\",\n  \"primerNombre\": \"Sebastián\",\n  \"segundoNombre\": \"Rodrigo\",\n  \"apPaterno\": \"González\",\n  \"apMaterno\": \"Pino\",\n  \"correo\": \"se.gonzalez2@duocuc.cl\",\n  \"nroCelular\": 962327029,\n  \"password\": \"test_fullstack\",\n  \"idTipoUsuario\": 1\n}\n"
 				},
-				"url": "{{baseUrl}}/usuario"
+				"url": "{{baseUrl}}/usuarios"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/usuarios/12345678"
 			},
 			"response": []
 		},
@@ -30,7 +39,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{baseUrl}}/usuario"
+				"url": "{{baseUrl}}/usuarios"
 			},
 			"response": []
 		},
@@ -46,9 +55,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"rut\": 15975312,\n    \"dv\": \"K\",\n    \"pNombre\": \"Juanito\",\n    \"sNombre\": \"Carlos\",\n    \"apPaterno\": \"Pérez\",\n    \"apMaterno\": \"Gómez\",\n    \"correo\": \"juanito.perez@example.com\",\n    \"nroCelular\": 87654320\n}"
+					"raw": "{\n    \"pNombre\": \"Juanito\",\n    \"sNombre\": \"Carlos\",\n    \"apPaterno\": \"Pérez\",\n    \"apMaterno\": \"Gómez\",\n    \"correo\": \"correo.prueba@example.com\",\n    \"nroCelular\": 123456789\n}"
 				},
-				"url": "{{baseUrl}}/usuario/15975312"
+				"url": "{{baseUrl}}/usuarios/12345678"
 			},
 			"response": []
 		},
@@ -57,7 +66,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "{{baseUrl}}/usuario/15975312"
+				"url": "{{baseUrl}}/usuarios/12345676"
 			},
 			"response": []
 		}

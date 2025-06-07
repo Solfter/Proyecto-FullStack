@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "f04caad0-7029-4925-af32-a6e9a85d1d4d",
-		"name": "CRUD Vehiculo",
+		"_postman_id": "e5a4e925-9e77-4c29-ac62-dad248b41d2f",
+		"name": "CRUD Vehiculo - Listo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "43061760"
 	},
 	"item": [
 		{
-			"name": "Insertar Vehículo (POST)",
+			"name": "Insertar Vehículo",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -18,9 +18,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"patente\": \"ZXC123\",\n  \"color\": \"Rojo\",\n  \"rutUsuario\": 12345678,\n  \"idModelo\": 2,\n  \"anio\": 2020\n}"
+					"raw": "{\n  \"patente\": \"AB1234\",\n  \"color\": \"Rojo\",\n  \"rutUsuario\": 12345678,\n  \"idModelo\": 2,\n  \"anio\": 2020\n}"
 				},
-				"url": "http://localhost:8001/vehiculo"
+				"url": "http://localhost:8001/vehiculos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Vehiculo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/vehiculos/AB1234"
 			},
 			"response": []
 		},
@@ -29,7 +38,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8001/vehiculo"
+				"url": "http://localhost:8001/vehiculos"
 			},
 			"response": []
 		},
@@ -45,9 +54,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"patente\": \"ZXC123\",\n  \"color\": \"Azul\",\n  \"rutUsuario\": 12345678,\n  \"idModelo\": 1,\n  \"anio\": 2021\n}"
+					"raw": "{\n  \"color\": \"Rojo\"\n}"
 				},
-				"url": "http://localhost:8001/vehiculo/ZXC123"
+				"url": "http://localhost:8001/vehiculos/AB1234"
 			},
 			"response": []
 		},
@@ -56,7 +65,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8001/vehiculo/ZXC123"
+				"url": "http://localhost:8001/vehiculos/AB1234"
 			},
 			"response": []
 		}

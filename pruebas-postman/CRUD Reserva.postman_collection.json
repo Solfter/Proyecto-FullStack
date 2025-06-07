@@ -14,11 +14,16 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idReserva\": 3,\n  \"fechaCreacionReserva\": \"2025-04-14\",\n  \"fechaReserva\": \"2025-04-20\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"rutUsuario\": 12345678,\n  \"idEstacionamiento\": 1\n}"
+					"raw": "{\n  \"fechaReserva\": \"2025-04-20\",\n  \"horaInicio\": \"08:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"idEstacionamiento\": 1\n}"
 				},
 				"url": "http://localhost:8001/reserva"
 			},

@@ -18,7 +18,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idFeedback\": 3,\n  \"fechaFeedback\": \"2025-04-14\",\n  \"descFeedback\": \"Muy buen sistema, fácil de usar\",\n  \"rutUsuario\": 12345678\n}"
+					"raw": "{\n  \"idFeedback\": 10,\n  \"fechaFeedback\": \"2025-04-14\",\n  \"descFeedback\": \"Muy buen sistema, fácil de usar\",\n  \"rutUsuario\": 12345678\n}"
 				},
 				"url": "http://localhost:8001/feedback"
 			},

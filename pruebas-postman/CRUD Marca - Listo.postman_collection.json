@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "80cd9a5a-57f9-4dde-a032-9f9f564b47ec",
-		"name": "CRUD Reporte",
+		"_postman_id": "e657899b-39c0-42ef-b6e2-160c72e3e3a1",
+		"name": "CRUD Marca - Listo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "43061760"
 	},
 	"item": [
 		{
-			"name": "Insertar Reporte (POST)",
+			"name": "Insertar Marca (POST)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -18,23 +18,32 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idReporte\": 1,\n  \"fechaReporte\": \"2024-04-14\",\n  \"rutUsuario\": 12345678,\n  \"descReporte\": \"Prueba\"\n}"
+					"raw": "{\n  \"nombreMarca\": \"PRUEBA POST\"\n}"
 				},
-				"url": "http://localhost:8001/reporte"
+				"url": "http://localhost:8001/marcas"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los Reportes (GET)",
+			"name": "Obtener Marca",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8001/reporte"
+				"url": "http://localhost:8001/marcas/15"
 			},
 			"response": []
 		},
 		{
-			"name": "Actualizar Reporte (PUT)",
+			"name": "Obtener todas las Marcas (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8001/marcas"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Marca (PUT)",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -45,18 +54,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"idReporte\": 1,\n  \"fechaReporte\": \"2024-04-14\",\n  \"rutUsuario\": 12345678,\n  \"descReporte\": \"Prueba Put\"\n}"
+					"raw": "{\n  \"nombreMarca\": \"PRUEBA PUT\"\n}"
 				},
-				"url": "http://localhost:8001/reporte/1"
+				"url": "http://localhost:8001/marcas/15"
 			},
 			"response": []
 		},
 		{
-			"name": "Eliminar Reporte (DELETE)",
+			"name": "Eliminar Marca (DELETE)",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8001/reporte/1"
+				"url": "http://localhost:8001/marcas/15"
 			},
 			"response": []
 		}
