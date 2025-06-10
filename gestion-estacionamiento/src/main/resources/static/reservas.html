@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Reservas</title>
-    <link rel="stylesheet" href="reservas-styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <div class="card header">
             <h1>Gestión de Reservas</h1>
-            <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+            <button onclick="logout()" class="btn btn-danger">Cerrar Sesión</button>
         </div>
 
-        <div class="reserva-container">
+        <div class="card">
             <h2 class="section-title">Crear Nueva Reserva</h2>
             
-            <div id="successMessage" class="success-message"></div>
-            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="message success-message"></div>
+            <div id="errorMessage" class="message error-message"></div>
             <div id="loading" class="loading">
                 <div class="spinner"></div>
                 Creando reserva...
@@ -63,13 +63,16 @@
                     </select>
                 </div>
 
-                <button type="submit" class="crear-btn" id="crearBtn">
+                <button type="submit" class="btn btn-success btn-full" id="crearBtn">
                     Crear Reserva
                 </button>
             </form>
         </div>
     </div>
 
-    <script src="reservas-script.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui-utils.js"></script>
+    <script src="js/reserva-service.js"></script>
+    <script src="js/reservas.js"></script>
 </body>
 </html>
