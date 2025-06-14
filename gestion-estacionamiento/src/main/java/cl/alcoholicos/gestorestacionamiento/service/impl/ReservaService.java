@@ -3,7 +3,9 @@ package cl.alcoholicos.gestorestacionamiento.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
@@ -38,6 +40,10 @@ public class ReservaService implements IReserva {
         UsuarioEntity usuario = usuarioRepository.findById(rutUsuario)
                                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
+        if (estacionamiento.getEstadoEstacionamiento().getIdEstadoEstacionamiento() != 1) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El estacionamiento no está dispnible");
+        }
+
         reserva.setEstacionamiento(estacionamiento);
         reserva.setUsuario(usuario);
         
@@ -49,13 +55,11 @@ public class ReservaService implements IReserva {
 
     @Override
     public ReservaResponseDTO update(Integer idReserva, ReservaUpdateDTO reserva) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public boolean delete(Integer idReserva) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 

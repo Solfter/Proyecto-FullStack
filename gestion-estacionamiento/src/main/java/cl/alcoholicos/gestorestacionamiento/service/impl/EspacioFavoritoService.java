@@ -23,25 +23,21 @@ public class EspacioFavoritoService implements IEspacioFavorito {
     @Override
     public EspacioFavoritoEntity update(Integer rutUsuario, Integer idEstacionamiento,
             EspacioFavoritoEntity espacioFavorito) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public EspacioFavoritoEntity delete(Integer rutUsuario, Integer idEstacionamiento) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
     public EspacioFavoritoEntity getById(Integer rutUsuario, Integer idEstacionamiento) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getById'");
     }
 
     @Override
     public List<EspacioFavoritoEntity> getAll() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAll'");
     }
 

@@ -17,9 +17,9 @@ public class EstacionamientoResponseDTO {
 
     private int nroEstacionamiento;
 
-    private EstadoEstacionamientoResponseDTO estadoEstacionamiento;
-
-    private SensorResponseDTO sensor;
+    private EstadoEstacionamientoBasicDTO estadoEstacionamiento;
+    
+    private SensorBasicDTO sensor;
 
     private List<EspacioFavoritoBasicDTO> espacioFavoritos;
 

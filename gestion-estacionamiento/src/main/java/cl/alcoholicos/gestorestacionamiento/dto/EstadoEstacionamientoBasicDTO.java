@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EstadoEstacionamientoBasicDTO {
-    
-    private int idEstadoEstacionamiento;
 
     private String descEstadoEstacionamiento;
     

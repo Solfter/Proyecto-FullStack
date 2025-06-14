@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import cl.alcoholicos.gestorestacionamiento.config.JwtTokenUtil;
 import cl.alcoholicos.gestorestacionamiento.dto.MessageResponse;
@@ -108,7 +109,11 @@ public class ReservaController {
             logger.error("Error de seguridad: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(new MessageResponse("Acceso denegado"));
-                    
+        
+        } catch (ResponseStatusException e) {
+            logger.error("Error de estacionamiento: {}", e.getMessage(), e);
+            return ResponseEntity.status(e.getStatusCode())
+                .body(new MessageResponse(e.getReason()));
         } catch (Exception e) {
             logger.error("Error desconocido al obtener perfil: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
