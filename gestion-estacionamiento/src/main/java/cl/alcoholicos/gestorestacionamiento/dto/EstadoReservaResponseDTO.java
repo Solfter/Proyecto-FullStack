@@ -18,4 +18,5 @@ public class EstadoReservaResponseDTO {
     private ReservaBasicDTO reserva;
 
     private LocalDate fechaEstadoReserva;
+    
 }

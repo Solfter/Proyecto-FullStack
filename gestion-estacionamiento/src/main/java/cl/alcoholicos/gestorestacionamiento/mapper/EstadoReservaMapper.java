@@ -8,10 +8,9 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 
 @Mapper(componentModel = "spring", 
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = TipoEstadoReservaMapper.class)
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstadoReservaMapper {
     
-    EstadoReservaResponseDTO toResponseDTO (EstadoReservaEntity marcaEntity);
+    EstadoReservaResponseDTO toResponseDTO (EstadoReservaEntity estadoReservaEntity);
 
 }

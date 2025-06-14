@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EstadoReservaBasicDTO {
 
-    private int idEstadoReserva;
-
     private LocalDate fechaEstadoReserva;
     
 }

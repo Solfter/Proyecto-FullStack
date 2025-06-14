@@ -9,7 +9,6 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.mapper.EstadoReservaMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IEstadoReserva;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -20,10 +19,10 @@ public class EstadoReservaService implements IEstadoReserva{
     private final EstadoReservaMapper estadoReservaMapper;
 
     @Override
-    public EstadoReservaResponseDTO getById(Integer idEstadoReserva) {
-        return estadoReservaRepository.findById(idEstadoReserva)
+    public List<EstadoReservaResponseDTO> getByIdReserva(Integer idReserva) {
+        return estadoReservaRepository.findAllByReservaIdReserva(idReserva).stream()
                 .map(estadoReservaMapper::toResponseDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Estado de reserva no encontrado"));
+                .collect(Collectors.toList());
     }
 
     @Override

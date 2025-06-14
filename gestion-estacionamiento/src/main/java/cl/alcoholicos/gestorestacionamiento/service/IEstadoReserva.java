@@ -6,7 +6,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 
 public interface IEstadoReserva {
 
-    EstadoReservaResponseDTO getById(Integer idEstadoReserva);
+    List<EstadoReservaResponseDTO> getByIdReserva(Integer idEstadoReserva);
 
     List<EstadoReservaResponseDTO> getAll();
 

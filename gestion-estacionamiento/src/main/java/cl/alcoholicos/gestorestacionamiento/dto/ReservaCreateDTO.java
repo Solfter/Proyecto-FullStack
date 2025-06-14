@@ -21,4 +21,7 @@ public class ReservaCreateDTO {
     private LocalTime horaFin;
 
     private Integer idEstacionamiento;
+
+    private EstadoReservaResponseDTO estadoReserva;
+
 }

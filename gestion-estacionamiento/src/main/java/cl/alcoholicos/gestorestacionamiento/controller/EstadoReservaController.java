@@ -29,9 +29,9 @@ public class EstadoReservaController {
         return ResponseEntity.ok(estadosReserva);
     }
 
-    @GetMapping("{idEstadoReserva}")
-    public ResponseEntity<EstadoReservaResponseDTO> getById(@PathVariable Integer idEstadoReserva) {
-        EstadoReservaResponseDTO estadoReserva = estadoReservaService.getById(idEstadoReserva);
+    @GetMapping("{idReserva}")
+    public ResponseEntity<List<EstadoReservaResponseDTO>> getByIdReserva(@PathVariable Integer idReserva) {
+        List<EstadoReservaResponseDTO> estadoReserva = estadoReservaService.getByIdReserva(idReserva);
         if (estadoReserva == null) {
             return ResponseEntity.notFound().build();
         }
