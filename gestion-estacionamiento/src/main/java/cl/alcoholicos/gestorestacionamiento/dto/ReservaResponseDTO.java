@@ -29,7 +29,7 @@ public class ReservaResponseDTO {
 
     private EstacionamientoBasicDTO estacionamiento;
 
-    private List<EstadoReservaResponseDTO> estadosReserva;
+    private List<EstadoReservaBasicDTO> estadosReservas;
     
 }
 

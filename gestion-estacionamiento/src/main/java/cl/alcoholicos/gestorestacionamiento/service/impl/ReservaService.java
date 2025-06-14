@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaUpdateDTO;

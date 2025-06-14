@@ -14,8 +14,11 @@ import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 @Mapper(componentModel = "spring",
     unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ReservaMapper {
+
     ReservaResponseDTO toResponseDTO (ReservaEntity reservaEntity);
+
     ReservaEntity toEntity (ReservaCreateDTO reserva);
+
     ReservaBasicDTO toBasicDTO(ReservaEntity reservaEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
