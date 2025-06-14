@@ -41,7 +41,7 @@ public class ReservaService implements IReserva {
                                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
         if (estacionamiento.getEstadoEstacionamiento().getIdEstadoEstacionamiento() != 1) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El estacionamiento no está dispnible");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El estacionamiento se encuentra en estado de: " + estacionamiento.getEstadoEstacionamiento().getDescEstadoEstacionamiento());
         }
 
         reserva.setEstacionamiento(estacionamiento);
