@@ -10,7 +10,7 @@ import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 
 
 @Repository
-public interface ReservaRepository  extends JpaRepository<ReservaEntity, Integer> {
+public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer> {
 
     @Query(value = """
         SELECT r.* FROM reserva r 
@@ -21,7 +21,6 @@ public interface ReservaRepository  extends JpaRepository<ReservaEntity, Integer
             TO_CHAR(r.hora_fin, 'HH24:MI:SS'), 
             'YYYY-MM-DD HH24:MI:SS'
         ) < SYSTIMESTAMP
-        AND er.id_tipo_estado_reserva IN (2, 3, 4, 5)
         AND er.fecha_estado_reserva = (
             SELECT MAX(er2.fecha_estado_reserva) 
             FROM estado_reserva er2 
