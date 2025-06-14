@@ -33,6 +33,7 @@ public class ReservaService implements IReserva {
     private final EstacionamientoRepository estacionamientoRepository;
     private final UsuarioRepository usuarioRepository;
     private final EstadoEstacionamientoRepository estadoEstacionamientoRepository;
+    private final EstadoReservaService estadoReservaService;
 
     @Override
     public ReservaResponseDTO insert(ReservaCreateDTO createDTO, Integer rutUsuario) {
@@ -47,18 +48,20 @@ public class ReservaService implements IReserva {
         UsuarioEntity usuario = usuarioRepository.findById(rutUsuario)
                                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
+
         if (estacionamiento.getEstadoEstacionamiento().getIdEstadoEstacionamiento() != 1) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El estacionamiento se encuentra en estado de: " + estacionamiento.getEstadoEstacionamiento().getDescEstadoEstacionamiento());
         }
 
         estacionamiento.setEstadoEstacionamiento(reservado);
-
         reserva.setEstacionamiento(estacionamiento);
         reserva.setUsuario(usuario);
         
         ReservaEntity reservaGuardada = reservaRepository.save(reserva);
-
         ReservaResponseDTO responseDTO = reservaMapper.toResponseDTO(reservaGuardada);
+
+        estadoReservaService.crearEstadoInicial(reservaGuardada);
+        
         return responseDTO;
     }
 
