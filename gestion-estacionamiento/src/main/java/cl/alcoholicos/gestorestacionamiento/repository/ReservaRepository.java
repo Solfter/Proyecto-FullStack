@@ -21,6 +21,7 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             TO_CHAR(r.hora_fin, 'HH24:MI:SS'), 
             'YYYY-MM-DD HH24:MI:SS'
         ) < SYSTIMESTAMP
+        AND er.id_tipo_estado_reserva IN (2, 3, 4)
         AND er.fecha_estado_reserva = (
             SELECT MAX(er2.fecha_estado_reserva) 
             FROM estado_reserva er2 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package cl.alcoholicos.gestorestacionamiento.mapper;
 
-import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import javax.annotation.processing.Generated;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-14T08:53:18-0400",
+    date = "2025-06-14T15:09:16-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -26,18 +25,5 @@ public class TipoEstadoReservaMapperImpl implements TipoEstadoReservaMapper {
         tipoEstadoReservaResponseDTO.idTipoEstadoReserva( tipoEstadoReservaEntity.getIdTipoEstadoReserva() );
 
         return tipoEstadoReservaResponseDTO.build();
-    }
-
-    @Override
-    public TipoEstadoReservaBasicDTO toBasicDTO(TipoEstadoReservaEntity tipoEstadoReservaEntity) {
-        if ( tipoEstadoReservaEntity == null ) {
-            return null;
-        }
-
-        TipoEstadoReservaBasicDTO tipoEstadoReservaBasicDTO = new TipoEstadoReservaBasicDTO();
-
-        tipoEstadoReservaBasicDTO.setDescTipoEstadoReserva( tipoEstadoReservaEntity.getDescTipoEstadoReserva() );
-
-        return tipoEstadoReservaBasicDTO;
     }
 }

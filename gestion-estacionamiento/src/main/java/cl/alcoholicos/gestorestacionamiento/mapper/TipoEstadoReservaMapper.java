@@ -3,7 +3,6 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 
@@ -11,7 +10,5 @@ import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 public interface TipoEstadoReservaMapper {
     
     TipoEstadoReservaResponseDTO toResponseDTO(TipoEstadoReservaEntity tipoEstadoReservaEntity);
-
-    TipoEstadoReservaBasicDTO toBasicDTO(TipoEstadoReservaEntity tipoEstadoReservaEntity); 
 
 }

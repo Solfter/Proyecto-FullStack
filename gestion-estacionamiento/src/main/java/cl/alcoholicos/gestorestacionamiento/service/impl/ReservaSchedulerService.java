@@ -6,18 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
-import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.repository.EstacionamientoRepository;
-import cl.alcoholicos.gestorestacionamiento.repository.EstadoEstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.ReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.TipoEstadoReservaRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

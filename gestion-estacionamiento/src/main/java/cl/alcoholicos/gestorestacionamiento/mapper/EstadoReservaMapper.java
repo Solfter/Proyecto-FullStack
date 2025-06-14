@@ -7,7 +7,7 @@ import org.mapstruct.ReportingPolicy;
 import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 
-@Mapper(componentModel = "spring", 
+@Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstadoReservaMapper {
     

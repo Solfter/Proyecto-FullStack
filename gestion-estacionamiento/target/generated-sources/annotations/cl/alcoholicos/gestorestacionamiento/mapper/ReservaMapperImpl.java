@@ -5,10 +5,12 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-14T12:33:01-0400",
+    date = "2025-06-14T15:10:35-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -129,6 +131,18 @@ public class ReservaMapperImpl implements ReservaMapper {
         return estacionamientoBasicDTO;
     }
 
+    protected TipoEstadoReservaBasicDTO tipoEstadoReservaEntityToTipoEstadoReservaBasicDTO(TipoEstadoReservaEntity tipoEstadoReservaEntity) {
+        if ( tipoEstadoReservaEntity == null ) {
+            return null;
+        }
+
+        TipoEstadoReservaBasicDTO tipoEstadoReservaBasicDTO = new TipoEstadoReservaBasicDTO();
+
+        tipoEstadoReservaBasicDTO.setDescTipoEstadoReserva( tipoEstadoReservaEntity.getDescTipoEstadoReserva() );
+
+        return tipoEstadoReservaBasicDTO;
+    }
+
     protected EstadoReservaBasicDTO estadoReservaEntityToEstadoReservaBasicDTO(EstadoReservaEntity estadoReservaEntity) {
         if ( estadoReservaEntity == null ) {
             return null;
@@ -137,6 +151,7 @@ public class ReservaMapperImpl implements ReservaMapper {
         EstadoReservaBasicDTO.EstadoReservaBasicDTOBuilder estadoReservaBasicDTO = EstadoReservaBasicDTO.builder();
 
         estadoReservaBasicDTO.fechaEstadoReserva( estadoReservaEntity.getFechaEstadoReserva() );
+        estadoReservaBasicDTO.tipoEstadoReserva( tipoEstadoReservaEntityToTipoEstadoReservaBasicDTO( estadoReservaEntity.getTipoEstadoReserva() ) );
 
         return estadoReservaBasicDTO.build();
     }
@@ -181,6 +196,18 @@ public class ReservaMapperImpl implements ReservaMapper {
         mappingTarget.setNroEstacionamiento( estacionamientoBasicDTO.getNroEstacionamiento() );
     }
 
+    protected TipoEstadoReservaEntity tipoEstadoReservaBasicDTOToTipoEstadoReservaEntity(TipoEstadoReservaBasicDTO tipoEstadoReservaBasicDTO) {
+        if ( tipoEstadoReservaBasicDTO == null ) {
+            return null;
+        }
+
+        TipoEstadoReservaEntity tipoEstadoReservaEntity = new TipoEstadoReservaEntity();
+
+        tipoEstadoReservaEntity.setDescTipoEstadoReserva( tipoEstadoReservaBasicDTO.getDescTipoEstadoReserva() );
+
+        return tipoEstadoReservaEntity;
+    }
+
     protected EstadoReservaEntity estadoReservaBasicDTOToEstadoReservaEntity(EstadoReservaBasicDTO estadoReservaBasicDTO) {
         if ( estadoReservaBasicDTO == null ) {
             return null;
@@ -189,6 +216,7 @@ public class ReservaMapperImpl implements ReservaMapper {
         EstadoReservaEntity estadoReservaEntity = new EstadoReservaEntity();
 
         estadoReservaEntity.setFechaEstadoReserva( estadoReservaBasicDTO.getFechaEstadoReserva() );
+        estadoReservaEntity.setTipoEstadoReserva( tipoEstadoReservaBasicDTOToTipoEstadoReservaEntity( estadoReservaBasicDTO.getTipoEstadoReserva() ) );
 
         return estadoReservaEntity;
     }
