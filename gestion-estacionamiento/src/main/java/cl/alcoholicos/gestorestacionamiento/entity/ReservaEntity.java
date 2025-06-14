@@ -1,6 +1,7 @@
 package cl.alcoholicos.gestorestacionamiento.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ReservaEntity {
     private int idReserva;
 
     @Column(name = "FECHA_CREACION_RESERVA")
-    private LocalDate fechaCreacionReserva;
+    private LocalDateTime fechaCreacionReserva;
 
     @Column(name = "FECHA_RESERVA")
     private LocalDate fechaReserva;

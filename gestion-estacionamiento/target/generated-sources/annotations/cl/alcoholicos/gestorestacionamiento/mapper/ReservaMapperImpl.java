@@ -10,37 +10,18 @@ import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-14T11:27:53-0400",
+    date = "2025-06-14T12:33:01-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class ReservaMapperImpl implements ReservaMapper {
-
-    private final DatatypeFactory datatypeFactory;
-
-    public ReservaMapperImpl() {
-        try {
-            datatypeFactory = DatatypeFactory.newInstance();
-        }
-        catch ( DatatypeConfigurationException ex ) {
-            throw new RuntimeException( ex );
-        }
-    }
 
     @Override
     public ReservaResponseDTO toResponseDTO(ReservaEntity reservaEntity) {
@@ -70,7 +51,6 @@ public class ReservaMapperImpl implements ReservaMapper {
 
         ReservaEntity reservaEntity = new ReservaEntity();
 
-        reservaEntity.setFechaCreacionReserva( xmlGregorianCalendarToLocalDate( localDateTimeToXmlGregorianCalendar( reserva.getFechaCreacionReserva() ) ) );
         reservaEntity.setFechaReserva( reserva.getFechaReserva() );
         reservaEntity.setHoraFin( reserva.getHoraFin() );
         reservaEntity.setHoraInicio( reserva.getHoraInicio() );
@@ -137,88 +117,6 @@ public class ReservaMapperImpl implements ReservaMapper {
         }
     }
 
-    private XMLGregorianCalendar localDateToXmlGregorianCalendar( LocalDate localDate ) {
-        if ( localDate == null ) {
-            return null;
-        }
-
-        return datatypeFactory.newXMLGregorianCalendarDate(
-            localDate.getYear(),
-            localDate.getMonthValue(),
-            localDate.getDayOfMonth(),
-            DatatypeConstants.FIELD_UNDEFINED );
-    }
-
-    private XMLGregorianCalendar localDateTimeToXmlGregorianCalendar( LocalDateTime localDateTime ) {
-        if ( localDateTime == null ) {
-            return null;
-        }
-
-        return datatypeFactory.newXMLGregorianCalendar(
-            localDateTime.getYear(),
-            localDateTime.getMonthValue(),
-            localDateTime.getDayOfMonth(),
-            localDateTime.getHour(),
-            localDateTime.getMinute(),
-            localDateTime.getSecond(),
-            localDateTime.get( ChronoField.MILLI_OF_SECOND ),
-            DatatypeConstants.FIELD_UNDEFINED );
-    }
-
-    private static LocalDate xmlGregorianCalendarToLocalDate( XMLGregorianCalendar xcal ) {
-        if ( xcal == null ) {
-            return null;
-        }
-
-        return LocalDate.of( xcal.getYear(), xcal.getMonth(), xcal.getDay() );
-    }
-
-    private static LocalDateTime xmlGregorianCalendarToLocalDateTime( XMLGregorianCalendar xcal ) {
-        if ( xcal == null ) {
-            return null;
-        }
-
-        if ( xcal.getYear() != DatatypeConstants.FIELD_UNDEFINED
-            && xcal.getMonth() != DatatypeConstants.FIELD_UNDEFINED
-            && xcal.getDay() != DatatypeConstants.FIELD_UNDEFINED
-            && xcal.getHour() != DatatypeConstants.FIELD_UNDEFINED
-            && xcal.getMinute() != DatatypeConstants.FIELD_UNDEFINED
-        ) {
-            if ( xcal.getSecond() != DatatypeConstants.FIELD_UNDEFINED
-                && xcal.getMillisecond() != DatatypeConstants.FIELD_UNDEFINED ) {
-                return LocalDateTime.of(
-                    xcal.getYear(),
-                    xcal.getMonth(),
-                    xcal.getDay(),
-                    xcal.getHour(),
-                    xcal.getMinute(),
-                    xcal.getSecond(),
-                    Duration.ofMillis( xcal.getMillisecond() ).getNano()
-                );
-            }
-            else if ( xcal.getSecond() != DatatypeConstants.FIELD_UNDEFINED ) {
-                return LocalDateTime.of(
-                    xcal.getYear(),
-                    xcal.getMonth(),
-                    xcal.getDay(),
-                    xcal.getHour(),
-                    xcal.getMinute(),
-                    xcal.getSecond()
-                );
-            }
-            else {
-                return LocalDateTime.of(
-                    xcal.getYear(),
-                    xcal.getMonth(),
-                    xcal.getDay(),
-                    xcal.getHour(),
-                    xcal.getMinute()
-                );
-            }
-        }
-        return null;
-    }
-
     protected EstacionamientoBasicDTO estacionamientoEntityToEstacionamientoBasicDTO(EstacionamientoEntity estacionamientoEntity) {
         if ( estacionamientoEntity == null ) {
             return null;
@@ -238,7 +136,7 @@ public class ReservaMapperImpl implements ReservaMapper {
 
         EstadoReservaBasicDTO.EstadoReservaBasicDTOBuilder estadoReservaBasicDTO = EstadoReservaBasicDTO.builder();
 
-        estadoReservaBasicDTO.fechaEstadoReserva( xmlGregorianCalendarToLocalDate( localDateTimeToXmlGregorianCalendar( estadoReservaEntity.getFechaEstadoReserva() ) ) );
+        estadoReservaBasicDTO.fechaEstadoReserva( estadoReservaEntity.getFechaEstadoReserva() );
 
         return estadoReservaBasicDTO.build();
     }
@@ -290,7 +188,7 @@ public class ReservaMapperImpl implements ReservaMapper {
 
         EstadoReservaEntity estadoReservaEntity = new EstadoReservaEntity();
 
-        estadoReservaEntity.setFechaEstadoReserva( xmlGregorianCalendarToLocalDateTime( localDateToXmlGregorianCalendar( estadoReservaBasicDTO.getFechaEstadoReserva() ) ) );
+        estadoReservaEntity.setFechaEstadoReserva( estadoReservaBasicDTO.getFechaEstadoReserva() );
 
         return estadoReservaEntity;
     }

@@ -1,5 +1,6 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaUpdateDTO;
@@ -56,9 +56,11 @@ public class ReservaService implements IReserva {
         estacionamiento.setEstadoEstacionamiento(reservado);
         reserva.setEstacionamiento(estacionamiento);
         reserva.setUsuario(usuario);
+        reserva.setFechaCreacionReserva(LocalDateTime.now());
         
         ReservaEntity reservaGuardada = reservaRepository.save(reserva);
         ReservaResponseDTO responseDTO = reservaMapper.toResponseDTO(reservaGuardada);
+        
 
         estadoReservaService.crearEstadoInicial(reservaGuardada);
         
