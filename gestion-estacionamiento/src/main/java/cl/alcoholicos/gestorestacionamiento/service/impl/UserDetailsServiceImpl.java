@@ -1,8 +1,6 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,8 +10,6 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioDetails;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
 
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Implementación de UserDetailsService que carga usuarios desde la base de datos.
@@ -31,9 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Buscar el usuario en la base de datos por correo
         UsuarioEntity usuario = usuarioRepository.findByCorreo(correo)
                                 .orElseThrow(() -> new UsernameNotFoundException("Correo no encontrado: " + correo));
-
-        // Convertir roles/permisos a formato de Spring Security
-        List<SimpleGrantedAuthority> authorities = Collections.emptyList();
 
         // Crear un UserDetails con la información del usuario
         return new UsuarioDetails(usuario);
