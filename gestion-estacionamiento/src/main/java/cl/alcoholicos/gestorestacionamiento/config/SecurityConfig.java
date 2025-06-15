@@ -60,12 +60,11 @@ public class SecurityConfig {
         http
             // Desactiva la protección CSRF (Cross-Site Request Forgery). Esto es común en APIs REST que utilizan JWT porque los tokens JWT ya proporcionan protección contra ataques CSRF.
             .csrf(csrf -> csrf.disable()) 
-            .authorizeHttpRequests(authz -> authz
-                // Configura las reglas de autorización para las solicitudes HTTP: Las rutas descritas son publicas y no requieren autenticación
-                .requestMatchers("/**").permitAll()
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/**").permitAll()
                 // Cualquier otra solicitud que no coincida con las rutas públicas requiere que el usuario esté autenticado.
                 .anyRequest().authenticated()
-            )
+                )
             /* Configura la política de creación de sesiones como STATELESS (sin estado). 
             Esto significa que el servidor no mantendrá información de sesión para los usuarios, lo cual es apropiado para APIs REST que utilizan JWT. */
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -2,10 +2,12 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EspacioFavoritoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoBasicDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.IncidenteResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.MarcaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.UsuarioCreateDTO;
@@ -14,10 +16,12 @@ import cl.alcoholicos.gestorestacionamiento.dto.UsuarioUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EspacioFavoritoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.IncidenteEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.VehiculoEntity;
@@ -28,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-14T08:53:17-0400",
+    date = "2025-06-14T23:50:19-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -193,6 +197,44 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         return list1;
     }
 
+    protected TipoEstadoReservaBasicDTO tipoEstadoReservaEntityToTipoEstadoReservaBasicDTO(TipoEstadoReservaEntity tipoEstadoReservaEntity) {
+        if ( tipoEstadoReservaEntity == null ) {
+            return null;
+        }
+
+        TipoEstadoReservaBasicDTO tipoEstadoReservaBasicDTO = new TipoEstadoReservaBasicDTO();
+
+        tipoEstadoReservaBasicDTO.setDescTipoEstadoReserva( tipoEstadoReservaEntity.getDescTipoEstadoReserva() );
+
+        return tipoEstadoReservaBasicDTO;
+    }
+
+    protected EstadoReservaBasicDTO estadoReservaEntityToEstadoReservaBasicDTO(EstadoReservaEntity estadoReservaEntity) {
+        if ( estadoReservaEntity == null ) {
+            return null;
+        }
+
+        EstadoReservaBasicDTO.EstadoReservaBasicDTOBuilder estadoReservaBasicDTO = EstadoReservaBasicDTO.builder();
+
+        estadoReservaBasicDTO.fechaEstadoReserva( estadoReservaEntity.getFechaEstadoReserva() );
+        estadoReservaBasicDTO.tipoEstadoReserva( tipoEstadoReservaEntityToTipoEstadoReservaBasicDTO( estadoReservaEntity.getTipoEstadoReserva() ) );
+
+        return estadoReservaBasicDTO.build();
+    }
+
+    protected List<EstadoReservaBasicDTO> estadoReservaEntityListToEstadoReservaBasicDTOList(List<EstadoReservaEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<EstadoReservaBasicDTO> list1 = new ArrayList<EstadoReservaBasicDTO>( list.size() );
+        for ( EstadoReservaEntity estadoReservaEntity : list ) {
+            list1.add( estadoReservaEntityToEstadoReservaBasicDTO( estadoReservaEntity ) );
+        }
+
+        return list1;
+    }
+
     protected ReservaResponseDTO reservaEntityToReservaResponseDTO(ReservaEntity reservaEntity) {
         if ( reservaEntity == null ) {
             return null;
@@ -201,6 +243,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         ReservaResponseDTO.ReservaResponseDTOBuilder reservaResponseDTO = ReservaResponseDTO.builder();
 
         reservaResponseDTO.estacionamiento( estacionamientoEntityToEstacionamientoBasicDTO( reservaEntity.getEstacionamiento() ) );
+        reservaResponseDTO.estadosReservas( estadoReservaEntityListToEstadoReservaBasicDTOList( reservaEntity.getEstadosReservas() ) );
         reservaResponseDTO.fechaCreacionReserva( reservaEntity.getFechaCreacionReserva() );
         reservaResponseDTO.fechaReserva( reservaEntity.getFechaReserva() );
         reservaResponseDTO.horaFin( reservaEntity.getHoraFin() );
