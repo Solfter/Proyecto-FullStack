@@ -96,7 +96,7 @@ public class UsuarioService implements IUsuario {
     public UsuarioResponseDTO validateUser(LoginRequest loginRequest) {
         // Buscar el usuario por email
         UsuarioEntity usuario = usuarioRepository.findByCorreo(loginRequest.getCorreo())
-            .orElseThrow(() -> new UsernameNotFoundException("UsuarioService: Usuario no encontrado"));
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         // Validar contraseña
         if (!passwordEncoder.matches(loginRequest.getPassword(), usuario.getPassword())) {

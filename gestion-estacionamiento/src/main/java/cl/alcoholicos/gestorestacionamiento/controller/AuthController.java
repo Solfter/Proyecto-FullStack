@@ -316,7 +316,7 @@ public class AuthController {
                     .body(new MessageResponse("Token con firma inválida"));
                     
         } catch (ResourceNotFoundException e) {
-            logger.error("AuthController: Usuario no encontrado: {}", e.getMessage());
+            logger.error("Usuario no encontrado: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse(e.getMessage()));
                     
