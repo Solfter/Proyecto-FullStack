@@ -23,21 +23,50 @@ import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.exception.ResourceNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ServiceUnavailableException;
 import cl.alcoholicos.gestorestacionamiento.service.impl.ReservaService;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/reserva")
+@Tag(name = "Reservas", description = "API para la gestión de reservas de estacionamiento")
 public class ReservaController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservaController.class);
     private final ReservaService reservaService;
     private final JwtTokenUtil jwtTokenUtil;
 
+    @Operation(
+        summary = "Obtener todas las reservas",
+        description = "Retrieve todas las reservas existentes en el sistema"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Lista de reservas obtenida exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ReservaResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "No se encontraron reservas",
+            content = @Content
+        )
+    })
     @GetMapping
     public ResponseEntity<List<ReservaResponseDTO>> getAll() {
         List<ReservaResponseDTO> reservas = reservaService.getAll();
@@ -47,8 +76,35 @@ public class ReservaController {
         return ResponseEntity.ok(reservas);
     }
 
+    @Operation(
+        summary = "Obtener reserva por ID",
+        description = "Obtiene una reserva específica mediante su ID"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Reserva encontrada exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ReservaResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "Reserva no encontrada",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "ID de reserva inválido",
+            content = @Content
+        )
+    })
     @GetMapping("{idReserva}")
-    public ResponseEntity<ReservaResponseDTO> getById(@PathVariable Integer idReserva) {
+    public ResponseEntity<ReservaResponseDTO> getById(
+        @Parameter(description = "ID único de la reserva", required = true, example = "1")
+        @PathVariable Integer idReserva
+    ) {
         ReservaResponseDTO reserva = reservaService.getById(idReserva);
         if (reserva == null) {
             return ResponseEntity.noContent().build();
@@ -56,9 +112,82 @@ public class ReservaController {
         return ResponseEntity.ok(reserva);
     }
 
+    @Operation(
+        summary = "Crear nueva reserva",
+        description = "Crea una nueva reserva de estacionamiento. Requiere autenticación JWT.",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Reserva creada exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ReservaResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Datos de entrada inválidos o incompletos",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Token de autorización inválido o expirado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Acceso denegado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Usuario no encontrado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "503",
+            description = "Servicio temporalmente no disponible",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        )
+    })
     @SuppressWarnings("null")
     @PostMapping
-    public ResponseEntity<?> insert(@RequestBody ReservaCreateDTO createDTO, @RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<?> insert(
+        @Parameter(description = "Datos para crear la reserva", required = true)
+        @RequestBody ReservaCreateDTO createDTO,
+        
+        @Parameter(
+            description = "Token de autorización JWT (Bearer token)",
+            required = true,
+            example = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        )
+        @RequestHeader("Authorization") String authHeader
+    ) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -130,6 +259,4 @@ public class ReservaController {
                     .body(new MessageResponse("Error al procesar la solicitud"));
         }
     }
-
-
 }
