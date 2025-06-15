@@ -180,4 +180,19 @@ public class TipoUsuarioController {
         }
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{idTipoUsuario}")
+    @Operation(
+        summary = "Obtener tipo de usuario por ID",
+        description = "Retorna los datos de un tipo de usuario específico usando su ID"
+    )
+    public ResponseEntity<TipoUsuarioResponseDTO> getById(
+        @Parameter(description = "ID del tipo de usuario", required = true, example = "1")
+        @PathVariable Integer idTipoUsuario) {
+        TipoUsuarioResponseDTO tipoUsuario = tipoUsuarioService.getById(idTipoUsuario);
+        if (tipoUsuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(tipoUsuario);
+}
 }
