@@ -101,13 +101,23 @@ public class EstadoReservaController {
         return ResponseEntity.ok(estadoReserva);
     }
 
-    @PutMapping("{idReserva}")
+    @PutMapping("{idReserva}/activar")
     public ResponseEntity<Void> actualizarReservaAActiva (@PathVariable Integer idReserva) {
         ReservaEntity reserva = reservaRepository.findById(idReserva)
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
         
         estadoReservaService.actualizarAEstadoActiva(reserva);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{idReserva}/cancelar")
+    public ResponseEntity<Void> actualizarReservaACancelada (@PathVariable Integer idReserva) {
+        ReservaEntity reserva = reservaRepository.findById(idReserva)
+            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        
+        estadoReservaService.actualizarAEstadoCancelada(reserva);
         return ResponseEntity.noContent().build();
     }
 
