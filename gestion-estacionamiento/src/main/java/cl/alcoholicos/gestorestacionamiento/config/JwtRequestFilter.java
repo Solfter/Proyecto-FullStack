@@ -42,6 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter { // OncePerRequestFi
     @Autowired
     private JwtTokenUtil jwtTokenUtil; // Proporciona métodos para manipular y validar tokens JWT.
 
+    @SuppressWarnings("null")
     @Override
     // Sobrescribe el método doFilterInternal que se ejecuta para cada solicitud. Recibe la solicitud, respuesta y la cadena de filtros.
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException { 
