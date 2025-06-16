@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
+import cl.alcoholicos.gestorestacionamiento.repository.ReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.service.impl.EstadoReservaService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,6 +29,7 @@ import lombok.AllArgsConstructor;
 public class EstadoReservaController {
 
     private final EstadoReservaService estadoReservaService;
+    private final ReservaRepository reservaRepository;
 
     @Operation(
         summary = "Obtener todos los estados de reserva",
@@ -97,4 +100,16 @@ public class EstadoReservaController {
         }
         return ResponseEntity.ok(estadoReserva);
     }
+
+    @PutMapping("{idReserva}")
+    public ResponseEntity<Void> actualizarReservaAActiva (@PathVariable Integer idReserva) {
+        ReservaEntity reserva = reservaRepository.findById(idReserva)
+            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        
+        estadoReservaService.actualizarAEstadoActiva(reserva);
+        return ResponseEntity.noContent().build();
+    }
+
+    
 }

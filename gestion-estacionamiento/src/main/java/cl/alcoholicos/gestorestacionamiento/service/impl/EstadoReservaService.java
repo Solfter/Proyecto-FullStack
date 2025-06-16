@@ -53,7 +53,37 @@ public class EstadoReservaService implements IEstadoReserva{
 
     }
 
+    @Override
+    public void actualizarAEstadoActiva(ReservaEntity reserva) {
 
+        List<EstadoReservaEntity> estadosReservas = estadoReservaRepository.findAllByReservaIdReserva(reserva.getIdReserva());
+
+        if (estadosReservas.isEmpty()) {
+            throw new IllegalStateException("La reserva no tiene estados previos registrados");
+        }
+
+        TipoEstadoReservaEntity tipoEstadoReservaActivo = tipoEstadoReservaRepository.findById(1)
+            .orElseThrow(() -> new RuntimeException("Tipo de estado Activa no encontrado"));
+        
+        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findById(2)
+            .orElseThrow(() -> new RuntimeException("Tipo de estado Confirmada no encontrado"));
+
+        EstadoReservaEntity ultimoEstado = estadosReservas.get(estadosReservas.size() - 1);
+
+        if (ultimoEstado.getTipoEstadoReserva() != tipoEstadoReservaConfirmada) {
+            throw new IllegalStateException("La reserva debe estar en estado \"Confirmada\" para continuar");
+        }
+
+        EstadoReservaEntity estadoActivo = new EstadoReservaEntity();
+
+        estadoActivo.setReserva(reserva);
+        estadoActivo.setTipoEstadoReserva(tipoEstadoReservaActivo);
+        estadoActivo.setFechaEstadoReserva(LocalDateTime.now());
+
+        estadoReservaRepository.save(estadoActivo);
+    }
+
+    
     
 
 }

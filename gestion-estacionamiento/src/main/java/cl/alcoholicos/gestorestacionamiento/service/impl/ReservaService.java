@@ -1,6 +1,8 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,7 @@ import cl.alcoholicos.gestorestacionamiento.repository.ReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IReserva;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -36,7 +39,11 @@ public class ReservaService implements IReserva {
     private final EstadoReservaService estadoReservaService;
 
     @Override
+    @Transactional
     public ReservaResponseDTO insert(ReservaCreateDTO createDTO, Integer rutUsuario) {
+
+        validarReserva(createDTO);
+
         ReservaEntity reserva = reservaMapper.toEntity(createDTO);
 
         EstacionamientoEntity estacionamiento = estacionamientoRepository.findById(createDTO.getIdEstacionamiento())
@@ -89,6 +96,21 @@ public class ReservaService implements IReserva {
         return reservaRepository.findAll().stream()
             .map(reservaMapper::toResponseDTO)
             .collect(Collectors.toList());
+    }
+
+    private void validarReserva(ReservaCreateDTO createDTO) {
+        if (createDTO.getFechaReserva().isBefore(LocalDate.now())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha de reserva no puede ser anterior a la fecha actual");
+        }
+
+        if (createDTO.getFechaReserva().isEqual(LocalDate.now()) &&
+            createDTO.getHoraInicio().isBefore(LocalTime.now())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La hora de inicio no puede ser anterior a la hora actual");
+        }
+
+        if (createDTO.getHoraFin().isBefore(createDTO.getHoraInicio())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La hora de fin no puede ser anterior a la hora de inicio");
+        }
     }
 
 }

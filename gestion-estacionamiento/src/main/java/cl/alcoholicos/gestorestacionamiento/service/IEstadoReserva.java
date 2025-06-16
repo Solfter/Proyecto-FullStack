@@ -13,4 +13,6 @@ public interface IEstadoReserva {
 
     void crearEstadoInicial (ReservaEntity reserva);
 
+    void actualizarAEstadoActiva (ReservaEntity reserva);
+
 }
