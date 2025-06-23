@@ -14,8 +14,10 @@ public interface IReserva {
 
     boolean delete(Integer idReserva);
 
-    ReservaResponseDTO getById(Integer idReserva);
+    ReservaResponseDTO getByReservaId(Integer idReserva);
 
     List<ReservaResponseDTO> getAll();
+
+    List<ReservaResponseDTO> getByUserId(Integer rutUsuario);
 
 }

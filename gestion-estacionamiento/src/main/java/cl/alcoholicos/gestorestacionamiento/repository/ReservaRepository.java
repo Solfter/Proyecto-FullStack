@@ -49,4 +49,6 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
         """, 
         nativeQuery = true)
     List<ReservaEntity> findReservasCompletadas();
+
+    List<ReservaEntity> findByUsuarioRut(Integer rutUsuario);
 }

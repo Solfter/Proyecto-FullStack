@@ -20,6 +20,7 @@ import cl.alcoholicos.gestorestacionamiento.config.JwtTokenUtil;
 import cl.alcoholicos.gestorestacionamiento.dto.MessageResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.exception.ResourceNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ServiceUnavailableException;
 import cl.alcoholicos.gestorestacionamiento.service.impl.ReservaService;
@@ -100,12 +101,12 @@ public class ReservaController {
             content = @Content
         )
     })
-    @GetMapping("{idReserva}")
+    @GetMapping("/id/{idReserva}")
     public ResponseEntity<ReservaResponseDTO> getById(
         @Parameter(description = "ID único de la reserva", required = true, example = "1")
         @PathVariable Integer idReserva
     ) {
-        ReservaResponseDTO reserva = reservaService.getById(idReserva);
+        ReservaResponseDTO reserva = reservaService.getByReservaId(idReserva);
         if (reserva == null) {
             return ResponseEntity.noContent().build();
         }
@@ -187,7 +188,7 @@ public class ReservaController {
             example = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         )
         @RequestHeader("Authorization") String authHeader
-    ) {
+        ) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -210,6 +211,83 @@ public class ReservaController {
             ReservaResponseDTO nuevaReserva = reservaService.insert(createDTO, rutUsuario);
             
             return ResponseEntity.ok(nuevaReserva);
+
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("Error: Datos incompletos - " + e.getRootCause().getMessage());
+
+        } catch (ExpiredJwtException e) {
+            logger.error("JWT expirado: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new MessageResponse("Token expirado, por favor inicie sesión nuevamente"));
+                    
+        } catch (UnsupportedJwtException e) {
+            logger.error("JWT no soportado: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new MessageResponse("Formato de token no soportado"));
+                    
+        } catch (MalformedJwtException e) {
+            logger.error("JWT malformado: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new MessageResponse("Token inválido"));
+                    
+        } catch (SignatureException e) {
+            logger.error("Error en firma del JWT: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new MessageResponse("Token con firma inválida"));
+                    
+        } catch (ResourceNotFoundException e) {
+            logger.error("AuthController: Usuario no encontrado: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse(e.getMessage()));
+                    
+        } catch (ServiceUnavailableException e) {
+            logger.error("Servicio no disponible: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(new MessageResponse("Servicio temporalmente no disponible"));
+                
+        } catch (SecurityException e) {
+            logger.error("Error de seguridad: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Acceso denegado"));
+        
+        } catch (ResponseStatusException e) {
+            logger.error("Error de estacionamiento: {}", e.getMessage(), e);
+            return ResponseEntity.status(e.getStatusCode())
+                .body(new MessageResponse(e.getReason()));
+        } catch (Exception e) {
+            logger.error("Error desconocido al obtener perfil: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error al procesar la solicitud"));
+        }
+    }
+
+    @GetMapping("/historial")
+    public ResponseEntity<?> obtenerReservaPorUsuario (@RequestHeader("Authorization") String authHeader) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new MessageResponse("Se requiere token de autorización"));
+            }
+
+            String token = authHeader.substring(7);
+            logger.debug("Token recibido en /user: {}", token.length() > 20 ? token.substring(0, 20) + "..." : token);
+            
+            
+            if (!jwtTokenUtil.validateToken(token)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new MessageResponse("Token inválido o expirado"));
+            }
+
+            // Extrae el ID del usuario del token JWT
+            Integer rutUsuario = jwtTokenUtil.getUserIdFromJWT(token);
+            logger.debug("UserId extraído del token: {}", rutUsuario);
+
+            List<ReservaResponseDTO> reservas = reservaService.getByUserId(rutUsuario);
+            if (reservas.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(reservas);
 
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("Error: Datos incompletos - " + e.getRootCause().getMessage());

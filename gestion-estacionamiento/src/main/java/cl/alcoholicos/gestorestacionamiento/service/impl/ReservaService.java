@@ -85,7 +85,7 @@ public class ReservaService implements IReserva {
     }
 
     @Override
-    public ReservaResponseDTO getById(Integer idReserva) {
+    public ReservaResponseDTO getByReservaId(Integer idReserva) {
         return reservaRepository.findById(idReserva)
             .map(reservaMapper::toResponseDTO)
             .orElse(null);
@@ -112,5 +112,13 @@ public class ReservaService implements IReserva {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La hora de fin no puede ser anterior a la hora de inicio");
         }
     }
+
+    @Override
+    public List<ReservaResponseDTO> getByUserId(Integer rutUsuario) {
+        return reservaRepository.findByUsuarioRut(rutUsuario).stream()
+            .map(reservaMapper::toResponseDTO)
+            .collect(Collectors.toList());
+    }
+
 
 }

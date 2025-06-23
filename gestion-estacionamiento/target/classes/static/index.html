@@ -201,7 +201,7 @@
                         localStorage.setItem('authToken', data.token);
                     }
                     // Redirigir a la página de reservas
-                    window.location.href = 'reservas.html';
+                    window.location.href = 'menu.html';
                 } else {
                     const errorData = await response.json();
                     showError(errorData.message || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.');
