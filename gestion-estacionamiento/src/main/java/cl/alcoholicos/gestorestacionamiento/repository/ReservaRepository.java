@@ -1,9 +1,12 @@
 package cl.alcoholicos.gestorestacionamiento.repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
@@ -51,4 +54,27 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
     List<ReservaEntity> findReservasCompletadas();
 
     List<ReservaEntity> findByUsuarioRut(Integer rutUsuario);
+
+    @Query("""
+        SELECT r FROM ReservaEntity r
+        WHERE r.estacionamiento.id = :idEstacionamiento
+        AND r.fechaReserva = :fecha
+        AND r.idReserva != :idReservaExcluir
+        AND (
+            (r.horaInicio <= :horaInicio AND r.horaFin > :horaInicio) OR
+            (r.horaInicio < :horaFin AND r.horaFin >= :horaFin) OR
+            (r.horaInicio >= :horaInicio AND r.horaFin <= :horaFin)
+        )
+        AND EXISTS (
+            SELECT er FROM EstadoReservaEntity er
+            WHERE er.reserva = r 
+            AND er.tipoEstadoReserva.id = 2
+        )
+        """)
+    List<ReservaEntity> findReservasConflicto(
+        @Param("idEstacionamiento") Integer idEstacionamiento,
+        @Param("fecha") LocalDate fecha,
+        @Param("horaInicio") LocalTime horaInicio,
+        @Param("horaFin") LocalTime horaFin,
+        @Param("idReservaExcluir") Integer idReservaExcluir);
 }

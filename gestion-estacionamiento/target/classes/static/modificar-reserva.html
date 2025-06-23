@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Reserva - Gestión de Estacionamiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .reservas-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .reservas-list h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .reserva-card {
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .reserva-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .reserva-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e9ecff 100%);
+        }
+
+        .reserva-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f8f9fa;
+        }
+
+        .reserva-card.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #e1e8ed;
+        }
+
+        .reserva-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .reserva-id {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .estado-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .estado-confirmada {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .estado-activa {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .estado-cancelada {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .reserva-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            font-weight: 500;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e8ed;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            border-color: #ccc;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .reserva-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✏️ Modificar Reserva</h1>
+            <a href="menu.html" class="back-btn">← Volver al Panel</a>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            Cargando reservas...
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <!-- Lista de reservas -->
+            <div class="reservas-list">
+                <h2>📋 Tus Reservas Confirmadas</h2>
+                <div id="reservasList"></div>
+            </div>
+
+            <!-- Formulario de modificación -->
+            <div class="form-container">
+                <h2>🔧 Modificar Reserva</h2>
+                <div id="alertContainer"></div>
+                
+                <div id="noSelectionMessage" class="alert alert-info">
+                    <strong>ℹ️ Información:</strong> Selecciona una reserva de la lista para modificarla.
+                </div>
+
+                <form id="modificarForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="fechaReserva">📅 Nueva Fecha de Reserva:</label>
+                        <input type="date" id="fechaReserva" name="fechaReserva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="horaInicio">⏰ Nueva Hora de Inicio:</label>
+                        <input type="time" id="horaInicio" name="horaInicio">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="horaFin">⏰ Nueva Hora de Fin:</label>
+                        <input type="time" id="horaFin" name="horaFin">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="cancelarModificacion()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            💾 Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let reservasData = [];
+        let selectedReserva = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadReservas();
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        async function loadReservas() {
+            const loading = document.getElementById('loading');
+            const reservasList = document.getElementById('reservasList');
+            
+            try {
+                loading.style.display = 'block';
+                
+                const token = localStorage.getItem('authToken');
+                console.log('Token encontrado:', token ? 'Sí' : 'No');
+                
+                const response = await fetch('http://localhost:8001/reserva/historial', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                console.log('Respuesta recibida:', response.status, response.statusText);
+
+                if (response.ok) {
+                    reservasData = await response.json();
+                    console.log('Datos recibidos:', reservasData);
+                    console.log('Número de reservas:', reservasData.length);
+                    
+                    // Filtrar solo reservas confirmadas (usando descTipoEstadoReserva)
+                    const reservasConfirmadas = reservasData.filter(reserva => {
+                        // Verificar que tenga estados de reserva
+                        if (!reserva.estadosReservas || reserva.estadosReservas.length === 0) {
+                            console.warn('Reserva sin estados:', reserva.idReserva);
+                            return false;
+                        }
+                        
+                        // Obtener el estado más reciente (último en el array)
+                        const estadoActual = reserva.estadosReservas[reserva.estadosReservas.length - 1];
+                        
+                        // Validar que el estado tenga la estructura esperada
+                        if (!estadoActual || !estadoActual.tipoEstadoReserva || !estadoActual.tipoEstadoReserva.descTipoEstadoReserva) {
+                            console.warn('Estado de reserva con estructura incorrecta:', estadoActual);
+                            return false;
+                        }
+                        
+                        // Filtrar por estado "Confirmada"
+                        return estadoActual.tipoEstadoReserva.descTipoEstadoReserva === 'Confirmada';
+                    });
+                    
+                    console.log('Reservas confirmadas encontradas:', reservasConfirmadas.length);
+                    
+                    displayReservas(reservasConfirmadas);
+                    
+                } else if (response.status === 401) {
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'index.html';
+                } else {
+                    console.error('Error HTTP:', response.status, response.statusText);
+                    const errorText = await response.text();
+                    console.error('Respuesta del servidor:', errorText);
+                    showAlert(`Error al cargar las reservas: ${response.status} - ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error completo:', error);
+                console.error('Tipo de error:', error.name);
+                console.error('Mensaje del error:', error.message);
+                console.error('Stack trace:', error.stack);
+                
+                // Diferentes tipos de errores
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    showAlert('Error de conexión: No se puede conectar al servidor', 'error');
+                } else if (error.name === 'SyntaxError') {
+                    showAlert('Error: Respuesta inválida del servidor', 'error');
+                } else {
+                    showAlert(`Error: ${error.message}`, 'error');
+                }
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayReservas(reservas) {
+            const reservasList = document.getElementById('reservasList');
+            
+            if (!reservasList) {
+                console.error('Elemento reservasList no encontrado');
+                return;
+            }
+            
+            if (!reservas || reservas.length === 0) {
+                reservasList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📅</div>
+                        <p>No se encontraron reservas confirmadas.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            reservasList.innerHTML = '';
+            
+            reservas.forEach(reserva => {
+                try {
+                    // Validar datos básicos
+                    const fechaReserva = reserva.fechaReserva || 'Fecha no disponible';
+                    const horaInicio = reserva.horaInicio || 'Hora no disponible';
+                    const horaFin = reserva.horaFin || 'Hora no disponible';
+                    const nroEstacionamiento = reserva.estacionamiento?.nroEstacionamiento || 'N/A';
+                    
+                    // Validar estado actual
+                    let estadoActual = 'Estado no disponible';
+                    if (reserva.estadosReservas && reserva.estadosReservas.length > 0) {
+                        const ultimoEstado = reserva.estadosReservas[reserva.estadosReservas.length - 1];
+                        if (ultimoEstado?.tipoEstadoReserva?.descTipoEstadoReserva) {
+                            estadoActual = ultimoEstado.tipoEstadoReserva.descTipoEstadoReserva;
+                        }
+                    }
+                    
+                    // Validar usuario
+                    let nombreCompleto = 'Usuario no disponible';
+                    if (reserva.usuario) {
+                        const primerNombre = reserva.usuario.primerNombre || '';
+                        const segundoNombre = reserva.usuario.segundoNombre || '';
+                        const apPaterno = reserva.usuario.apPaterno || '';
+                        const apMaterno = reserva.usuario.apMaterno || '';
+                        
+                        nombreCompleto = `${primerNombre} ${segundoNombre} ${apPaterno} ${apMaterno}`.trim();
+                        if (!nombreCompleto) {
+                            nombreCompleto = 'Usuario no disponible';
+                        }
+                    }
+                    
+                    // Formatear fecha para mostrar
+                    const fechaFormateada = formatDate(fechaReserva);
+                    
+                    // Crear elemento HTML con la clase correcta y evento onclick
+                    const reservaElement = document.createElement('div');
+                    reservaElement.className = 'reserva-card';
+                    reservaElement.onclick = () => selectReserva(reserva.idReserva);
+                    reservaElement.innerHTML = `
+                        <div class="reserva-header">
+                            <div class="reserva-id">Reserva #${reserva.idReserva || 'N/A'}</div>
+                            <span class="estado-badge estado-confirmada">${estadoActual}</span>
+                        </div>
+                        <div class="reserva-details">
+                            <div class="detail-item">
+                                <span class="detail-label">📅 Fecha:</span>
+                                <span>${fechaFormateada}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">🚗 Estacionamiento:</span>
+                                <span>#${nroEstacionamiento}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⏰ Hora inicio:</span>
+                                <span>${horaInicio}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⏰ Hora fin:</span>
+                                <span>${horaFin}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    reservasList.appendChild(reservaElement);
+                    
+                } catch (error) {
+                    console.error('Error al procesar reserva:', reserva.idReserva, error);
+                }
+            });
+        }
+
+        function selectReserva(idReserva) {
+            selectedReserva = reservasData.find(r => r.idReserva === idReserva);
+            
+            if (!selectedReserva) {
+                console.error('Reserva no encontrada:', idReserva);
+                return;
+            }
+            
+            // Actualizar UI
+            document.querySelectorAll('.reserva-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Encontrar y seleccionar la tarjeta correspondiente
+            const cards = document.querySelectorAll('.reserva-card');
+            cards.forEach(card => {
+                const reservaIdText = card.querySelector('.reserva-id').textContent;
+                if (reservaIdText.includes(idReserva)) {
+                    card.classList.add('selected');
+                }
+            });
+            
+            // Mostrar formulario y ocultar mensaje
+            document.getElementById('noSelectionMessage').style.display = 'none';
+            document.getElementById('modificarForm').style.display = 'block';
+            
+            // Llenar formulario con datos actuales
+            document.getElementById('fechaReserva').value = selectedReserva.fechaReserva;
+            document.getElementById('horaInicio').value = selectedReserva.horaInicio;
+            document.getElementById('horaFin').value = selectedReserva.horaFin;
+            
+            // Limpiar alertas
+            document.getElementById('alertContainer').innerHTML = '';
+            
+            console.log('Reserva seleccionada:', selectedReserva);
+        }
+
+        function cancelarModificacion() {
+            selectedReserva = null;
+            
+            // Limpiar selección
+            document.querySelectorAll('.reserva-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Ocultar formulario y mostrar mensaje
+            document.getElementById('modificarForm').style.display = 'none';
+            document.getElementById('noSelectionMessage').style.display = 'block';
+            
+            // Limpiar alertas
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+
+        document.getElementById('modificarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!selectedReserva) {
+                showAlert('Por favor selecciona una reserva para modificar', 'error');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<div class="spinner"></div> Guardando...';
+                
+                const formData = new FormData(e.target);
+                const updateData = {};
+                
+                // Solo incluir campos que han cambiado
+                if (formData.get('fechaReserva') !== selectedReserva.fechaReserva) {
+                    updateData.fechaReserva = formData.get('fechaReserva');
+                }
+                if (formData.get('horaInicio') !== selectedReserva.horaInicio) {
+                    updateData.horaInicio = formData.get('horaInicio');
+                }
+                if (formData.get('horaFin') !== selectedReserva.horaFin) {
+                    updateData.horaFin = formData.get('horaFin');
+                }
+                
+                // Verificar si hay cambios
+                if (Object.keys(updateData).length === 0) {
+                    showAlert('No se detectaron cambios en la reserva', 'info');
+                    return;
+                }
+
+                const token = localStorage.getItem('authToken');
+                const response = await fetch(`http://localhost:8001/reserva/id/${selectedReserva.idReserva}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateData)
+                });
+
+                if (response.ok) {
+                    const updatedReserva = await response.json();
+                    showAlert('✅ Reserva modificada exitosamente', 'success');
+                    
+                    // Recargar la lista de reservas
+                    setTimeout(() => {
+                        loadReservas();
+                        cancelarModificacion();
+                    }, 2000);
+                } else {
+                    const errorData = await response.json();
+                    showAlert(`❌ Error: ${errorData.message || 'Error al modificar la reserva'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('❌ Error de conexión al modificar la reserva', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertClass = `alert-${type}`;
+            
+            alertContainer.innerHTML = `
+                <div class="alert ${alertClass}">
+                    ${message}
+                </div>
+            `;
+            
+            // Auto-hide success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString + 'T00:00:00');
+                return date.toLocaleDateString('es-ES', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch (error) {
+                console.error('Error al formatear fecha:', dateString, error);
+                return dateString;
+            }
+        }
+
+        // Verificar autenticación periódicamente
+        setInterval(function() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.href = 'index.html';
+            }
+        }, 60000);
+    </script>
+</body>
+</html>
