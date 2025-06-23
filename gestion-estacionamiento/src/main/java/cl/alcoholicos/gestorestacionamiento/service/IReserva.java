@@ -10,7 +10,7 @@ public interface IReserva {
 
     ReservaResponseDTO insert(ReservaCreateDTO reserva, Integer rutUsuario);
 
-    ReservaResponseDTO update(Integer idReserva, ReservaUpdateDTO reserva);
+    ReservaResponseDTO update(Integer idReserva, ReservaUpdateDTO reservaUpdate, Integer rutUsuario);
 
     boolean delete(Integer idReserva);
 
