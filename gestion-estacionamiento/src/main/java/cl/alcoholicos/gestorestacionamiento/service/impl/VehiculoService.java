@@ -30,12 +30,12 @@ public class VehiculoService implements IVehiculo {
     @Override
     public VehiculoResponseDTO insert(VehiculoCreateDTO createDTO) {
         VehiculoEntity vehiculo = vehiculoMapper.toEntity(createDTO); // DTO a Entidad
-        
+
         UsuarioEntity usuario = usuarioRepository.findById(createDTO.getRutUsuario())
-            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
         ModeloEntity modelo = modeloRepository.findById(createDTO.getIdModelo())
-            .orElseThrow(() -> new EntityNotFoundException("Modelo no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Modelo no encontrado"));
 
         vehiculo.setUsuario(usuario);
         vehiculo.setModelo(modelo);
@@ -44,7 +44,6 @@ public class VehiculoService implements IVehiculo {
         VehiculoResponseDTO responseDTO = vehiculoMapper.toResponseDTO(vehiculoGuardado); // DTO
         return responseDTO;
     }
-    
 
     @Override
     public VehiculoResponseDTO update(String patente, VehiculoUpdateDTO vehiculoUpdateDTO) {
@@ -78,6 +77,17 @@ public class VehiculoService implements IVehiculo {
     @Override
     public List<VehiculoResponseDTO> getAll() {
         return vehiculoRepository.findAll().stream()
+                .map(vehiculoMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VehiculoResponseDTO> getAllByUsuario(Integer rutUsuario) {
+        if (rutUsuario == null) {
+            throw new IllegalArgumentException("El RUT del usuario no puede ser nulo");
+        }
+
+        return vehiculoRepository.findByUsuarioRut(rutUsuario).stream()
                 .map(vehiculoMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }

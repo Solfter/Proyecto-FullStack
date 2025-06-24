@@ -17,5 +17,7 @@ public interface IVehiculo {
     VehiculoResponseDTO getById(String patente);
 
     List<VehiculoResponseDTO> getAll();
+
+    List<VehiculoResponseDTO> getAllByUsuario(Integer rut);
     
 }

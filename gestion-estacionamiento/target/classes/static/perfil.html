@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Gestión de Estacionamiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .page-title {
+            color: #333;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control:disabled {
+            background: #f8f9fa;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .form-control.invalid {
+            border-color: #dc3545;
+            background-color: #fff5f5;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .vehicles-section {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-top: 2rem;
+        }
+
+        .vehicle-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .vehicle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .vehicle-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .vehicle-icon {
+            font-size: 2rem;
+        }
+
+        .vehicle-details h4 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .vehicle-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .vehicle-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #FFA726 0%, #FF9800 100%);
+            color: white;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-vehicle-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .add-vehicle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .save-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .no-vehicles {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid;
+            position: relative;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeaa7;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #f1f3f4;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .back-btn {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .vehicle-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .vehicle-actions {
+                align-self: stretch;
+                justify-content: center;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <a href="menu.html" class="back-btn">
+                    ← Volver al Menú
+                </a>
+                <h1 class="page-title">👤 Mi Perfil</h1>
+                <p class="page-subtitle">Gestiona tu información personal y vehículos</p>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Cargando información del perfil...</p>
+        </div>
+
+        <!-- Alert -->
+        <div id="alert" style="display: none;"></div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Información Personal -->
+            <div class="profile-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        👤 Información Personal
+                    </h2>
+                    <button class="edit-btn" onclick="toggleEdit('personal')">
+                        ✏️ Editar
+                    </button>
+                </div>
+
+                <form id="personalForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut">RUT</label>
+                            <input type="text" id="rut" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="dv">DV</label>
+                            <input type="text" id="dv" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="primerNombre">Primer Nombre</label>
+                            <input type="text" id="primerNombre" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="segundoNombre">Segundo Nombre</label>
+                            <input type="text" id="segundoNombre" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="apPaterno">Apellido Paterno</label>
+                            <input type="text" id="apPaterno" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="apMaterno">Apellido Materno</label>
+                            <input type="text" id="apMaterno" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico</label>
+                        <input type="email" id="correo" class="form-control" disabled>
+                        <div class="error-message" id="correo-error">Por favor ingresa un correo válido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nroCelular">Número de Celular</label>
+                        <input type="tel" id="nroCelular" class="form-control" disabled>
+                        <div class="error-message" id="nroCelular-error">Por favor ingresa un número válido</div>
+                    </div>
+
+                    <button type="submit" class="save-btn" id="savePersonalBtn" style="display: none;">
+                        💾 Guardar Cambios
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vehículos -->
+        <div class="vehicles-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    🚗 Mis Vehículos
+                </h2>
+                <button class="add-vehicle-btn" onclick="showAddVehicleModal()">
+                    ➕ Agregar Vehículo
+                </button>
+            </div>
+
+            <div id="vehiclesList">
+                <div class="no-vehicles">
+                    <p>No tienes vehículos registrados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar vehículo -->
+    <div id="vehicleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Agregar Vehículo</h3>
+                <button class="close-btn" onclick="closeVehicleModal()">&times;</button>
+            </div>
+            <form id="vehicleForm">
+                <div class="form-group">
+                    <label for="vehiclePatente">Patente</label>
+                    <input type="text" id="vehiclePatente" class="form-control" placeholder="AAAA12" maxlength="6">
+                    <div class="error-message" id="vehiclePatente-error">Formato de patente inválido</div>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleMarca">Marca</label>
+                    <input type="text" id="vehicleMarca" class="form-control" placeholder="Toyota">
+                    <div class="error-message" id="vehicleMarca-error">La marca es requerida</div>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleModelo">Modelo</label>
+                    <input type="text" id="vehicleModelo" class="form-control" placeholder="Corolla">
+                    <div class="error-message" id="vehicleModelo-error">El modelo es requerido</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleAnio">Año</label>
+                        <input type="number" id="vehicleAnio" class="form-control" min="1900" max="2025">
+                        <div class="error-message" id="vehicleAnio-error">Año inválido</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleColor">Color</label>
+                        <input type="text" id="vehicleColor" class="form-control" placeholder="Blanco">
+                        <div class="error-message" id="vehicleColor-error">El color es requerido</div>
+                    </div>
+                </div>
+                <button type="submit" class="save-btn">
+                    💾 Guardar Vehículo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let userData = null;
+        let isEditingPersonal = false;
+        let currentEditingVehicle = null;
+
+        // Configuración de la API
+        const API_BASE_URL = 'http://localhost:8001';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserProfile();
+            setupFormValidation();
+        });
+
+        // Manejo mejorado de autenticación
+        class AuthManager {
+            static getToken() {
+                return sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            }
+
+            static setToken(token, remember = false) {
+                if (remember) {
+                    localStorage.setItem('authToken', token);
+                } else {
+                    sessionStorage.setItem('authToken', token);
+                }
+            }
+
+            static removeToken() {
+                sessionStorage.removeItem('authToken');
+                localStorage.removeItem('authToken');
+            }
+
+            static isTokenExpired(token) {
+                if (!token) return true;
+                
+                try {
+                    const parts = token.split('.');
+                    if (parts.length !== 3) return true;
+
+                    const payload = JSON.parse(atob(parts[1]));
+                    const now = Math.floor(Date.now() / 1000);
+                    
+                    // Verificar si el token expira en los próximos 5 minutos
+                    return payload.exp <= (now + 300);
+                } catch (error) {
+                    console.error('Error validating token:', error);
+                    return true;
+                }
+            }
+
+            static redirectToLogin() {
+                this.removeToken();
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Cliente HTTP mejorado
+        class ApiClient {
+            static async request(url, options = {}) {
+                const token = AuthManager.getToken();
+
+                if (!token || AuthManager.isTokenExpired(token)) {
+                    AuthManager.redirectToLogin();
+                    return null;
+                }
+
+                const defaultHeaders = {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                };
+
+                const config = {
+                    ...options,
+                    headers: {
+                        ...defaultHeaders,
+                        ...options.headers
+                    }
+                };
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}${url}`, config);
+
+                    if (response.status === 401) {
+                        AuthManager.redirectToLogin();
+                        return null;
+                    }
+
+                    return response;
+                } catch (error) {
+                    console.error('API request failed:', error);
+                    throw new Error('Error de conexión al servidor');
+                }
+            }
+
+            static async get(url) {
+                return this.request(url, { method: 'GET' });
+            }
+
+            static async post(url, data) {
+                return this.request(url, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+            }
+
+            static async put(url, data) {
+                return this.request(url, {
+                    method: 'PUT',
+                    body: JSON.stringify(data)
+                });
+            }
+
+            static async delete(url) {
+                return this.request(url, { method: 'DELETE' });
+            }
+        }
+
+        // Validaciones mejoradas
+        class FormValidator {
+            static validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            static validatePhone(phone) {
+                const phoneRegex = /^[0-9]{8,9}$/;
+                return phoneRegex.test(phone.replace(/\s+/g, ''));
+            }
+
+            static validatePatente(patente) {
+                const patenteRegex = /^[A-Z]{4}[0-9]{2}$|^[A-Z]{2}[0-9]{4}$/;
+                return patenteRegex.test(patente.toUpperCase());
+            }
+
+            static validateYear(year) {
+                const currentYear = new Date().getFullYear();
+                return year >= 1900 && year <= currentYear + 1;
+            }
+
+            static showFieldError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                
+                if (field && errorElement) {
+                    field.classList.add('invalid');
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+
+            static clearFieldError(fieldId) {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                
+                if (field && errorElement) {
+                    field.classList.remove('invalid');
+                    errorElement.style.display = 'none';
+                }
+            }
+
+            static clearAllErrors(formId) {
+                const form = document.getElementById(formId);
+                const errorElements = form.querySelectorAll('.error-message');
+                const invalidFields = form.querySelectorAll('.invalid');
+                
+                errorElements.forEach(element => element.style.display = 'none');
+                invalidFields.forEach(field => field.classList.remove('invalid'));
+            }
+        }
+
+        async function loadUserProfile() {
+            const loading = document.getElementById('loading');
+
+            try {
+                loading.style.display = 'block';
+
+                // Cargar información del usuario
+                const userResponse = await ApiClient.get('/auth/user');
+                
+                if (userResponse && userResponse.ok) {
+                    userData = await userResponse.json();
+                    populateUserData(userData);
+                } else if (userResponse) {
+                    const errorText = await userResponse.text();
+                    console.error('User profile error:', errorText);
+                    showAlert('Error al cargar información del usuario', 'error');
+                }
+
+                // Cargar vehículos del usuario
+                await loadUserVehicles();
+
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                showAlert('Error de conexión al servidor', 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        async function loadUserVehicles() {
+            try {
+                const vehiclesResponse = await ApiClient.get('/vehiculos/usuario');
+
+                if (vehiclesResponse && vehiclesResponse.ok) {
+                    const vehiculos = await vehiclesResponse.json();
+                    populateVehicles(vehiculos);
+                } else if (vehiclesResponse && vehiclesResponse.status === 204) {
+                    populateVehicles([]);
+                } else if (vehiclesResponse) {
+                    const errorData = await vehiclesResponse.text();
+                    console.error('Error response:', errorData);
+                    showAlert(`Error al cargar vehículos: ${vehiclesResponse.status}`, 'error');
+                    populateVehicles([]);
+                }
+            } catch (error) {
+                console.error('Error al cargar vehículos:', error);
+                showAlert('Error de conexión al cargar vehículos', 'error');
+                populateVehicles([]);
+            }
+        }
+
+        function populateUserData(data) {
+            const fields = ['rut', 'dv', 'primerNombre', 'segundoNombre', 'apPaterno', 'apMaterno', 'correo', 'nroCelular'];
+            
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.value = data[field] || '';
+                }
+            });
+        }
+
+        function populateVehicles(vehiculos) {
+            const vehiclesList = document.getElementById('vehiclesList');
+
+            if (!vehiculos || vehiculos.length === 0) {
+                vehiclesList.innerHTML = '<div class="no-vehicles"><p>No tienes vehículos registrados</p></div>';
+                return;
+            }
+
+            vehiclesList.innerHTML = vehiculos.map(vehiculo => `
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-info">
+                            <span class="vehicle-icon">🚗</span>
+                            <div class="vehicle-details">
+                                <h4>${vehiculo.patente || 'Sin patente'}</h4>
+                                <p>${vehiculo.modelo?.marca?.nombreMarca ?? 'Sin marca'} ${vehiculo.modelo?.nombreModelo ?? 'Sin modelo'} ${vehiculo.anio ?? ''} - ${vehiculo.color ?? 'Sin color'}</p>
+                            </div>
+                        </div>
+                        <div class="vehicle-actions">
+                            <button class="btn-small btn-edit" onclick="editVehicle('${vehiculo.patente}')">
+                                ✏️ Editar
+                            </button>
+                            <button class="btn-small btn-delete" onclick="deleteVehicle('${vehiculo.patente}')">
+                                🗑️ Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupFormValidation() {
+            // Validación en tiempo real para el formulario personal
+            const correoField = document.getElementById('correo');
+            const celularField = document.getElementById('nroCelular');
+
+            correoField.addEventListener('blur', function() {
+                if (this.value && !FormValidator.validateEmail(this.value)) {
+                    FormValidator.showFieldError('correo', 'Por favor ingresa un correo válido');
+                } else {
+                    FormValidator.clearFieldError('correo');
+                }
+            });
+
+            celularField.addEventListener('blur', function() {
+                if (this.value && !FormValidator.validatePhone(this.value)) {
+                    FormValidator.showFieldError('nroCelular', 'Por favor ingresa un número válido (8-9 dígitos)');
+                } else {
+                    FormValidator.clearFieldError('nroCelular');
+                }
+            });
+
+            // Validación para el formulario de vehículos
+            const vehicleForm = document.getElementById('vehicleForm');
+            vehicleForm.addEventListener('submit', handleVehicleSubmit);
+
+            // Validación en tiempo real para patente
+            const patenteField = document.getElementById('vehiclePatente');
+            patenteField.addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+
+            patenteField.addEventListener('blur', function() {
+                if (this.value && !FormValidator.validatePatente(this.value)) {
+                    FormValidator.showFieldError('vehiclePatente', 'Formato: AAAA12 o AA1234');
+                } else {
+                    FormValidator.clearFieldError('vehiclePatente');
+                }
+            });
+        }
+
+        function toggleEdit(section) {
+            if (section === 'personal') {
+                isEditingPersonal = !isEditingPersonal;
+                const form = document.getElementById('personalForm');
+                const editableInputs = ['correo', 'nroCelular'];
+                const saveBtn = document.getElementById('savePersonalBtn');
+                const editBtn = form.parentElement.querySelector('.edit-btn');
+
+                editableInputs.forEach(inputId => {
+                    const input = document.getElementById(inputId);
+                    input.disabled = !isEditingPersonal;
+                });
+
+                if (isEditingPersonal) {
+                    editBtn.textContent = '❌ Cancelar';
+                    saveBtn.style.display = 'block';
+                    FormValidator.clearAllErrors('personalForm');
+                } else {
+                    editBtn.textContent = '✏️ Editar';
+                    saveBtn.style.display = 'none';
+                    FormValidator.clearAllErrors('personalForm');
+                    if (userData) {
+                        populateUserData(userData);
+                    }
+                }
+            }
+        }
+
+        document.getElementById('personalForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Validaciones
+            const correo = document.getElementById('correo').value;
+            const nroCelular = document.getElementById('nroCelular').value;
+            let isValid = true;
+
+            FormValidator.clearAllErrors('personalForm');
+
+            if (!FormValidator.validateEmail(correo)) {
+                FormValidator.showFieldError('correo', 'Por favor ingresa un correo válido');
+                isValid = false;
+            }
+
+            if (!FormValidator.validatePhone(nroCelular)) {
+                FormValidator.showFieldError('nroCelular', 'Por favor ingresa un número válido (8-9 dígitos)');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const saveBtn = document.getElementById('savePersonalBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = '💾 Guardando...';
+
+            try {
+                const formData = {
+                    correo: correo,
+                    nroCelular: parseInt(nroCelular.replace(/\s+/g, ''))
+                };
+
+                const response = await ApiClient.put('/auth/user', formData);
+
+                if (response && response.ok) {
+                    showAlert('Información actualizada correctamente', 'success');
+                    userData = await response.json();
+                    toggleEdit('personal');
+                } else {
+                    throw new Error('Error al actualizar información');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al actualizar información', 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 Guardar Cambios';
+            }
+        });
+
+        function showAddVehicleModal() {
+            currentEditingVehicle = null;
+            document.getElementById('modalTitle').textContent = 'Agregar Vehículo';
+            document.getElementById('vehicleForm').reset();
+            FormValidator.clearAllErrors('vehicleForm');
+            document.getElementById('vehicleModal').style.display = 'block';
+        }
+
+        function editVehicle(patente) {
+            // Buscar el vehículo en los datos cargados
+            const vehiclesList = document.getElementById('vehiclesList');
+            // Aquí deberías tener los datos del vehículo, por simplicidad usaremos un placeholder
+            currentEditingVehicle = patente;
+            document.getElementById('modalTitle').textContent = 'Editar Vehículo';
+            
+            // Cargar datos del vehículo en el formulario
+            document.getElementById('vehiclePatente').value = patente;
+            // Aquí cargarías los demás datos del vehículo
+            
+            FormValidator.clearAllErrors('vehicleForm');
+            document.getElementById('vehicleModal').style.display = 'block';
+        }
+
+        async function deleteVehicle(patente) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este vehículo?')) {
+                return;
+            }
+
+            try {
+                const response = await ApiClient.delete(`/vehiculos/${patente}`);
+
+                if (response && response.ok) {
+                    showAlert('Vehículo eliminado correctamente', 'success');
+                    await loadUserVehicles();
+                } else {
+                    throw new Error('Error al eliminar vehículo');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al eliminar vehículo', 'error');
+            }
+        }
+
+        function closeVehicleModal() {
+            document.getElementById('vehicleModal').style.display = 'none';
+            document.getElementById('vehicleForm').reset();
+            FormValidator.clearAllErrors('vehicleForm');
+            currentEditingVehicle = null;
+        }
+
+        async function handleVehicleSubmit(e) {
+            e.preventDefault();
+
+            // Obtener valores del formulario
+            const patente = document.getElementById('vehiclePatente').value;
+            const marca = document.getElementById('vehicleMarca').value;
+            const modelo = document.getElementById('vehicleModelo').value;
+            const anio = parseInt(document.getElementById('vehicleAnio').value);
+            const color = document.getElementById('vehicleColor').value;
+
+            // Validaciones
+            let isValid = true;
+            FormValidator.clearAllErrors('vehicleForm');
+
+            if (!FormValidator.validatePatente(patente)) {
+                FormValidator.showFieldError('vehiclePatente', 'Formato de patente inválido (AAAA12 o AA1234)');
+                isValid = false;
+            }
+
+            if (!marca.trim()) {
+                FormValidator.showFieldError('vehicleMarca', 'La marca es requerida');
+                isValid = false;
+            }
+
+            if (!modelo.trim()) {
+                FormValidator.showFieldError('vehicleModelo', 'El modelo es requerido');
+                isValid = false;
+            }
+
+            if (!FormValidator.validateYear(anio)) {
+                FormValidator.showFieldError('vehicleAnio', 'Año inválido (1900-' + (new Date().getFullYear() + 1) + ')');
+                isValid = false;
+            }
+
+            if (!color.trim()) {
+                FormValidator.showFieldError('vehicleColor', 'El color es requerido');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '💾 Guardando...';
+
+            try {
+                const vehicleData = {
+                    patente: patente.toUpperCase(),
+                    marca: marca.trim(),
+                    modelo: modelo.trim(),
+                    anio: anio,
+                    color: color.trim()
+                };
+
+                let response;
+                if (currentEditingVehicle) {
+                    response = await ApiClient.put(`/vehiculos/${currentEditingVehicle}`, vehicleData);
+                } else {
+                    response = await ApiClient.post('/vehiculos', vehicleData);
+                }
+
+                if (response && response.ok) {
+                    const action = currentEditingVehicle ? 'actualizado' : 'agregado';
+                    showAlert(`Vehículo ${action} correctamente`, 'success');
+                    closeVehicleModal();
+                    await loadUserVehicles();
+                } else {
+                    const errorData = await response.text();
+                    throw new Error(`Error al guardar vehículo: ${errorData}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al guardar vehículo', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '💾 Guardar Vehículo';
+            }
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.display = 'block';
+
+            // Auto-hide después de 5 segundos
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('vehicleModal');
+            if (event.target === modal) {
+                closeVehicleModal();
+            }
+        });
+
+        // Verificar autenticación periódicamente
+        setInterval(function () {
+            const token = AuthManager.getToken();
+            if (!token || AuthManager.isTokenExpired(token)) {
+                AuthManager.redirectToLogin();
+            }
+        }, 60000); // Verificar cada minuto
+
+        // Manejar visibilidad de la página
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const token = AuthManager.getToken();
+                if (!token || AuthManager.isTokenExpired(token)) {
+                    AuthManager.redirectToLogin();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

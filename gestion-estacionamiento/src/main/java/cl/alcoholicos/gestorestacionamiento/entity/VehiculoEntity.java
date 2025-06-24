@@ -28,6 +28,7 @@ public class VehiculoEntity {
     private UsuarioEntity usuario;
 
     @ManyToOne
+    @JoinColumn(name = "ID_MODELO", nullable = false)
     private ModeloEntity modelo;
 
     @Column(name = "ANO")
