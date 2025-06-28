@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModeloCreateDTO {
-    private int idModelo;
 
     private String nombreModelo;
 
-    private int idMarca;
+    private String nombreMarca;
+
 }

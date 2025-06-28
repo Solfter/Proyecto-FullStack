@@ -25,7 +25,7 @@ class AuthControllerIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void testLoginFailure_UserNotFound() throws Exception {
+    void testLoginFallido_UsuarioInexistente() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setCorreo("usuario_inexistente@correo.com");
         request.setPassword("password_cualquiera");
@@ -38,7 +38,7 @@ class AuthControllerIntegrationTest {
     }
 
     @Test
-    void testLoginSuccess_ValidCredentials() throws Exception {
+    void testLoginExitoso_CredencialesValidas() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setCorreo("se.gonzalez2@duocuc.cl");
         request.setPassword("test_fullstack");
@@ -53,7 +53,7 @@ class AuthControllerIntegrationTest {
     }
 
     @Test
-    void testLoginFailure_WrongPassword() throws Exception {
+    void testLoginFallido_ContrasenaEquivocada() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setCorreo("se.gonzalez2@duocuc.cl");
         request.setPassword("wrong_password");

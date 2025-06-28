@@ -68,7 +68,7 @@ public class EstacionamientoController {
         return ResponseEntity.ok(estacionamientos);
     }
 
-    @GetMapping("/{idEstacionamiento}")
+    @GetMapping("/id/{idEstacionamiento}")
     @Operation(
         summary = "Obtener estacionamiento por ID",
         description = "Retorna los datos de un estacionamiento específico usando su ID"
@@ -235,5 +235,14 @@ public class EstacionamientoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/estado/{estadoEstacionamiento}")
+    public ResponseEntity<List<EstacionamientoResponseDTO>> obtenerEstacionamientosDisponibles (@PathVariable String estadoEstacionamiento) {
+        List<EstacionamientoResponseDTO> estacionamientos = estacionamientoService.obtenerEstacionamientoPorEstado(estadoEstacionamiento);
+        if (estacionamientos == null || estacionamientos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(estacionamientos);
     }
 }

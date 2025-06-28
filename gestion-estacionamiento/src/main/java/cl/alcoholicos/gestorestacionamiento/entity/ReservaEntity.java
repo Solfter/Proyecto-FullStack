@@ -32,7 +32,7 @@ public class ReservaEntity {
     private int idReserva;
 
     @Column(name = "FECHA_CREACION_RESERVA")
-    private LocalDateTime fechaCreacionReserva;
+    private LocalDate fechaCreacionReserva;
 
     @Column(name = "FECHA_RESERVA")
     private LocalDate fechaReserva;

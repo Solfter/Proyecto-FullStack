@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SensorCreateDTO {
-     private int idSensor;
 
-    private int idEstacionamiento;
+    Integer nroSensor;
 }

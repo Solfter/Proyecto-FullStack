@@ -28,4 +28,7 @@ public class SensorEntity {
     @OneToOne(mappedBy = "sensor")
     private EstacionamientoEntity estacionamiento;
 
+    @Column(name = "nro_sensor")
+    private Integer nroSensor;
+
 }

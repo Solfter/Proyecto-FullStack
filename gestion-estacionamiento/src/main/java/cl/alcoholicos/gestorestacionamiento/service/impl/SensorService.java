@@ -7,13 +7,10 @@ import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.dto.SensorCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.SensorResponseDTO;
-import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.SensorMapper;
-import cl.alcoholicos.gestorestacionamiento.repository.EstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.SensorRepository;
 import cl.alcoholicos.gestorestacionamiento.service.ISensor;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,16 +19,11 @@ public class SensorService implements ISensor {
 
     private final SensorRepository sensorRepository;
     private final SensorMapper sensorMapper;
-    private final EstacionamientoRepository estacionamientoRepository;
 
 
     @Override
     public SensorResponseDTO insert(SensorCreateDTO createDTO) {
         SensorEntity sensor = sensorMapper.toEntity(createDTO);
-
-        EstacionamientoEntity estacionamiento = estacionamientoRepository.findById(createDTO.getIdEstacionamiento())
-                        .orElseThrow(() -> new EntityNotFoundException("Tipo de Usuario no encontrado"));
-        sensor.setEstacionamiento(estacionamiento);
         // Guardar en BD
         SensorEntity sensorGuardado = sensorRepository.save(sensor);
         // Convertir a DTO de respuesta

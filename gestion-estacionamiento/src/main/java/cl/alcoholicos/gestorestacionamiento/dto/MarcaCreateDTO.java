@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MarcaCreateDTO {
+    
     private String nombreMarca;
 }

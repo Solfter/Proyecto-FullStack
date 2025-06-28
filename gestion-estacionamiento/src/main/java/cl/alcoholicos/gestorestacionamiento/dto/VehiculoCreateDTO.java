@@ -28,7 +28,7 @@ public class VehiculoCreateDTO {
     private int rutUsuario;
     
     @NotNull
-    private int idModelo;
+    private String nombreModelo;
     
     @Min(1900)
     @Max(2025)

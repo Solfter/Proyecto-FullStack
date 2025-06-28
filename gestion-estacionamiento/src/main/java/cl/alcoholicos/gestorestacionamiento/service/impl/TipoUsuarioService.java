@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoUsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.TipoUsuarioMapper;
@@ -22,8 +23,8 @@ public class TipoUsuarioService implements ITipoUsuario {
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
     @Override
-    public TipoUsuarioResponseDTO insert(TipoUsuarioResponseDTO tipoUsuarioResponseDTO) {
-        TipoUsuarioEntity tipoUsuario = tipoUsuarioMapper.toEntity(tipoUsuarioResponseDTO);
+    public TipoUsuarioResponseDTO insert(TipoUsuarioCreateDTO createDTO) {
+        TipoUsuarioEntity tipoUsuario = tipoUsuarioMapper.toEntity(createDTO);
         TipoUsuarioEntity tipoUsuarioGuardado = tipoUsuarioRepository.save(tipoUsuario);
         TipoUsuarioResponseDTO responseDTO = tipoUsuarioMapper.toResponseDTO(tipoUsuarioGuardado);
         return responseDTO;

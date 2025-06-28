@@ -38,24 +38,25 @@ public class ReservaSchedulerService {
         // Buscar reservas que han vencido
         List<ReservaEntity> reservasVencidas = reservaRepository.findReservasVencidas();
 
-        TipoEstadoReservaEntity estadoReservaExpirada = tipoEstadoReservaRepository.findById(5)
-            .orElseThrow(() -> new RuntimeException("No se pudo encontrar el estado de reserva Expirado"));
+        // Estado correcto para reservas vencidas
+        TipoEstadoReservaEntity estadoExpirada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Expirada")
+            .orElseThrow(() -> new RuntimeException("No se pudo encontrar el estado de reserva Expirada"));
 
         for (ReservaEntity reserva : reservasVencidas) {
-            // Cambiar estado de la RESERVA
+            // 1. Cambiar estado de la RESERVA a Expirada
             EstadoReservaEntity nuevoEstado = new EstadoReservaEntity();
             nuevoEstado.setReserva(reserva);
-            nuevoEstado.setTipoEstadoReserva(estadoReservaExpirada);
+            nuevoEstado.setTipoEstadoReserva(estadoExpirada);
             nuevoEstado.setFechaEstadoReserva(ahora);
             estadoReservaRepository.save(nuevoEstado);
 
-            // 2. LIBERAR EL ESTACIONAMIENTO (LO MÁS IMPORTANTE)
+            // 2. LIBERAR EL ESTACIONAMIENTO (cambiar a Disponible)
             EstacionamientoEntity estacionamiento = reserva.getEstacionamiento();
-            estacionamientoRepository.liberarEstacionamiento(estacionamiento.getIdEstacionamiento());
+            estacionamientoRepository.liberarEstacionamiento(estacionamiento.getNroEstacionamiento());
         }
         
         if (!reservasVencidas.isEmpty()) {
-            System.out.println("Se actualizaron " + reservasVencidas.size() + " reservas vencidas a Disponible");
+            System.out.println("Se actualizaron " + reservasVencidas.size() + " reservas vencidas a Expirada");
         }
     }
 
@@ -66,24 +67,42 @@ public class ReservaSchedulerService {
         // Buscar reservas que han completado
         List<ReservaEntity> reservasCompletadas = reservaRepository.findReservasCompletadas();
 
-        TipoEstadoReservaEntity estadoReservaCompletada = tipoEstadoReservaRepository.findById(4)
+        // Estado correcto para reservas completadas
+        TipoEstadoReservaEntity estadoCompletada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Completada")
             .orElseThrow(() -> new RuntimeException("No se pudo encontrar el estado de reserva Completada"));
 
         for (ReservaEntity reserva : reservasCompletadas) {
-            // Cambiar estado de la RESERVA
+            // 1. Cambiar estado de la RESERVA a Completada
             EstadoReservaEntity nuevoEstado = new EstadoReservaEntity();
             nuevoEstado.setReserva(reserva);
-            nuevoEstado.setTipoEstadoReserva(estadoReservaCompletada);
+            nuevoEstado.setTipoEstadoReserva(estadoCompletada);
             nuevoEstado.setFechaEstadoReserva(ahora);
             estadoReservaRepository.save(nuevoEstado);
 
-            // 2. LIBERAR EL ESTACIONAMIENTO (LO MÁS IMPORTANTE)
+            // 2. LIBERAR EL ESTACIONAMIENTO (cambiar a Disponible)
             EstacionamientoEntity estacionamiento = reserva.getEstacionamiento();
-            estacionamientoRepository.liberarEstacionamiento(estacionamiento.getIdEstacionamiento());
+            estacionamientoRepository.liberarEstacionamiento(estacionamiento.getNroEstacionamiento());
         }
         
         if (!reservasCompletadas.isEmpty()) {
-            System.out.println("Se actualizaron " + reservasCompletadas.size() + " reservas completadas a Disponible");
+            System.out.println("Se actualizaron " + reservasCompletadas.size() + " reservas completadas a Completada");
+        }
+    }
+
+    @Scheduled(fixedRate = 300000) // 5 minutos en milisegundos
+    public void liberarEstacionamientosReservasCanceladas() {
+        // Buscar reservas que están canceladas
+        List<ReservaEntity> reservasCanceladas = reservaRepository.findReservasCanceladas();
+
+        for (ReservaEntity reserva : reservasCanceladas) {
+            // Solo LIBERAR EL ESTACIONAMIENTO
+            // No cambiar estado de la reserva porque ya está cancelada
+            EstacionamientoEntity estacionamiento = reserva.getEstacionamiento();
+            estacionamientoRepository.liberarEstacionamiento(estacionamiento.getNroEstacionamiento());
+        }
+        
+        if (!reservasCanceladas.isEmpty()) {
+            System.out.println("Se liberaron " + reservasCanceladas.size() + " estacionamientos de reservas canceladas");
         }
     }
 }

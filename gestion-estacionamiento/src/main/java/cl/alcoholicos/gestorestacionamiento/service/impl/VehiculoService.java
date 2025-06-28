@@ -34,7 +34,7 @@ public class VehiculoService implements IVehiculo {
         UsuarioEntity usuario = usuarioRepository.findById(createDTO.getRutUsuario())
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-        ModeloEntity modelo = modeloRepository.findById(createDTO.getIdModelo())
+        ModeloEntity modelo = modeloRepository.findByNombreModelo(createDTO.getNombreModelo())
                 .orElseThrow(() -> new EntityNotFoundException("Modelo no encontrado"));
 
         vehiculo.setUsuario(usuario);

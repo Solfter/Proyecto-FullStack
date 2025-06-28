@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.service.impl.TipoUsuarioService;
 
@@ -96,7 +97,7 @@ public class TipoUsuarioController {
     })
     public ResponseEntity<TipoUsuarioResponseDTO> insert(
         @Parameter(description = "Datos del tipo de usuario a crear", required = true)
-        @RequestBody TipoUsuarioResponseDTO tipoUsuario) {
+        @RequestBody TipoUsuarioCreateDTO tipoUsuario) {
         TipoUsuarioResponseDTO nuevoTipoUsuario = tipoUsuarioService.insert(tipoUsuario);
         return ResponseEntity.ok(nuevoTipoUsuario);
     }
@@ -194,5 +195,5 @@ public class TipoUsuarioController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(tipoUsuario);
-}
+    }
 }

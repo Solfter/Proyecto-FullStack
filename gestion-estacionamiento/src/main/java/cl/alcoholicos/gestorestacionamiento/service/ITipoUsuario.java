@@ -2,11 +2,12 @@ package cl.alcoholicos.gestorestacionamiento.service;
 
 import java.util.List;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoUsuarioResponseDTO;
 
 public interface ITipoUsuario {
        
-    TipoUsuarioResponseDTO insert(TipoUsuarioResponseDTO usuario);
+    TipoUsuarioResponseDTO insert(TipoUsuarioCreateDTO usuario);
 
     TipoUsuarioResponseDTO update(Integer idTipoUsuario, TipoUsuarioResponseDTO usuario);
 

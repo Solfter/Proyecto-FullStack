@@ -286,7 +286,7 @@
                 
                 const token = localStorage.getItem('authToken');
                 if (!token) {
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html';
                     return;
                 }
 
@@ -302,8 +302,8 @@
                     const userData = await response.json();
                     
                     // Actualizar nombre del usuario
-                    const nombreCompleto = userData.primerNombre + ' ' + userData.segundoNombre  + ' ' + userData.apPaterno + ' ' + userData.apMaterno || 'Usuario';
-                    document.getElementById('userName').textContent = `Bienvenido, ${nombreCompleto}`;
+                    const nombre = userData.primerNombre + ' ' + userData.apPaterno || 'Usuario';
+                    document.getElementById('userName').textContent = `Bienvenido, ${nombre}`;
                     
                     // Actualizar correo
                     document.getElementById('userEmail').textContent = userData.correo || 'usuario@email.com';
@@ -313,7 +313,7 @@
                     // Token inválido o expirado
                     console.log('Token inválido, redirigiendo al login');
                     localStorage.removeItem('authToken');
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html';
                 } else {
                     console.error('Error al cargar información del usuario:', response.status);
                     // Mantener valores por defecto
@@ -330,7 +330,7 @@
         function logout() {
             if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
                 localStorage.removeItem('authToken');
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             }
         }
 
@@ -338,7 +338,7 @@
         setInterval(function() {
             const token = localStorage.getItem('authToken');
             if (!token) {
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             }
         }, 60000); // Verificar cada minuto
     </script>

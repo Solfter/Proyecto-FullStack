@@ -31,7 +31,7 @@ public class ModeloService implements IModelo {
     public ModeloResponseDTO insert(ModeloCreateDTO createDTO) {
         ModeloEntity modelo = modeloMapper.toEntity(createDTO);
 
-        MarcaEntity marca = marcaRepository.findById(createDTO.getIdMarca())
+        MarcaEntity marca = marcaRepository.findByNombreMarca(createDTO.getNombreMarca())
             .orElseThrow(() -> new EntityNotFoundException("Marca no Encontrada"));
 
         modelo.setMarca(marca);

@@ -42,7 +42,7 @@ public class EstadoReservaService implements IEstadoReserva{
     public void crearEstadoInicial(ReservaEntity reserva) {
         EstadoReservaEntity estadoInicial = new EstadoReservaEntity();
         
-        TipoEstadoReservaEntity tipoEstadoReserva = tipoEstadoReservaRepository.findById(2)
+        TipoEstadoReservaEntity tipoEstadoReserva = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Confirmada")
             .orElseThrow(() -> new RuntimeException("Tipo de estado Inicial no encontrado"));
         
         estadoInicial.setReserva(reserva);
@@ -62,10 +62,10 @@ public class EstadoReservaService implements IEstadoReserva{
             throw new IllegalStateException("La reserva no tiene estados previos registrados");
         }
 
-        TipoEstadoReservaEntity tipoEstadoReservaActivo = tipoEstadoReservaRepository.findById(1)
+        TipoEstadoReservaEntity tipoEstadoReservaActivo = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Activa")
             .orElseThrow(() -> new RuntimeException("Tipo de estado Activa no encontrado"));
         
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findById(2)
+        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Confirmada")
             .orElseThrow(() -> new RuntimeException("Tipo de estado Confirmada no encontrado"));
 
         EstadoReservaEntity ultimoEstado = estadosReservas.get(estadosReservas.size() - 1);
@@ -91,10 +91,10 @@ public class EstadoReservaService implements IEstadoReserva{
             throw new IllegalStateException("La reserva no tiene estados previos registrados");
         }
 
-        TipoEstadoReservaEntity tipoEstadoReservaCancelada = tipoEstadoReservaRepository.findById(3)
+        TipoEstadoReservaEntity tipoEstadoReservaCancelada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Cancelada")
             .orElseThrow(() -> new RuntimeException("Tipo de estado Cancelada no encontrado"));
         
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findById(2)
+        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Confirmada")
             .orElseThrow(() -> new RuntimeException("Tipo de estado Confirmada no encontrado"));
 
         EstadoReservaEntity ultimoEstado = estadosReservas.get(estadosReservas.size() - 1);

@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.service;
 
 import java.util.List;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaResponseDTO;
 
 public interface ITipoEstadoReserva {
@@ -10,5 +11,6 @@ public interface ITipoEstadoReserva {
 
     List<TipoEstadoReservaResponseDTO> getAll();
 
+    TipoEstadoReservaResponseDTO insert(TipoEstadoReservaCreateDTO tipoEstadoReservaCreateDTO);
 
 }

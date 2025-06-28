@@ -435,8 +435,8 @@
 
                 if (response.ok) {
                     reservasData = await response.json();
-                    // Ordenar las reservas por fecha de reserva (mayor a menor - más recientes primero)
-                    reservasData.sort((a, b) => new Date(b.fechaReserva) - new Date(a.fechaReserva));
+                    // Ordenar las reservas por ID de reserva (mayor a menor - IDs más altos primero)
+                    reservasData.sort((a, b) => b.idReserva - a.idReserva);
                     reservasFiltradas = [...reservasData];
                     displayReservas(reservasFiltradas);
                     updateReservasCount(reservasFiltradas.length);
@@ -571,8 +571,8 @@
                 return true;
             });
 
-            // Mantener el orden por fecha después de aplicar filtros
-            reservasFiltradas.sort((a, b) => new Date(b.fechaReserva) - new Date(a.fechaReserva));
+            // Mantener el orden por ID de reserva después de aplicar filtros
+            reservasFiltradas.sort((a, b) => b.idReserva - a.idReserva);
             
             displayReservas(reservasFiltradas);
             updateReservasCount(reservasFiltradas.length);

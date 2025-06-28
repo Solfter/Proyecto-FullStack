@@ -32,10 +32,10 @@ public class EstacionamientoService implements IEstacionamiento {
     public EstacionamientoResponseDTO insert(EstacionamientoCreateDTO estacionamientoCreateDTO) {
         EstacionamientoEntity estacionamiento = estacionamientoMapper.toEntity(estacionamientoCreateDTO);
 
-        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository.findById(estacionamientoCreateDTO.getIdEstadoEstacionamiento())
+        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository.findByDescEstadoEstacionamiento(estacionamientoCreateDTO.getDescEstadoEstacionamiento())
             .orElseThrow(() -> new EntityNotFoundException("Estado de Estacionamiento no encontrado"));
 
-        SensorEntity sensor = sensorRepository.findById(estacionamientoCreateDTO.getIdSensor())
+        SensorEntity sensor = sensorRepository.findByNroSensor(estacionamientoCreateDTO.getNroSensor())
             .orElseThrow(() -> new EntityNotFoundException("Sensor no encontrado"));
 
         estacionamiento.setSensor(sensor);
@@ -78,6 +78,13 @@ public class EstacionamientoService implements IEstacionamiento {
         return estacionamientoRepository.findAll().stream() // Recorre la lista
                 .map(estacionamientoMapper::toResponseDTO) // Convierte a ResponseDTO
                 .collect(Collectors.toList()); // Crea una nueva lista de lo que convierte
+    }
+
+    @Override
+    public List<EstacionamientoResponseDTO> obtenerEstacionamientoPorEstado(String estado) {
+        return estacionamientoRepository.findByEstadoEstacionamientoDescEstadoEstacionamiento(estado).stream()
+            .map(estacionamientoMapper::toResponseDTO)
+            .collect(Collectors.toList());
     }
 
 }

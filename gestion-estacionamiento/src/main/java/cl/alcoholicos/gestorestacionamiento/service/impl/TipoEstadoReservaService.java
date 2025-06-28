@@ -5,10 +5,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.TipoEstadoReservaResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.TipoEstadoReservaMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.TipoEstadoReservaRepository;
 import cl.alcoholicos.gestorestacionamiento.service.ITipoEstadoReserva;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -32,4 +35,17 @@ public class TipoEstadoReservaService implements ITipoEstadoReserva {
             .collect(Collectors.toList());
     }
 
+
+    @Override
+    @Transactional
+    public TipoEstadoReservaResponseDTO insert(TipoEstadoReservaCreateDTO createDTO) {
+        TipoEstadoReservaEntity tipoEstadoReserva = tipoEstadoReservaMapper.toEntity(createDTO);
+
+        TipoEstadoReservaEntity tipoEstadoReservaGuardado = tipoEstadoReservaRepository.save(tipoEstadoReserva);
+
+        TipoEstadoReservaResponseDTO responseDTO = tipoEstadoReservaMapper.toResponseDTO(tipoEstadoReservaGuardado);
+
+        return responseDTO;
+
+    }
 }

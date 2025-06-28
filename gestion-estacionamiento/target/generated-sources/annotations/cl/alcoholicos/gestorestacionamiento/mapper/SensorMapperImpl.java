@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-23T18:56:52-0400",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
+    date = "2025-06-28T08:54:48-0400",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250624-0847, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class SensorMapperImpl implements SensorMapper {
@@ -23,6 +23,9 @@ public class SensorMapperImpl implements SensorMapper {
         SensorResponseDTO sensorResponseDTO = new SensorResponseDTO();
 
         sensorResponseDTO.setIdSensor( sensorEntity.getIdSensor() );
+        if ( sensorEntity.getNroSensor() != null ) {
+            sensorResponseDTO.setNroSensor( sensorEntity.getNroSensor() );
+        }
 
         return sensorResponseDTO;
     }
@@ -35,7 +38,7 @@ public class SensorMapperImpl implements SensorMapper {
 
         SensorEntity sensorEntity = new SensorEntity();
 
-        sensorEntity.setIdSensor( sensorCreateDTO.getIdSensor() );
+        sensorEntity.setNroSensor( sensorCreateDTO.getNroSensor() );
 
         return sensorEntity;
     }
@@ -47,5 +50,6 @@ public class SensorMapperImpl implements SensorMapper {
         }
 
         entity.setIdSensor( updateDTO.getIdSensor() );
+        entity.setNroSensor( updateDTO.getNroSensor() );
     }
 }

@@ -18,4 +18,6 @@ public interface IEstacionamiento{
 
     List<EstacionamientoResponseDTO> getAll();
 
+    List<EstacionamientoResponseDTO> obtenerEstacionamientoPorEstado(String estado);
+
 }

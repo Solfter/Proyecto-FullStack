@@ -5,10 +5,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.EstadoEstacionamientoCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstadoEstacionamientoResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.mapper.EstadoEstacionamientoMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoEstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IEstadoEstacionamiento;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -30,5 +33,18 @@ public class EstadoEstacionamientoService implements IEstadoEstacionamiento {
         return estadoEstacionamientoRepository.findAll().stream()
             .map(estadoEstacionamientoMapper::toResponseDTO)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public EstadoEstacionamientoResponseDTO insert(EstadoEstacionamientoCreateDTO createDTO) {
+
+        EstadoEstacionamientoEntity estado = estadoEstacionamientoMapper.toEntity(createDTO);
+
+        EstadoEstacionamientoEntity estadoGuardado = estadoEstacionamientoRepository.save(estado);
+
+        EstadoEstacionamientoResponseDTO responseDTO = estadoEstacionamientoMapper.toResponseDTO(estadoGuardado);
+
+        return responseDTO;
     }
 }

@@ -1,0 +1,211 @@
+eliminar datos bbdd
+sensores - Listo
+{
+    "nroSensor": 1
+}
+{
+    "nroSensor": 2
+}
+{
+    "nroSensor": 3
+}
+{
+    "nroSensor": 4
+}
+{
+    "nroSensor": 5
+}
+
+tipoestacionamiento - Listo
+{
+    "descEstadoEstacionamiento": "Disponible"
+}
+{
+    "descEstadoEstacionamiento": "Ocupado"
+}
+{
+    "descEstadoEstacionamiento": "Reservado"
+}
+{
+    "descEstadoEstacionamiento": "Fuera de Servicio"
+}
+{
+    "descEstadoEstacionamiento": "Mantenimiento"
+}
+
+estacionamiento
+{
+    "nroEstacionamiento": 1,
+    "descEstadoEstacionamiento": "Disponible",
+    "nroSensor": 1
+}
+{
+    "nroEstacionamiento": 2,
+    "descEstadoEstacionamiento": "Ocupado",
+    "nroSensor": 2
+}
+{
+    "nroEstacionamiento": 3,
+    "descEstadoEstacionamiento": "Reservado",
+    "nroSensor": 3
+}
+{
+    "nroEstacionamiento": 4,
+    "descEstadoEstacionamiento": "Fuera de Servicio",
+    "nroSensor": 4
+}
+{
+    "nroEstacionamiento": 5,
+    "descEstadoEstacionamiento": "Mantenimiento",
+    "nroSensor": 5
+}
+
+
+marca - Listo
+{
+    "nombreMarca": Hyundai
+}
+{
+    "nombreMarca": Chevrolet
+}
+{
+    "nombreMarca": Kia
+}
+{
+    "nombreMarca": Toyota
+}
+{
+    "nombreMarca": Nissan
+}
+
+modelo - Listo
+{
+    "nombreModelo": "Accent",
+    "nombreMarca": "Hyundai"
+}
+{
+    "nombreModelo": "Sail",
+    "nombreMarca": "Chevrolet"
+}
+{
+    "nombreModelo": "Morning",
+    "nombreMarca": "Kia"
+}
+{
+    "nombreModelo": "Yaris",
+    "nombreMarca": "Toyota"
+}
+{
+    "nombreModelo": "Versa",
+    "nombreMarca": "Nissan"
+}
+tipo usuario - Listo
+{
+    "descTipoUsuario": "Administrador"
+}
+{
+    "descTipoUsuario": "Profesor"
+}
+{
+    "descTipoUsuario": "Estudiante"
+}
+{
+    "descTipoUsuario": "Invitado"
+}
+
+usuario - Listo
+{
+  "rut": 12345678,
+  "dv": "K",
+  "primerNombre": "Sebastián",
+  "segundoNombre": "Rodrigo",
+  "apPaterno": "González",
+  "apMaterno": "Pino",
+  "correo": "se.gonzalez2@duocuc.cl",
+  "nroCelular": 123456789,
+  "password": "test_fullstack",
+  "descTipoUsuario": "Administrador"
+}
+{
+  "rut": 87654321,
+  "dv": "K",
+  "primerNombre": "Oscar",
+  "apPaterno": "Flores",
+  "correo": "oscar.flores@duocuc.cl",
+  "nroCelular": 987654321,
+  "password": "test_fullstack",
+  "descTipoUsuario": "Profesor"
+}
+{
+  "rut": 15975362,
+  "dv": "K",
+  "primerNombre": "Leroy",
+  "apPaterno": "Rodriguez",
+  "correo": "leroy.rodriguez@duocuc.cl",
+  "nroCelular": 147896321,
+  "password": "test_fullstack",
+  "descTipoUsuario": "Invitado"
+}
+{
+  "rut": 13467985,
+  "dv": "K",
+  "primerNombre": "Harrys",
+  "apPaterno": "Ojeda",
+  "correo": "harrys.ojeda@duocuc.cl",
+  "nroCelular": 976431245,
+  "password": "test_fullstack",
+  "descTipoUsuario": "Estudiante"
+}
+
+tipo estado reserva - Pendiente
+{
+    "descTipoEstadoReserva": "Activa"
+}
+{
+    "descTipoEstadoReserva": "Confirmada"
+}
+{
+    "descTipoEstadoReserva": "Cancelada"
+}
+{
+    "descTipoEstadoReserva": "Completada"
+}
+{
+    "descTipoEstadoReserva": "Expirada"
+}
+
+vehiculo - Listo
+{
+  "patente": "ABCD12",
+  "color": "Rojo",
+  "rutUsuario": 12345678,
+  "nombreModelo": "Versa",
+  "anio": 2020
+}
+{
+  "patente": "CRFT89",
+  "color": "Verde",
+  "rutUsuario": 87654321,
+  "nombreModelo": "Yaris",
+  "anio": 2020
+}
+{
+  "patente": "KMXZ34",
+  "color": "Negro",
+  "rutUsuario": 15975362,
+  "nombreModelo": "Accent",
+  "anio": 2020
+}
+{
+  "patente": "KMXZ34",
+  "color": "Azul",
+  "rutUsuario": 13467985,
+  "nombreModelo": "Sail",
+  "anio": 2020
+}
+
+pruebas tomar estcionamiento ocupado
+ver estcionmiento libre
+hora de desocupar estacionamiento (en estado ocupado)
+
+Constraint a crear: tipo_usuario, estado_reserva, modelo, incidente, tipo_estado_reserva

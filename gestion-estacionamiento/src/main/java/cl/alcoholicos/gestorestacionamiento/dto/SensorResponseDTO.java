@@ -11,4 +11,5 @@ public class SensorResponseDTO {
 
     private int idSensor;
     
+    private int nroSensor;
 }

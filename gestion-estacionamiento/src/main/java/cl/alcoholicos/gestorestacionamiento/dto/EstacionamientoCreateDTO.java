@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class EstacionamientoCreateDTO {
+    
     private int nroEstacionamiento;
 
-    private int idEstadoEstacionamiento;
+    private String descEstadoEstacionamiento;
 
-    private int idSensor;
+    private int nroSensor;
 
 }

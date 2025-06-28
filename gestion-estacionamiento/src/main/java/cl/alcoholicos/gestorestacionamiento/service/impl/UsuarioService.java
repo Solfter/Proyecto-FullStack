@@ -36,7 +36,7 @@ public class UsuarioService implements IUsuario {
         UsuarioEntity usuario = usuarioMapper.toEntity(createDTO);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
-        TipoUsuarioEntity tipoUsuario = tipoUsuarioRepository.findById(createDTO.getIdTipoUsuario())
+        TipoUsuarioEntity tipoUsuario = tipoUsuarioRepository.findByDescTipoUsuario(createDTO.getDescTipoUsuario())
                         .orElseThrow(() -> new EntityNotFoundException("Tipo de Usuario no encontrado"));
 
         usuario.setTipoUsuario(tipoUsuario);

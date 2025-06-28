@@ -50,16 +50,16 @@ public class ReservaService implements IReserva {
 
         ReservaEntity reserva = reservaMapper.toEntity(createDTO);
 
-        EstacionamientoEntity estacionamiento = estacionamientoRepository.findById(createDTO.getIdEstacionamiento())
+        EstacionamientoEntity estacionamiento = estacionamientoRepository.findByNroEstacionamiento(createDTO.getNroEstacionamiento())
                 .orElseThrow(() -> new EntityNotFoundException("Estacionamiento no encontrado"));
 
-        EstadoEstacionamientoEntity reservado = estadoEstacionamientoRepository.findById(3)
+        EstadoEstacionamientoEntity reservado = estadoEstacionamientoRepository.findByDescEstadoEstacionamiento("Reservado")
                 .orElseThrow(() -> new EntityNotFoundException("Estado de estacionamiento no encontrado"));
 
         UsuarioEntity usuario = usuarioRepository.findById(rutUsuario)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-        if (estacionamiento.getEstadoEstacionamiento().getIdEstadoEstacionamiento() != 1) {
+        if (!estacionamiento.getEstadoEstacionamiento().getDescEstadoEstacionamiento().equals("Disponible")) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El estacionamiento se encuentra en estado de: "
                     + estacionamiento.getEstadoEstacionamiento().getDescEstadoEstacionamiento());
         }
@@ -67,7 +67,7 @@ public class ReservaService implements IReserva {
         estacionamiento.setEstadoEstacionamiento(reservado);
         reserva.setEstacionamiento(estacionamiento);
         reserva.setUsuario(usuario);
-        reserva.setFechaCreacionReserva(LocalDateTime.now());
+        reserva.setFechaCreacionReserva(LocalDate.now());
 
         ReservaEntity reservaGuardada = reservaRepository.save(reserva);
         ReservaResponseDTO responseDTO = reservaMapper.toResponseDTO(reservaGuardada);
@@ -228,8 +228,8 @@ public class ReservaService implements IReserva {
 
     private boolean esEstadoConfirmada(ReservaEntity reserva) {
         // Verificar si existe al menos un estado "confirmada" activo
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findById(2)
-                .orElseThrow(() -> new EntityNotFoundException("No se encuentra la id 2 de tipoEstadoReserva"));
+        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Confirmada")
+                .orElseThrow(() -> new EntityNotFoundException("No se encuentra la descripcion confirmada de tipoEstadoReserva"));
 
         List<EstadoReservaEntity> estadosReserva = reserva.getEstadosReservas();
 

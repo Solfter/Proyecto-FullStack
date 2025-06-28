@@ -22,7 +22,6 @@ import cl.alcoholicos.gestorestacionamiento.dto.MessageResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaUpdateDTO;
-import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.exception.ResourceNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ServiceUnavailableException;
 import cl.alcoholicos.gestorestacionamiento.service.impl.ReservaService;
