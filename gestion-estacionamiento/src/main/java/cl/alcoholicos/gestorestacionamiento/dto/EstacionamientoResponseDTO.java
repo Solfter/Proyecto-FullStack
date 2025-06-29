@@ -18,9 +18,11 @@ public class EstacionamientoResponseDTO {
     private int nroEstacionamiento;
 
     private EstadoEstacionamientoBasicDTO estadoEstacionamiento;
-    
+
     private SensorBasicDTO sensor;
 
     private List<EspacioFavoritoBasicDTO> espacioFavoritos;
+
+    private TipoEstacionamientoBasicDTO tipoEstacionamiento;
 
 }

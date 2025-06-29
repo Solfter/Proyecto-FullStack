@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EstacionamientoUpdateDTO {
 
-    private int nroEstacionamiento;
+    private String descEstadoEstacionamiento;
 
 }

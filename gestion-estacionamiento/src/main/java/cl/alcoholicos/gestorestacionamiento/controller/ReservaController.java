@@ -1,9 +1,14 @@
 package cl.alcoholicos.gestorestacionamiento.controller;
 
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,7 @@ import cl.alcoholicos.gestorestacionamiento.dto.MessageResponse;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ReservaUpdateDTO;
+import cl.alcoholicos.gestorestacionamiento.exception.EstacionamientoNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ResourceNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.exception.ServiceUnavailableException;
 import cl.alcoholicos.gestorestacionamiento.service.impl.ReservaService;
@@ -80,6 +86,12 @@ public class ReservaController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(reserva);
+    }
+
+    @GetMapping("horaFin/{nroEstacionamiento}")
+    public ResponseEntity<?> obtenerHoraFin (@PathVariable Integer nroEstacionamiento) {
+        LocalTime horaFin = reservaService.buscarHoraFinPorEstacionamiento(nroEstacionamiento);
+        return new ResponseEntity<>("El estacionamiento nro \"" + nroEstacionamiento + "\" se desocupa a las " + horaFin, HttpStatus.OK);
     }
 
     @Operation(summary = "Crear nueva reserva", description = "Crea una nueva reserva de estacionamiento. Requiere autenticación JWT.", security = @SecurityRequirement(name = "bearerAuth"))

@@ -32,11 +32,12 @@ public class EstacionamientoService implements IEstacionamiento {
     public EstacionamientoResponseDTO insert(EstacionamientoCreateDTO estacionamientoCreateDTO) {
         EstacionamientoEntity estacionamiento = estacionamientoMapper.toEntity(estacionamientoCreateDTO);
 
-        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository.findByDescEstadoEstacionamiento(estacionamientoCreateDTO.getDescEstadoEstacionamiento())
-            .orElseThrow(() -> new EntityNotFoundException("Estado de Estacionamiento no encontrado"));
+        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository
+                .findByDescEstadoEstacionamiento(estacionamientoCreateDTO.getDescEstadoEstacionamiento())
+                .orElseThrow(() -> new EntityNotFoundException("Estado de Estacionamiento no encontrado"));
 
         SensorEntity sensor = sensorRepository.findByNroSensor(estacionamientoCreateDTO.getNroSensor())
-            .orElseThrow(() -> new EntityNotFoundException("Sensor no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Sensor no encontrado"));
 
         estacionamiento.setSensor(sensor);
         estacionamiento.setEstadoEstacionamiento(estadoEstacionamiento);
@@ -47,12 +48,22 @@ public class EstacionamientoService implements IEstacionamiento {
     }
 
     @Override
-    public EstacionamientoResponseDTO update(int idEstacionamiento, EstacionamientoUpdateDTO estacionamientoUpdateDTO) {
-        return estacionamientoRepository.findById(idEstacionamiento)
-                .map(estacionamientoExistente -> {
-                    estacionamientoMapper.updateFromUpdateDTO(estacionamientoUpdateDTO, estacionamientoExistente);
-                    EstacionamientoEntity estacionamientoActualizado = estacionamientoRepository.save(estacionamientoExistente);
-                    return estacionamientoMapper.toResponseDTO(estacionamientoActualizado);
+    public EstacionamientoResponseDTO update(int nroEstacionamiento,
+            EstacionamientoUpdateDTO estacionamientoUpdateDTO) {
+        return estacionamientoRepository.findByNroEstacionamiento(nroEstacionamiento)
+                .map(estacionamiento -> {
+                    // Mapea campos simples
+                    estacionamientoMapper.updateFromUpdateDTO(estacionamientoUpdateDTO, estacionamiento);
+
+                    // 🔴 Carga la entidad EstadoEstacionamiento desde la BD
+                    EstadoEstacionamientoEntity estado = estadoEstacionamientoRepository
+                            .findByDescEstadoEstacionamiento(estacionamientoUpdateDTO.getDescEstadoEstacionamiento())
+                            .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
+
+                    estacionamiento.setEstadoEstacionamiento(estado);
+
+                    EstacionamientoEntity actualizado = estacionamientoRepository.save(estacionamiento);
+                    return estacionamientoMapper.toResponseDTO(actualizado);
                 })
                 .orElse(null);
     }
@@ -83,8 +94,8 @@ public class EstacionamientoService implements IEstacionamiento {
     @Override
     public List<EstacionamientoResponseDTO> obtenerEstacionamientoPorEstado(String estado) {
         return estacionamientoRepository.findByEstadoEstacionamientoDescEstadoEstacionamiento(estado).stream()
-            .map(estacionamientoMapper::toResponseDTO)
-            .collect(Collectors.toList());
+                .map(estacionamientoMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }

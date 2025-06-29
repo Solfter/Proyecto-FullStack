@@ -1,5 +1,6 @@
 package cl.alcoholicos.gestorestacionamiento.mapper;
 
+import cl.alcoholicos.gestorestacionamiento.dto.SensorBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.SensorCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.SensorResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-28T08:54:48-0400",
+    date = "2025-06-29T10:02:41-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250624-0847, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -41,6 +42,19 @@ public class SensorMapperImpl implements SensorMapper {
         sensorEntity.setNroSensor( sensorCreateDTO.getNroSensor() );
 
         return sensorEntity;
+    }
+
+    @Override
+    public SensorBasicDTO toBasicDTO(SensorEntity reservaEntity) {
+        if ( reservaEntity == null ) {
+            return null;
+        }
+
+        SensorBasicDTO sensorBasicDTO = new SensorBasicDTO();
+
+        sensorBasicDTO.setNroSensor( reservaEntity.getNroSensor() );
+
+        return sensorBasicDTO;
     }
 
     @Override

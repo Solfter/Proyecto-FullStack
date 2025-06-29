@@ -30,5 +30,9 @@ public interface EstacionamientoRepository extends JpaRepository<Estacionamiento
 
     Optional<EstacionamientoEntity> findByNroEstacionamiento(Integer nroEstacionamiento);
 
-    List<EstacionamientoEntity> findByEstadoEstacionamientoDescEstadoEstacionamiento(String descEstadoEstacionamiento);
+    @Query("SELECT e FROM EstacionamientoEntity e WHERE LOWER(e.estadoEstacionamiento.descEstadoEstacionamiento) = LOWER(:estado)")
+    List<EstacionamientoEntity> findByEstadoEstacionamientoDescEstadoEstacionamiento(@Param("estado") String estado);
+
+    
+
 }

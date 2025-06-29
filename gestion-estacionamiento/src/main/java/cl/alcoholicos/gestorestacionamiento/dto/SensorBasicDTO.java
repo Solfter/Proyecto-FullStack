@@ -1,5 +1,13 @@
 package cl.alcoholicos.gestorestacionamiento.dto;
 
-public class SensorBasicDTO {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SensorBasicDTO {
+    
+    Integer nroSensor;
 }

@@ -16,7 +16,7 @@ sensores - Listo
     "nroSensor": 5
 }
 
-tipoestacionamiento - Listo
+estadoestacionamiento - Listo
 {
     "descEstadoEstacionamiento": "Disponible"
 }
@@ -33,31 +33,44 @@ tipoestacionamiento - Listo
     "descEstadoEstacionamiento": "Mantenimiento"
 }
 
-estacionamiento
+tipoestacionamiento - Listo
+{
+    "descTipoEstacionamiento": "Simple"
+}
+{
+    "descTipoEstacionamiento": "Doble"
+}
+
+estacionamiento - Listo
 {
     "nroEstacionamiento": 1,
     "descEstadoEstacionamiento": "Disponible",
-    "nroSensor": 1
+    "nroSensor": 1,
+    "tipoEstacionamiento": "Simple"
 }
 {
     "nroEstacionamiento": 2,
     "descEstadoEstacionamiento": "Ocupado",
     "nroSensor": 2
+    "tipoEstacionamiento": "Simple"
 }
 {
     "nroEstacionamiento": 3,
     "descEstadoEstacionamiento": "Reservado",
     "nroSensor": 3
+    "tipoEstacionamiento": "Doble"
 }
 {
     "nroEstacionamiento": 4,
     "descEstadoEstacionamiento": "Fuera de Servicio",
     "nroSensor": 4
+    "tipoEstacionamiento": "Doble"
 }
 {
     "nroEstacionamiento": 5,
     "descEstadoEstacionamiento": "Mantenimiento",
     "nroSensor": 5
+    "tipoEstacionamiento": "Simple"
 }
 
 
@@ -111,6 +124,9 @@ tipo usuario - Listo
 }
 {
     "descTipoUsuario": "Invitado"
+}
+{
+    "descTipoUsuario": "Seguridad"
 }
 
 usuario - Listo
@@ -204,8 +220,9 @@ vehiculo - Listo
   "anio": 2020
 }
 
-pruebas tomar estcionamiento ocupado
-ver estcionmiento libre
+pruebas:
+tomar estacionamiento ocupado - Listo
+ver estacionamiento libre - Listo
 hora de desocupar estacionamiento (en estado ocupado)
 
 Constraint a crear: tipo_usuario, estado_reserva, modelo, incidente, tipo_estado_reserva

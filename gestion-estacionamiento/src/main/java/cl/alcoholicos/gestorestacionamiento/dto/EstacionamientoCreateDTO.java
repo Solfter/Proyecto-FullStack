@@ -17,4 +17,6 @@ public class EstacionamientoCreateDTO {
 
     private int nroSensor;
 
+    private String descTipoEstacionamiento;
+
 }

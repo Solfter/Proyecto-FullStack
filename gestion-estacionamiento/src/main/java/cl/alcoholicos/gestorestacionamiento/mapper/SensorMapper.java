@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
+import cl.alcoholicos.gestorestacionamiento.dto.SensorBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.SensorCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.SensorResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.SensorEntity;
@@ -17,6 +18,8 @@ public interface SensorMapper {
     @Mapping(target = "estacionamiento.sensor", ignore = true)
     SensorResponseDTO toResponseDTO(SensorEntity sensorEntity);
     SensorEntity toEntity(SensorCreateDTO sensorCreateDTO);
+
+    SensorBasicDTO toBasicDTO(SensorEntity reservaEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromUpdateDTO(SensorResponseDTO updateDTO, @MappingTarget SensorEntity entity);

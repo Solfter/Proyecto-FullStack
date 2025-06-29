@@ -7,15 +7,19 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstadoEstacionamientoBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-28T08:54:48-0400",
+    date = "2025-06-29T10:02:42-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250624-0847, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class EstacionamientoMapperImpl implements EstacionamientoMapper {
+
+    @Autowired
+    private TipoEstacionamientoMapper tipoEstacionamientoMapper;
 
     @Override
     public EstacionamientoResponseDTO toResponseDTO(EstacionamientoEntity estacionamientoEntity) {
@@ -28,6 +32,7 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
         estacionamientoResponseDTO.estadoEstacionamiento( estadoEstacionamientoEntityToEstadoEstacionamientoBasicDTO( estacionamientoEntity.getEstadoEstacionamiento() ) );
         estacionamientoResponseDTO.idEstacionamiento( estacionamientoEntity.getIdEstacionamiento() );
         estacionamientoResponseDTO.nroEstacionamiento( estacionamientoEntity.getNroEstacionamiento() );
+        estacionamientoResponseDTO.tipoEstacionamiento( tipoEstacionamientoMapper.toBasicDTO( estacionamientoEntity.getTipoEstacionamiento() ) );
 
         return estacionamientoResponseDTO.build();
     }
@@ -50,8 +55,6 @@ public class EstacionamientoMapperImpl implements EstacionamientoMapper {
         if ( updateDTO == null ) {
             return;
         }
-
-        entity.setNroEstacionamiento( updateDTO.getNroEstacionamiento() );
     }
 
     protected EstadoEstacionamientoBasicDTO estadoEstacionamientoEntityToEstadoEstacionamientoBasicDTO(EstadoEstacionamientoEntity estadoEstacionamientoEntity) {

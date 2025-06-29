@@ -12,12 +12,15 @@ import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.EstacionamientoUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", uses = { SensorMapper.class,
+        TipoEstacionamientoMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstacionamientoMapper {
     @Mapping(target = "sensor", ignore = true)
     EstacionamientoResponseDTO toResponseDTO(EstacionamientoEntity estacionamientoEntity);
+
     EstacionamientoEntity toEntity(EstacionamientoCreateDTO estacionamiento);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromUpdateDTO(EstacionamientoUpdateDTO updateDTO, @MappingTarget EstacionamientoEntity entity);
+
 }

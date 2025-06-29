@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.TipoEstadoReservaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.exception.EstacionamientoNotFoundException;
 import cl.alcoholicos.gestorestacionamiento.mapper.ReservaMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.EstacionamientoRepository;
 import cl.alcoholicos.gestorestacionamiento.repository.EstadoEstacionamientoRepository;
@@ -50,10 +53,12 @@ public class ReservaService implements IReserva {
 
         ReservaEntity reserva = reservaMapper.toEntity(createDTO);
 
-        EstacionamientoEntity estacionamiento = estacionamientoRepository.findByNroEstacionamiento(createDTO.getNroEstacionamiento())
+        EstacionamientoEntity estacionamiento = estacionamientoRepository
+                .findByNroEstacionamiento(createDTO.getNroEstacionamiento())
                 .orElseThrow(() -> new EntityNotFoundException("Estacionamiento no encontrado"));
 
-        EstadoEstacionamientoEntity reservado = estadoEstacionamientoRepository.findByDescEstadoEstacionamiento("Reservado")
+        EstadoEstacionamientoEntity reservado = estadoEstacionamientoRepository
+                .findByDescEstadoEstacionamiento("Reservado")
                 .orElseThrow(() -> new EntityNotFoundException("Estado de estacionamiento no encontrado"));
 
         UsuarioEntity usuario = usuarioRepository.findById(rutUsuario)
@@ -228,8 +233,10 @@ public class ReservaService implements IReserva {
 
     private boolean esEstadoConfirmada(ReservaEntity reserva) {
         // Verificar si existe al menos un estado "confirmada" activo
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository.findByDescTipoEstadoReserva("Confirmada")
-                .orElseThrow(() -> new EntityNotFoundException("No se encuentra la descripcion confirmada de tipoEstadoReserva"));
+        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository
+                .findByDescTipoEstadoReserva("Confirmada")
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se encuentra la descripcion confirmada de tipoEstadoReserva"));
 
         List<EstadoReservaEntity> estadosReserva = reserva.getEstadosReservas();
 
@@ -261,4 +268,12 @@ public class ReservaService implements IReserva {
 
         return reservasConflicto.isEmpty();
     }
+
+    public LocalTime buscarHoraFinPorEstacionamiento (Integer nroEstacionamiento) {
+        String horaFinString = reservaRepository.findHorasFinDeReservasActivasPorNroEstacionamiento(nroEstacionamiento);
+        LocalTime horaFin = LocalTime.parse(horaFinString);
+        System.out.println("Hora fin: " + horaFinString);
+        return horaFin;
+    }
+
 }

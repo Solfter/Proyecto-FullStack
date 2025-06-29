@@ -158,7 +158,7 @@ public class EstacionamientoController {
         }
     }
 
-    @PutMapping("/{idEstacionamiento}")
+    @PutMapping("/{nroEstacionamiento}")
     @Operation(
         summary = "Actualizar estacionamiento",
         description = "Actualiza los datos de un estacionamiento existente identificado por su ID"
@@ -189,11 +189,11 @@ public class EstacionamientoController {
         )
     })
     public ResponseEntity<EstacionamientoResponseDTO> update(
-        @Parameter(description = "ID del estacionamiento a actualizar", required = true, example = "1")
-        @PathVariable Integer idEstacionamiento,
+        @Parameter(description = "Nro del estacionamiento a actualizar", required = true, example = "1")
+        @PathVariable Integer nroEstacionamiento,
         @Parameter(description = "Datos del estacionamiento a actualizar", required = true)
         @RequestBody EstacionamientoUpdateDTO estacionamientoUpdateDTO) {
-        EstacionamientoResponseDTO estacionamientoActualizado = estacionamientoService.update(idEstacionamiento, estacionamientoUpdateDTO);
+        EstacionamientoResponseDTO estacionamientoActualizado = estacionamientoService.update(nroEstacionamiento, estacionamientoUpdateDTO);
         if (estacionamientoActualizado == null) {
            return ResponseEntity.notFound().build();
         }

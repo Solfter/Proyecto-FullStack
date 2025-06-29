@@ -40,6 +40,10 @@ public class EstacionamientoEntity {
     @JoinColumn(name = "ID_SENSOR", unique = true)
     private SensorEntity sensor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_TIPO_ESTACIONAMIENTO")
+    private TipoEstacionamientoEntity tipoEstacionamiento;
+
     @OneToMany(mappedBy = "estacionamiento", cascade = CascadeType.ALL)
     private List<EspacioFavoritoEntity> espaciosFavoritos;
 }

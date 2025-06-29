@@ -2,6 +2,7 @@ package cl.alcoholicos.gestorestacionamiento.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -102,12 +103,11 @@ public class EstadoReservaController {
     }
 
     @PutMapping("{idReserva}/activar")
-    public ResponseEntity<Void> actualizarReservaAActiva (@PathVariable Integer idReserva) {
-        ReservaEntity reserva = reservaRepository.findById(idReserva)
-            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+    public ResponseEntity<String> actualizarReservaAActiva (@PathVariable Integer idReserva) {
 
-        
-        estadoReservaService.actualizarAEstadoActiva(reserva);
+        if (estadoReservaService.actualizarAEstadoActiva(idReserva)) {
+            return new ResponseEntity<>("Se logró cambiar el estado de reserva a \"Activa\"", HttpStatus.OK);
+        }
         return ResponseEntity.noContent().build();
     }
 
