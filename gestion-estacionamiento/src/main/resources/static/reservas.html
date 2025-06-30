@@ -39,6 +39,31 @@
             font-size: 2rem;
         }
 
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .menu-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
         .logout-btn {
             background: #dc3545;
             color: white;
@@ -124,9 +149,9 @@
 
         .parking-layout {
             display: grid;
-            grid-template-columns: repeat(20, 30px);
-            grid-template-rows: repeat(10, 40px);
-            gap: 2px;
+            grid-template-columns: repeat(25, 20px);
+            grid-template-rows: repeat(19, 20px);
+            gap: 1px;
             max-width: 100%;
             margin: 0 auto;
             padding: 20px;
@@ -137,38 +162,38 @@
         }
 
         .parking-spot {
-            border: 2px solid #666;
-            border-radius: 4px;
+            border: 1px solid #666;
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 10px;
+            font-size: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .parking-spot.available {
             background: linear-gradient(135deg, #51d437 0%, #51d437 100%);
-            color: #333;
+            color: white;
             border-color: #51d437;
         }
 
         .parking-spot.available:hover {
-            background: linear-gradient(135deg, #ffed4e 0%, #ffed4e 100%);
+            background: linear-gradient(135deg, #45b82e 0%, #45b82e 100%);
             transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 2px 8px rgba(81, 212, 55, 0.4);
             z-index: 10;
         }
 
         .parking-spot.selected {
             background: linear-gradient(135deg, #ffed4e 0%, #ffed4e 100%);
-            color: white;
+            color: #333;
             border-color: #ffed4e;
             transform: scale(1.15);
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 237, 78, 0.6);
             animation: pulse 2s infinite;
             z-index: 10;
         }
@@ -188,8 +213,8 @@
         }
 
         .road {
-            background: #504f4e79;
-            border: 1px solid #525050;
+            background: #6c757d;
+            border: 1px solid #545b62;
             cursor: default;
         }
 
@@ -200,10 +225,11 @@
         }
 
         .entrance {
-            background: #34db50;
-            border: 1px solid #34db50;
+            background: #17a2b8;
+            border: 1px solid #138496;
             cursor: default;
         }
+        
         .elevator {
             background: #3498db;
             border: 1px solid #2980b9;
@@ -228,9 +254,9 @@
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); }
-            50% { box-shadow: 0 4px 20px rgba(40, 167, 69, 0.6); }
-            100% { box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); }
+            0% { box-shadow: 0 4px 15px rgba(255, 237, 78, 0.6); }
+            50% { box-shadow: 0 4px 20px rgba(255, 237, 78, 0.8); }
+            100% { box-shadow: 0 4px 15px rgba(255, 237, 78, 0.6); }
         }
 
         .parking-legend {
@@ -268,10 +294,13 @@
             background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
         }
         .legend-road {
-            background: #666;
+            background: #6c757d;
         }
         .legend-building {
             background: #2c3e50;
+        }
+        .legend-entrance {
+            background: #17a2b8;
         }
 
         .selected-info {
@@ -372,19 +401,35 @@
                 text-align: center;
             }
 
+            .header-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+            }
+
             .parking-layout {
-                grid-template-columns: repeat(15, 25px);
-                grid-template-rows: repeat(10, 35px);
+                grid-template-columns: repeat(25, 12px);
+                grid-template-rows: repeat(19, 12px);
                 gap: 1px;
-                padding: 15px;
+                padding: 10px;
             }
             
             .parking-spot {
-                font-size: 8px;
+                font-size: 6px;
             }
             
             .parking-legend {
-                gap: 15px;
+                gap: 10px;
+            }
+            
+            .legend-item {
+                padding: 5px 8px;
+                font-size: 12px;
+            }
+            
+            .legend-color {
+                width: 15px;
+                height: 15px;
             }
         }
     </style>
@@ -393,7 +438,12 @@
     <div class="container">
         <div class="header">
             <h1>Gestión de Reservas</h1>
-            <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+            <div class="header-buttons">
+                <a href="menu.html" class="menu-btn">
+                    🏠 Volver al Menú
+                </a>
+                <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+            </div>
         </div>
 
         <div class="reserva-container">
@@ -457,6 +507,10 @@
                                 <div class="legend-color legend-building"></div>
                                 <span>Edificio</span>
                             </div>
+                            <div class="legend-item">
+                                <div class="legend-color legend-entrance"></div>
+                                <span>Entrada</span>
+                            </div>
                         </div>
                         
                         <div class="selected-info" id="selectedInfo">
@@ -477,19 +531,35 @@
         let selectedSpot = null;
         let occupiedSpots = [];
 
-        // Definir el layout del estacionamiento basado en la imagen
-        // 0 = espacio vacío, 1 = estacionamiento, 2 = espacio negro, 3 = calle, 4 = entrada 5 = ascensor
+        // Definir el layout del estacionamiento rectangular con edificio central
+        // CÓDIGOS: 0 = espacio vacío, 1 = estacionamiento, 2 = edificio, 3 = calle, 4 = entrada, 5 = ascensor
+        // Layout: 25x19 (más rectangular) con estacionamientos dobles en superior e izquierda
+        // INSTRUCCIONES: Cambia los números en la matriz para modificar el mapa
+        // - Usa 4 para marcar entradas (aparecerá como "E" azul)
+        // - Usa 5 para marcar ascensores (aparecerá como "A" azul)
+        // - Usa 2 para edificios (gris oscuro)
+        // - Usa 3 para calles/pasillos (gris claro)
+        // - Usa 1 para estacionamientos (verde, clickeable)
         const parkingLayout = [
-            [0,0,3,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
-            [1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
-            [1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1],
-            [1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1],
-            [1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1],
-            [1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1],
-            [1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1],
-            [1,1,3,3,3,3,3,3,3,5,5,3,3,3,3,3,3,3,3,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], // Fila 1: 25 espacios (superior doble)
+            [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], // Fila 2: 25 espacios (superior doble)
+            [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], // Fila 3: 2 espacios (izquierda y derecha)
+            [1,1,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1], // Fila 4: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 5: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 6: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 7: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 8: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 9: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 10: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 11: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 12: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 13: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 14: 2 espacios
+            [1,1,3,3,1,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,1,3,3,3,1], // Fila 15: 2 espacios
+            [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], // Fila 16: 2 espacios
+            [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], // Fila 17: 2 espacios
+            [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], // Fila 18: 25 espacios (inferior)
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]  // Fila 19: 25 espacios (inferior doble)
         ];
 
         // Mapeo de números de estacionamiento
@@ -500,7 +570,6 @@
         window.addEventListener('load', function() {
             const token = localStorage.getItem('authToken');
             if (!token) {
-                // Si no hay token, redirigir al login
                 window.location.href = 'index.html';
             }
             
@@ -512,10 +581,66 @@
             initializeParkingSelector();
         });
 
+        // Función para validar que la fecha sea igual o mayor a hoy
+        function validateDate() {
+            const fechaReserva = document.getElementById('fechaReserva').value;
+            
+            // Si no hay fecha seleccionada, no validar
+            if (!fechaReserva) {
+                return true;
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (fechaReserva < today) {
+                showError('La fecha de reserva debe ser igual o mayor a la fecha de hoy.');
+                document.getElementById('fechaReserva').value = today;
+                return false;
+            }
+            
+            hideMessages();
+            return true;
+        }
+
+        // Agregar validación de fecha al cambiar el valor
+        document.getElementById('fechaReserva').addEventListener('change', function() {
+            // Solo validar si la fecha está completa (formato YYYY-MM-DD)
+            const fechaReserva = this.value;
+            if (fechaReserva && fechaReserva.length === 10) {
+                validateDate();
+                updateParkingAvailability();
+            }
+        });
+
+        // Agregar validación suave mientras el usuario escribe
+        document.getElementById('fechaReserva').addEventListener('input', function() {
+            const fechaReserva = this.value;
+            
+            // Si la fecha está completa, validar sin mostrar errores inmediatamente
+            if (fechaReserva && fechaReserva.length === 10) {
+                const today = new Date().toISOString().split('T')[0];
+                
+                if (fechaReserva < today) {
+                    // Solo cambiar el valor si es menor a hoy, sin mostrar error inmediatamente
+                    this.value = today;
+                    // Validar después de un pequeño delay para dar tiempo al usuario
+                    setTimeout(() => {
+                        validateDate();
+                        updateParkingAvailability();
+                    }, 100);
+                } else {
+                    // Si la fecha es válida, limpiar mensajes y actualizar disponibilidad
+                    hideMessages();
+                    updateParkingAvailability();
+                }
+            }
+        });
+
         // Inicializar el selector visual de estacionamientos
         function initializeParkingSelector() {
             const layout = document.getElementById('parkingLayout');
             layout.innerHTML = '';
+            spotCounter = 1; // Resetear contador
             
             // Crear el layout basado en la matriz
             for (let row = 0; row < parkingLayout.length; row++) {
@@ -538,32 +663,107 @@
                                 cell.classList.add('occupied');
                             } else {
                                 cell.classList.add('available');
-                                cell.addEventListener('click', () => selectSpot(spotCounter));
+                                cell.addEventListener('click', ((id) => () => {
+                                    console.log(`Click en estacionamiento ${id}`);
+                                    selectSpot(id);
+                                })(spotCounter));
                             }
                             spotCounter++;
                             break;
-                        case 2: // espacio negro
+                        case 2: // Edificio
                             cell.className = 'parking-spot building';
                             break;
-                        case 3: // camino
+                        case 3: // Calle/Espacio central
                             cell.className = 'parking-spot road';
                             break;
                         case 4: // Entrada
                             cell.className = 'parking-spot entrance';
+                            cell.textContent = 'E';
                             break;
-                        case 5: //Ascensor
-                            cell.className= 'parking-spot elevator';
+                        case 5: // Ascensor
+                            cell.className = 'parking-spot elevator';
+                            cell.textContent = 'A';
+                            break;
                     }
                     
                     layout.appendChild(cell);
+                }
+            }
+            
+            // Agregar el edificio central rectangular con ascensor
+            addCentralBuilding();
+            
+            console.log(`Total de espacios de estacionamiento: ${spotCounter - 1} (Layout rectangular con edificio central)`);
+            console.log(`Espacios ocupados: ${occupiedSpots.length}`);
+        }
+
+        // Función para agregar el edificio central rectangular con ascensor
+        function addCentralBuilding() {
+            const layout = document.getElementById('parkingLayout');
+            const cells = layout.children;
+            
+            // Definir el área central del edificio rectangular (aproximadamente 10x6 en el centro)
+            const startRow = 5;
+            const endRow = 14;
+            const startCol = 8;
+            const endCol = 17;
+            
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const index = row * 25 + col;
+                    if (cells[index]) {
+                        // Solo modificar si no es un estacionamiento (no tiene data-spot-id)
+                        if (!cells[index].hasAttribute('data-spot-id')) {
+                            // Verificar el valor original en la matriz
+                            const originalValue = parkingLayout[row][col];
+                            
+                            // Si ya tiene un valor específico (como entrada o ascensor), respetarlo
+                            if (originalValue === 4) {
+                                // Es una entrada, mantenerla
+                                cells[index].className = 'parking-spot entrance';
+                                cells[index].textContent = 'E';
+                            } else if (originalValue === 5) {
+                                // Es un ascensor, mantenerlo
+                                cells[index].className = 'parking-spot elevator';
+                                cells[index].textContent = 'A';
+                            } else if (originalValue === 2) {
+                                // Es edificio, mantenerlo
+                                cells[index].className = 'parking-spot building';
+                                cells[index].textContent = '';
+                            } else if (originalValue === 3) {
+                                // Es calle, mantenerlo
+                                cells[index].className = 'parking-spot road';
+                                cells[index].textContent = '';
+                            } else {
+                                // Valor por defecto: si es el centro exacto, poner el ascensor
+                                if (row === 9 && col === 12) {
+                                    cells[index].className = 'parking-spot elevator';
+                                    cells[index].textContent = 'A';
+                                } else {
+                                    cells[index].className = 'parking-spot building';
+                                    cells[index].textContent = '';
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
         // Seleccionar un espacio de estacionamiento
         function selectSpot(spotId) {
+            console.log(`Función selectSpot llamada con spotId: ${spotId}`);
+            
+            // Verificar que el espacio no esté ocupado
+            if (occupiedSpots.includes(spotId)) {
+                console.log(`Estacionamiento ${spotId} está ocupado`);
+                showError('Este estacionamiento no está disponible.');
+                return;
+            }
+
             // Remover selección anterior
             if (selectedSpot) {
+                console.log(`Removiendo selección anterior: ${selectedSpot}`);
                 const prevSpot = document.querySelector(`[data-spot-id="${selectedSpot}"]`);
                 if (prevSpot && !prevSpot.classList.contains('occupied')) {
                     prevSpot.classList.remove('selected');
@@ -573,17 +773,25 @@
             
             // Seleccionar nuevo espacio
             const spot = document.querySelector(`[data-spot-id="${spotId}"]`);
-            spot.classList.remove('available');
-            spot.classList.add('selected');
+            console.log(`Elemento encontrado para spot ${spotId}:`, spot);
             
-            selectedSpot = spotId;
-            
-            // Mostrar información del espacio seleccionado
-            document.getElementById('selectedSpot').textContent = `Espacio ${spotId}`;
-            document.getElementById('selectedInfo').style.display = 'block';
-            
-            // Limpiar mensajes de error
-            hideMessages();
+            if (spot) {
+                spot.classList.remove('available');
+                spot.classList.add('selected');
+                
+                selectedSpot = spotId;
+                
+                // Mostrar información del espacio seleccionado
+                document.getElementById('selectedSpot').textContent = `Espacio ${spotId}`;
+                document.getElementById('selectedInfo').style.display = 'block';
+                
+                // Limpiar mensajes de error
+                hideMessages();
+                
+                console.log(`Estacionamiento seleccionado: ${spotId}`);
+            } else {
+                console.error(`No se encontró el elemento para spot ${spotId}`);
+            }
         }
 
         // Cargar espacios ocupados desde el servidor
@@ -605,10 +813,10 @@
                 }
             } catch (error) {
                 console.error('Error de conexión al cargar disponibilidad:', error);
-                // En caso de error, devolver algunos espacios ocupados como ejemplo
-                const totalSpots = spotCounter - 1;
+                // En caso de error, generar algunos espacios ocupados aleatorios
+                const totalSpots = 150; // 25 columnas * 6 filas de estacionamientos (2 superior + 2 inferior + 2 laterales)
                 const randomOccupied = [];
-                for (let i = 0; i < Math.floor(totalSpots * 0.3); i++) {
+                for (let i = 0; i < Math.floor(totalSpots * 0.2); i++) {
                     const randomSpot = Math.floor(Math.random() * totalSpots) + 1;
                     if (!randomOccupied.includes(randomSpot)) {
                         randomOccupied.push(randomSpot);
@@ -642,7 +850,6 @@
                     
                     // Actualizar vista
                     occupiedSpots = newOccupiedSpots;
-                    spotCounter = 1; // Resetear contador
                     initializeParkingSelector();
                     
                 } catch (error) {
@@ -666,12 +873,23 @@
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFin = document.getElementById('horaFin').value;
             
+            console.log('Enviando formulario con datos:', {
+                fechaReserva,
+                horaInicio,
+                horaFin,
+                selectedSpot
+            });
+            
             const successDiv = document.getElementById('successMessage');
             const errorDiv = document.getElementById('errorMessage');
             const loadingDiv = document.getElementById('loading');
             const crearBtn = document.getElementById('crearBtn');
             
             // Validaciones
+            if (!validateDate()) {
+                return;
+            }
+            
             if (horaFin <= horaInicio) {
                 showError('La hora de fin debe ser posterior a la hora de inicio.');
                 return;
@@ -702,7 +920,7 @@
                         fechaReserva: fechaReserva,
                         horaInicio: horaInicio,
                         horaFin: horaFin,
-                        idEstacionamiento: selectedSpot
+                        nroEstacionamiento: selectedSpot
                     })
                 });
                 
