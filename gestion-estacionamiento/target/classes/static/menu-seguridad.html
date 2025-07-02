@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Seguridad - Gestión de Estacionamiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .user-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .user-details h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .role-badge {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .menu-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .menu-header h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-header p {
+            color: #666;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            justify-items: center;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .menu-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .menu-item p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .menu-item:hover p {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+            padding: 1rem;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .security-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .security-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Información del usuario -->
+        <div class="user-info">
+            <div class="user-header">
+                <div class="user-details">
+                    <h2 id="userName">Bienvenido, Usuario <span class="role-badge">SEGURIDAD</span></h2>
+                    <p id="userEmail">usuario@email.com</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    🚪 Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú principal -->
+        <div class="menu-container">
+            <div class="security-header">
+                <h2>🛡️ Panel de Seguridad</h2>
+            </div>
+
+            <div class="menu-header">
+                <h1>Control de Acceso</h1>
+                <p>Gestiona la validación de reservas de estacionamiento</p>
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                Cargando información...
+            </div>
+
+            <div class="menu-grid">
+                <a href="validar-reserva.html" class="menu-item">
+                    <span class="menu-icon">✅</span>
+                    <h3>Validar Reserva</h3>
+                    <p>Activar y validar reservas de estacionamiento mediante ID</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar información del usuario al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+        });
+
+        async function loadUserInfo() {
+            const loading = document.getElementById('loading');
+            
+            try {
+                loading.style.display = 'block';
+                
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const response = await fetch('http://localhost:8001/auth/user', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    // Verificar que el usuario sea de seguridad
+                    if (userData.tipoUsuario && userData.tipoUsuario.descTipoUsuario !== "Seguridad") {
+                        alert('Acceso denegado. No tienes permisos para acceder a este panel.');
+                        window.location.href = 'menu.html';
+                        return;
+                    }
+                    
+                    // Actualizar nombre del usuario
+                    const nombre = userData.primerNombre + ' '  + userData.apPaterno + ' ' || 'Usuario';
+                    document.getElementById('userName').innerHTML = `Bienvenido, ${nombre} <span class="role-badge">SEGURIDAD</span>`;
+                    
+                    // Actualizar correo
+                    document.getElementById('userEmail').textContent = userData.correo || 'usuario@email.com';
+                    
+                    console.log('Información del usuario cargada correctamente');
+                } else if (response.status === 401) {
+                    // Token inválido o expirado
+                    console.log('Token inválido, redirigiendo al login');
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'login.html';
+                } else {
+                    console.error('Error al cargar información del usuario:', response.status);
+                    // Mantener valores por defecto
+                }
+            } catch (error) {
+                console.error('Error de conexión al cargar información del usuario:', error);
+                // Si hay error de conexión, mantener valores por defecto
+                // pero no redirigir al login
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                localStorage.removeItem('authToken');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Verificar autenticación periódicamente
+        setInterval(function() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+        }, 60000); // Verificar cada minuto
+    </script>
+</body>
+</html>

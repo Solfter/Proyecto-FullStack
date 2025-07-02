@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Reservas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .header p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .clear-filters-btn {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #e1e8ed;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        .reservas-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .reservas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .reservas-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            display: none;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .reserva-card {
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .reserva-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .reserva-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .reserva-id {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .estado-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .estado-completada {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .estado-activa {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .estado-confirmada {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .estado-cancelada {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .reserva-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .timeline {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .timeline-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .timeline-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-item {
+            background: #f1f3f4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        .no-reservas {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .no-reservas-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #c33;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reserva-details {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-items {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div>
+                    <h1>📋 Historial de Reservas</h1>
+                    <p>Consulta todas tus reservas anteriores y su estado</p>
+                </div>
+                <a href="menu.html" class="back-btn">
+                    ← Volver al Menú
+                </a>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="estadoFilter">Estado</label>
+                    <select id="estadoFilter">
+                        <option value="">Todos los estados</option>
+                        <option value="Completada">Completada</option>
+                        <option value="Activa">Activa</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="fechaDesde">Desde</label>
+                    <input type="date" id="fechaDesde">
+                </div>
+                <div class="filter-group">
+                    <label for="fechaHasta">Hasta</label>
+                    <input type="date" id="fechaHasta">
+                </div>
+                <div class="filter-group">
+                    <button class="clear-filters-btn" onclick="clearFilters()">
+                        🗑️ Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor de reservas -->
+        <div class="reservas-container">
+            <div class="reservas-header">
+                <h2>Mis Reservas</h2>
+                <div class="reservas-count" id="reservasCount">
+                    Cargando reservas...
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Cargando historial de reservas...</p>
+            </div>
+
+            <div id="reservasContainer">
+                <!-- Las reservas se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let reservasData = [];
+        let reservasFiltradas = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadReservas();
+            setupFilters();
+        });
+
+        async function loadReservas() {
+            const loading = document.getElementById('loading');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            try {
+                loading.style.display = 'block';
+                errorDiv.style.display = 'none';
+                
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                const response = await fetch('http://localhost:8001/reserva/historial', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) {
+                    reservasData = await response.json();
+                    // Ordenar las reservas por ID de reserva (mayor a menor - IDs más altos primero)
+                    reservasData.sort((a, b) => b.idReserva - a.idReserva);
+                    reservasFiltradas = [...reservasData];
+                    displayReservas(reservasFiltradas);
+                    updateReservasCount(reservasFiltradas.length);
+                } else if (response.status === 401) {
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'index.html';
+                } else {
+                    const errorData = await response.json();
+                    showError(errorData.message || 'Error al cargar las reservas');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Error de conexión. Por favor, intenta nuevamente.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayReservas(reservas) {
+            const container = document.getElementById('reservasContainer');
+            
+            if (reservas.length === 0) {
+                container.innerHTML = `
+                    <div class="no-reservas">
+                        <div class="no-reservas-icon">🚗</div>
+                        <h3>No hay reservas</h3>
+                        <p>No tienes reservas que coincidan con los filtros seleccionados.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = reservas.map(reserva => {
+                const estadoActual = getEstadoActual(reserva.estadosReservas);
+                const nombreCompleto = `${reserva.usuario.primerNombre} ${reserva.usuario.segundoNombre || ''} ${reserva.usuario.apPaterno} ${reserva.usuario.apMaterno}`.trim();
+                
+                return `
+                    <div class="reserva-card">
+                        <div class="reserva-header">
+                            <div class="reserva-id">Reserva #${reserva.idReserva}</div>
+                            <div class="estado-badge estado-${estadoActual.toLowerCase()}">
+                                ${estadoActual}
+                            </div>
+                        </div>
+                        
+                        <div class="reserva-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Fecha de Reserva</div>
+                                <div class="detail-value">${formatDate(reserva.fechaReserva)}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Horario</div>
+                                <div class="detail-value">${formatTime(reserva.horaInicio)} - ${formatTime(reserva.horaFin)}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Estacionamiento</div>
+                                <div class="detail-value">Espacio #${reserva.estacionamiento.nroEstacionamiento}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Creada el</div>
+                                <div class="detail-value">${reserva.fechaCreacionReserva}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-title">Historial de Estados:</div>
+                            <div class="timeline-items">
+                                ${reserva.estadosReservas.map(estado => `
+                                    <div class="timeline-item">
+                                        ${estado.tipoEstadoReserva.descTipoEstadoReserva} - ${estado.fechaEstadoReserva}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getEstadoActual(estadosReservas) {
+            if (!estadosReservas || estadosReservas.length === 0) return 'Desconocido';
+            
+            // Ordenar por fecha (más reciente primero) y tomar el último estado
+            const estadosOrdenados = estadosReservas.sort((a, b) => 
+                new Date(b.fechaEstadoReserva.replace(/(\d{2})-(\d{2})-(\d{4})/, '$3-$2-$1')) - 
+                new Date(a.fechaEstadoReserva.replace(/(\d{2})-(\d{2})-(\d{4})/, '$3-$2-$1'))
+            );
+            
+            return estadosOrdenados[0].tipoEstadoReserva.descTipoEstadoReserva;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(timeString) {
+            return timeString.slice(0, 5); // Quitar los segundos
+        }
+
+        function setupFilters() {
+            document.getElementById('estadoFilter').addEventListener('change', applyFilters);
+            document.getElementById('fechaDesde').addEventListener('change', applyFilters);
+            document.getElementById('fechaHasta').addEventListener('change', applyFilters);
+        }
+
+        function applyFilters() {
+            const estadoFilter = document.getElementById('estadoFilter').value;
+            const fechaDesde = document.getElementById('fechaDesde').value;
+            const fechaHasta = document.getElementById('fechaHasta').value;
+
+            reservasFiltradas = reservasData.filter(reserva => {
+                // Filtro por estado
+                if (estadoFilter && getEstadoActual(reserva.estadosReservas) !== estadoFilter) {
+                    return false;
+                }
+
+                // Filtro por fecha
+                const fechaReserva = new Date(reserva.fechaReserva);
+                if (fechaDesde && fechaReserva < new Date(fechaDesde)) {
+                    return false;
+                }
+                if (fechaHasta && fechaReserva > new Date(fechaHasta)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Mantener el orden por ID de reserva después de aplicar filtros
+            reservasFiltradas.sort((a, b) => b.idReserva - a.idReserva);
+            
+            displayReservas(reservasFiltradas);
+            updateReservasCount(reservasFiltradas.length);
+        }
+
+        function clearFilters() {
+            document.getElementById('estadoFilter').value = '';
+            document.getElementById('fechaDesde').value = '';
+            document.getElementById('fechaHasta').value = '';
+            
+            reservasFiltradas = [...reservasData];
+            displayReservas(reservasFiltradas);
+            updateReservasCount(reservasFiltradas.length);
+        }
+
+        function updateReservasCount(count) {
+            const countElement = document.getElementById('reservasCount');
+            countElement.textContent = `${count} reserva${count !== 1 ? 's' : ''} encontrada${count !== 1 ? 's' : ''}`;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Verificar autenticación periódicamente
+        setInterval(function() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.href = 'index.html';
+            }
+        }, 60000);
+    </script>
+</body>
+</html>
