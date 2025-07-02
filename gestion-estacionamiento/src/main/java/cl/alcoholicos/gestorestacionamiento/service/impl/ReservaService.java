@@ -270,10 +270,17 @@ public class ReservaService implements IReserva {
     }
 
     public LocalTime buscarHoraFinPorEstacionamiento (Integer nroEstacionamiento) {
-        String horaFinString = reservaRepository.findHorasFinDeReservasActivasPorNroEstacionamiento(nroEstacionamiento);
-        LocalTime horaFin = LocalTime.parse(horaFinString);
-        System.out.println("Hora fin: " + horaFinString);
-        return horaFin;
+        Optional<String> horaFinOptional = reservaRepository.findHorasFinDeReservasActivasPorNroEstacionamiento(nroEstacionamiento);
+        
+        if (horaFinOptional.isPresent()) {
+            String horaFinString = horaFinOptional.get();
+            LocalTime horaFin = LocalTime.parse(horaFinString);
+            System.out.println("Hora fin: " + horaFinString);
+            return horaFin;
+        } else {
+            System.out.println("No hay reserva activa en el estacionamiento " + nroEstacionamiento);
+            return null; // O podrías lanzar una excepción según tu lógica de negocio
+        }
     }
 
 }

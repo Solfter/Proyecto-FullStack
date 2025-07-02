@@ -227,7 +227,3 @@ hora de desocupar estacionamiento (en estado ocupado):
 	-REALIZAR RESERVA EN LA HORA ACTUAL - Listo
 	-ACTIVAR RESERVA - > SE PONDRA COMO OCUPADO EL ESTACIONAMIENTO - Listo
 	-REALIZAR RESERVA EN EL MISMO ESPACIO -> VISUALIZAR A QUE HORA SE DESOCUPA - Listo
-
-Falta implementar que la disponibilidad sea en base a la fecha, hora de inicio y hora de fin de las reservas
-
-Constraint a crear: tipo_usuario, estado_reserva, modelo, incidente, tipo_estado_reserva

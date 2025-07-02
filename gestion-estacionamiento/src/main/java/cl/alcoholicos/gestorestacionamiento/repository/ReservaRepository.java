@@ -15,7 +15,7 @@ import cl.alcoholicos.gestorestacionamiento.entity.ReservaEntity;
 @Repository
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer> {
 
-    // CORREGIDO: Busca reservas que están CONFIRMADAS pero ya vencieron (no las que
+    // Busca reservas que están CONFIRMADAS pero ya vencieron (no las que
     // ya están Expiradas)
     @Query(value = """
             SELECT r.* FROM reserva r
@@ -36,7 +36,7 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             """, nativeQuery = true)
     List<ReservaEntity> findReservasVencidas();
 
-    // CORREGIDO: Busca reservas que están EN_USO pero ya terminaron (no las que ya
+    // Busca reservas que están ACTIVAS pero ya terminaron (no las que ya
     // están Completadas)
     @Query(value = """
             SELECT r.* FROM reserva r
@@ -57,8 +57,10 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             """, nativeQuery = true)
     List<ReservaEntity> findReservasCompletadas();
 
+    // Busca todas las reservas de un usuario por su RUT
     List<ReservaEntity> findByUsuarioRut(Integer rutUsuario);
 
+    // Busca reservas que tienen conflicto de horarios con una nueva reserva
     @Query("""
             SELECT r FROM ReservaEntity r
             WHERE r.estacionamiento.id = :idEstacionamiento
@@ -72,7 +74,12 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             AND EXISTS (
                 SELECT er FROM EstadoReservaEntity er
                 WHERE er.reserva = r
-                AND er.tipoEstadoReserva.descTipoEstadoReserva = 'Confirmada'
+                AND er.fechaEstadoReserva = (
+                    SELECT MAX(er2.fechaEstadoReserva)
+                    FROM EstadoReservaEntity er2
+                    WHERE er2.reserva = r
+                )
+                AND er.tipoEstadoReserva.descTipoEstadoReserva IN ('Confirmada', 'Activa')
             )
             """)
     List<ReservaEntity> findReservasConflicto(
@@ -82,7 +89,7 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             @Param("horaFin") LocalTime horaFin,
             @Param("idReservaExcluir") Integer idReservaExcluir);
 
-    // Esta query está correcta - busca reservas que están Canceladas
+    // Busca reservas que están Canceladas
     @Query(value = """
             SELECT r.* FROM reserva r
             INNER JOIN estado_reserva er ON r.id_reserva = er.id_reserva
@@ -96,13 +103,14 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             """, nativeQuery = true)
     List<ReservaEntity> findReservasCanceladas();
 
+    // Busca la reserva activa actual en un estacionamiento específico
     @Query("""
             SELECT r
             FROM ReservaEntity r
             JOIN r.estadosReservas er
             JOIN er.tipoEstadoReserva ter
             WHERE r.estacionamiento.nroEstacionamiento = :nroEstacionamiento
-              AND ter.descTipoEstadoReserva = 'Confirmada'
+              AND ter.descTipoEstadoReserva = 'Activa'
               AND er.fechaEstadoReserva = (
                     SELECT MAX(er2.fechaEstadoReserva)
                     FROM EstadoReservaEntity er2
@@ -113,6 +121,8 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             """)
     Optional<ReservaEntity> findReservaActivaPorEstacionamiento(@Param("nroEstacionamiento") int nroEstacionamiento);
 
+    // Busca la hora de fin de la reserva activa en un estacionamiento específico
+    // Un estacionamiento solo puede tener una reserva activa a la vez
     @Query(value = """
             SELECT TO_CHAR(R.HORA_FIN, 'HH24:MI') AS horaFin
             FROM ESTADO_RESERVA ER
@@ -128,7 +138,7 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer>
             AND E.NRO_ESTACIONAMIENTO = :nroEstacionamiento
             ORDER BY ER.ID_RESERVA
             """, nativeQuery = true)
-    String findHorasFinDeReservasActivasPorNroEstacionamiento(
+    Optional<String> findHorasFinDeReservasActivasPorNroEstacionamiento(
             @Param("nroEstacionamiento") int nroEstacionamiento);
 
 }
