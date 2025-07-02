@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import cl.alcoholicos.gestorestacionamiento.dto.EstadoReservaResponseDTO;
-import cl.alcoholicos.gestorestacionamiento.dto.ReservaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.EstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoEstacionamientoEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.EstadoReservaEntity;
@@ -23,10 +22,21 @@ import cl.alcoholicos.gestorestacionamiento.service.IEstadoReserva;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class EstadoReservaService implements IEstadoReserva {
+
+    // Constantes para estados de reserva
+    private static final String ESTADO_CONFIRMADA = "Confirmada";
+    private static final String ESTADO_ACTIVA = "Activa";
+    private static final String ESTADO_CANCELADA = "Cancelada";
+    
+    // Constantes para estados de estacionamiento
+    private static final String ESTADO_OCUPADO = "Ocupado";
+    private static final String ESTADO_DISPONIBLE = "Disponible";
 
     private final EstadoReservaRepository estadoReservaRepository;
     private final EstadoReservaMapper estadoReservaMapper;
@@ -51,128 +61,110 @@ public class EstadoReservaService implements IEstadoReserva {
 
     @Override
     public void crearEstadoInicial(ReservaEntity reserva) {
+        TipoEstadoReservaEntity tipoEstadoReserva = obtenerTipoEstadoReserva(ESTADO_CONFIRMADA);
+        
         EstadoReservaEntity estadoInicial = new EstadoReservaEntity();
-
-        TipoEstadoReservaEntity tipoEstadoReserva = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Confirmada")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Inicial no encontrado"));
-
         estadoInicial.setReserva(reserva);
         estadoInicial.setTipoEstadoReserva(tipoEstadoReserva);
         estadoInicial.setFechaEstadoReserva(LocalDateTime.now());
 
         estadoReservaRepository.save(estadoInicial);
-
+        log.info("Estado inicial creado para reserva ID: {}", reserva.getIdReserva());
     }
 
     @Transactional
     public boolean actualizarAEstadoActiva(Integer idReserva) {
-
-        ReservaEntity reserva = reservaRepository.findById(idReserva)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
-
-        List<EstadoReservaEntity> estadosReservas = estadoReservaRepository
-                .findAllByReservaIdReserva(reserva.getIdReserva());
-
-        if (estadosReservas.isEmpty()) {
-            throw new IllegalStateException("La reserva no tiene estados previos registrados");
+        ReservaEntity reserva = obtenerReserva(idReserva);
+        validarEstadosPrevios(reserva.getIdReserva());
+        
+        EstadoReservaEntity ultimoEstado = obtenerUltimoEstado(reserva.getIdReserva());
+        TipoEstadoReservaEntity tipoEstadoConfirmada = obtenerTipoEstadoReserva(ESTADO_CONFIRMADA);
+        
+        if (!ultimoEstado.getTipoEstadoReserva().equals(tipoEstadoConfirmada)) {
+            throw new IllegalStateException("La reserva debe estar en estado \"" + ESTADO_CONFIRMADA + "\" para continuar");
         }
 
-        TipoEstadoReservaEntity tipoEstadoReservaActivo = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Activa")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Activa no encontrado"));
-
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Confirmada")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Confirmada no encontrado"));
-
-        EstadoReservaEntity ultimoEstado = estadosReservas.get(estadosReservas.size() - 1);
-
-        if (ultimoEstado.getTipoEstadoReserva() != tipoEstadoReservaConfirmada) {
-            throw new IllegalStateException("La reserva debe estar en estado \"Confirmada\" para continuar");
-        }
-
-        EstadoReservaEntity estadoActivo = new EstadoReservaEntity();
-
-        estadoActivo.setReserva(reserva);
-        estadoActivo.setTipoEstadoReserva(tipoEstadoReservaActivo);
-        estadoActivo.setFechaEstadoReserva(LocalDateTime.now());
-        estadoReservaRepository.save(estadoActivo);
-
-        EstacionamientoEntity estacionamiento = estacionamientoRepository
-                .findByNroEstacionamiento(reserva.getEstacionamiento().getNroEstacionamiento())
-                .orElseThrow(() -> new RuntimeException("No se logro encontrar el estacionamiento con nro "
-                        + reserva.getEstacionamiento().getNroEstacionamiento()));
-
-        EstadoEstacionamientoEntity estadoEstacionamientoOcupado = estadoEstacionamientoRepository
-                .findByDescEstadoEstacionamiento("Ocupado")
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "No se logro encontrar el estado de estacionamiento \"Ocupado\""));
-
-        estacionamiento.setEstadoEstacionamiento(estadoEstacionamientoOcupado);
-        estacionamientoRepository.save(estacionamiento);
-
-        System.out.println("Mi log personalizado: " + estacionamiento.getEstadoEstacionamiento());
-
+        // Crear nuevo estado activo
+        crearNuevoEstado(reserva, ESTADO_ACTIVA);
+        
+        // Actualizar estado del estacionamiento
+        actualizarEstadoEstacionamiento(reserva, ESTADO_OCUPADO);
+        
+        log.info("Reserva ID: {} actualizada a estado Activa", idReserva);
         return true;
-
     }
 
     @Transactional
     public boolean actualizarAEstadoCancelada(ReservaEntity reserva) {
-
-        List<EstadoReservaEntity> estadosReservas = estadoReservaRepository
-                .findAllByReservaIdReserva(reserva.getIdReserva());
-
-        if (estadosReservas.isEmpty()) {
-            throw new IllegalStateException("La reserva no tiene estados previos registrados");
-        }
-
-        TipoEstadoReservaEntity tipoEstadoReservaCancelada = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Cancelada")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Cancelada no encontrado"));
-
-        TipoEstadoReservaEntity tipoEstadoReservaActiva = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Activa")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Activa no encontrado"));
-
-        TipoEstadoReservaEntity tipoEstadoReservaConfirmada = tipoEstadoReservaRepository
-                .findByDescTipoEstadoReserva("Confirmada")
-                .orElseThrow(() -> new RuntimeException("Tipo de estado Confirmada no encontrado"));
-
-        EstadoReservaEntity ultimoEstado = estadosReservas.get(estadosReservas.size() - 1);
-
-        /*
-         * if (ultimoEstado.getTipoEstadoReserva() != tipoEstadoReservaConfirmada ||
-         * ultimoEstado.getTipoEstadoReserva() != tipoEstadoReservaActiva) {
-         * throw new
-         * IllegalStateException("La reserva debe estar en estado \"Confirmada\" o \"Activa\" para continuar"
-         * );
-         * }
-         */
-
-        EstadoReservaEntity estadoActivo = new EstadoReservaEntity();
-
-        estadoActivo.setReserva(reserva);
-        estadoActivo.setTipoEstadoReserva(tipoEstadoReservaCancelada);
-        estadoActivo.setFechaEstadoReserva(LocalDateTime.now());
-
-        estadoReservaRepository.save(estadoActivo);
-
-        EstacionamientoEntity estacionamiento = estacionamientoRepository
-                .findByNroEstacionamiento(reserva.getEstacionamiento().getNroEstacionamiento())
-                .orElseThrow(() -> new RuntimeException("No se logro encontrar el estacionamiento con nro "
-                        + reserva.getEstacionamiento().getNroEstacionamiento()));
-
-        EstadoEstacionamientoEntity estadoEstacionamientoDisponible = estadoEstacionamientoRepository
-                .findByDescEstadoEstacionamiento("Disponible")
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "No se logro encontrar el estado de estacionamiento \"Disponible\""));
-
-        estacionamiento.setEstadoEstacionamiento(estadoEstacionamientoDisponible);
-        estacionamientoRepository.save(estacionamiento);
-
+        validarEstadosPrevios(reserva.getIdReserva());
+        
+        // Crear nuevo estado cancelado
+        crearNuevoEstado(reserva, ESTADO_CANCELADA);
+        
+        // Actualizar estado del estacionamiento
+        actualizarEstadoEstacionamiento(reserva, ESTADO_DISPONIBLE);
+        
+        log.info("Reserva ID: {} actualizada a estado Cancelada", reserva.getIdReserva());
         return true;
     }
 
+    // Métodos privados para reducir duplicación de código
+    
+    private ReservaEntity obtenerReserva(Integer idReserva) {
+        return reservaRepository.findById(idReserva)
+                .orElseThrow(() -> new EntityNotFoundException("Reserva no encontrada con ID: " + idReserva));
+    }
+
+    private void validarEstadosPrevios(Integer idReserva) {
+        List<EstadoReservaEntity> estadosReservas = estadoReservaRepository
+                .findAllByReservaIdReserva(idReserva);
+        
+        if (estadosReservas.isEmpty()) {
+            throw new IllegalStateException("La reserva no tiene estados previos registrados");
+        }
+    }
+
+    private EstadoReservaEntity obtenerUltimoEstado(Integer idReserva) {
+        List<EstadoReservaEntity> estadosReservas = estadoReservaRepository
+                .findAllByReservaIdReserva(idReserva);
+        return estadosReservas.get(estadosReservas.size() - 1);
+    }
+
+    private TipoEstadoReservaEntity obtenerTipoEstadoReserva(String descripcion) {
+        return tipoEstadoReservaRepository
+                .findByDescTipoEstadoReserva(descripcion)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Tipo de estado \"" + descripcion + "\" no encontrado"));
+    }
+
+    private void crearNuevoEstado(ReservaEntity reserva, String descripcionEstado) {
+        TipoEstadoReservaEntity tipoEstado = obtenerTipoEstadoReserva(descripcionEstado);
+        
+        EstadoReservaEntity nuevoEstado = new EstadoReservaEntity();
+        nuevoEstado.setReserva(reserva);
+        nuevoEstado.setTipoEstadoReserva(tipoEstado);
+        nuevoEstado.setFechaEstadoReserva(LocalDateTime.now());
+        
+        estadoReservaRepository.save(nuevoEstado);
+    }
+
+    private void actualizarEstadoEstacionamiento(ReservaEntity reserva, String descripcionEstado) {
+        int nroEstacionamiento = reserva.getEstacionamiento().getNroEstacionamiento();
+        
+        EstacionamientoEntity estacionamiento = estacionamientoRepository
+                .findByNroEstacionamiento(nroEstacionamiento)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se encontró el estacionamiento con número: " + nroEstacionamiento));
+
+        EstadoEstacionamientoEntity estadoEstacionamiento = estadoEstacionamientoRepository
+                .findByDescEstadoEstacionamiento(descripcionEstado)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se encontró el estado de estacionamiento \"" + descripcionEstado + "\""));
+
+        estacionamiento.setEstadoEstacionamiento(estadoEstacionamiento);
+        estacionamientoRepository.save(estacionamiento);
+        
+        log.debug("Estado del estacionamiento {} actualizado a: {}", 
+                nroEstacionamiento, descripcionEstado);
+    }
 }
