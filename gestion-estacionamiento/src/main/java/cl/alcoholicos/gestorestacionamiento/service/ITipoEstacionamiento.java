@@ -9,6 +9,8 @@ public interface ITipoEstacionamiento {
 
     TipoEstacionamientoResponseDTO insert(TipoEstacionamientoCreateDTO tipoEstacionamiento);
 
+    boolean delete(Integer idTipoEstacionamiento);
+
     List<TipoEstacionamientoResponseDTO> getAll();
 
 }

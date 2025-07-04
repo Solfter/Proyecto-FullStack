@@ -13,4 +13,6 @@ public interface IEstadoEstacionamiento {
 
     EstadoEstacionamientoResponseDTO insert(EstadoEstacionamientoCreateDTO createDTO);
 
+    boolean delete(Integer idEstadoEstacionamiento);
+
 }

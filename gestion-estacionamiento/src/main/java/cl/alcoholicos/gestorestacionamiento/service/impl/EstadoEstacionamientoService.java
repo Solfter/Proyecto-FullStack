@@ -47,4 +47,14 @@ public class EstadoEstacionamientoService implements IEstadoEstacionamiento {
 
         return responseDTO;
     }
+
+    @Override
+    @Transactional
+    public boolean delete(Integer idEstadoEstacionamiento) {
+        if (estadoEstacionamientoRepository.existsById(idEstadoEstacionamiento)) {
+            estadoEstacionamientoRepository.deleteById(idEstadoEstacionamiento);
+            return true;
+        }
+        return false;
+    }
 }

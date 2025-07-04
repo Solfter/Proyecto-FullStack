@@ -18,5 +18,7 @@ public class VehiculoResponseDTO {
     private int anio;
 
     private ModeloResponseDTO modelo;
+
+    private UsuarioBasicDTO usuario;
     
 }

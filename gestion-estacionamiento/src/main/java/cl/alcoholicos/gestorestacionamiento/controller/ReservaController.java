@@ -12,6 +12,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,7 +90,33 @@ public class ReservaController {
     }
 
     @GetMapping("horaFin/{nroEstacionamiento}")
-    public ResponseEntity<?> obtenerHoraFin (@PathVariable Integer nroEstacionamiento) {
+    @Operation(
+        summary = "Obtener hora de fin de reserva por estacionamiento",
+        description = "Retorna la hora en que se desocupa un estacionamiento específico"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Hora de fin obtenida exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = String.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Estacionamiento no encontrado",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<?> obtenerHoraFin(
+        @Parameter(description = "Número del estacionamiento", required = true, example = "1")
+        @PathVariable Integer nroEstacionamiento) {
         LocalTime horaFin = reservaService.buscarHoraFinPorEstacionamiento(nroEstacionamiento);
         return new ResponseEntity<>("El estacionamiento nro \"" + nroEstacionamiento + "\" se desocupa a las " + horaFin, HttpStatus.OK);
     }
@@ -182,7 +209,45 @@ public class ReservaController {
     }
 
     @GetMapping("/historial")
-    public ResponseEntity<?> obtenerReservaPorUsuario(@RequestHeader("Authorization") String authHeader) {
+    @Operation(
+        summary = "Obtener historial de reservas del usuario",
+        description = "Retorna todas las reservas del usuario autenticado. Requiere autenticación JWT."
+    )
+    @SecurityRequirement(name = "Bearer Authentication")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Historial de reservas obtenido exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ReservaResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "No hay reservas para el usuario",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Token de autorización inválido o expirado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        )
+    })
+    public ResponseEntity<?> obtenerReservaPorUsuario(
+        @Parameter(description = "Token de autorización JWT (Bearer token)", required = true, example = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+        @RequestHeader("Authorization") String authHeader) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -258,9 +323,75 @@ public class ReservaController {
     }
 
     @PutMapping("/{idReserva}")
+    @Operation(
+        summary = "Actualizar reserva",
+        description = "Actualiza una reserva existente. Requiere autenticación JWT y permisos para modificar la reserva."
+    )
+    @SecurityRequirement(name = "Bearer Authentication")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Reserva actualizada exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ReservaResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Datos inválidos o argumentos incorrectos",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Token de autorización inválido o expirado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "No tienes permisos para modificar esta reserva",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Reserva no encontrada",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "409",
+            description = "Conflicto con el estado actual de la reserva",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        )
+    })
     public ResponseEntity<?> actualizarReserva(
+            @Parameter(description = "Datos de la reserva a actualizar", required = true)
             @RequestBody @Valid ReservaUpdateDTO updateDTO,
+            @Parameter(description = "Token de autorización JWT (Bearer token)", required = true, example = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
             @RequestHeader("Authorization") String authHeader,
+            @Parameter(description = "ID de la reserva a actualizar", required = true, example = "1")
             @PathVariable Integer idReserva) {
 
         try {
@@ -315,5 +446,42 @@ public class ReservaController {
         }
 
         return jwtTokenUtil.getUserIdFromJWT(token);
+    }
+
+    @DeleteMapping("/{idReserva}")
+    @Operation(
+        summary = "Eliminar reserva",
+        description = "Elimina una reserva del sistema usando su ID"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "204",
+            description = "Reserva eliminada exitosamente",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Reserva no encontrada",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "409",
+            description = "No se puede eliminar la reserva porque está siendo procesada",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<Void> delete(
+        @Parameter(description = "ID de la reserva a eliminar", required = true, example = "1")
+        @PathVariable Integer idReserva) {
+        boolean deleted = reservaService.delete(idReserva);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

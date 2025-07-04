@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-01T21:56:17-0400",
+    date = "2025-07-04T18:29:20-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250628-1110, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -318,6 +318,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         vehiculoResponseDTO.color( vehiculoEntity.getColor() );
         vehiculoResponseDTO.modelo( modeloEntityToModeloResponseDTO( vehiculoEntity.getModelo() ) );
         vehiculoResponseDTO.patente( vehiculoEntity.getPatente() );
+        vehiculoResponseDTO.usuario( usuarioEntityToUsuarioBasicDTO( vehiculoEntity.getUsuario() ) );
 
         return vehiculoResponseDTO.build();
     }

@@ -130,7 +130,11 @@ public class ReservaService implements IReserva {
 
     @Override
     public boolean delete(Integer idReserva) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if (reservaRepository.existsById(idReserva)) {
+            reservaRepository.deleteById(idReserva);
+            return true;
+        }
+        return false;
     }
 
     @Override

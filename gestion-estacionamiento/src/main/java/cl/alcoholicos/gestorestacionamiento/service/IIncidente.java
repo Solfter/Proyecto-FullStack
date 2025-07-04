@@ -10,7 +10,7 @@ public interface IIncidente {
 
     IncidenteEntity update(Integer idIncidente, IncidenteEntity incidente);
 
-    IncidenteEntity delete(Integer idIncidente);
+    boolean delete(Integer idIncidente);
 
     IncidenteEntity getById(Integer idIncidente);
 

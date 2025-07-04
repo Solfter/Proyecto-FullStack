@@ -27,9 +27,12 @@ public class IncidenteService implements IIncidente {
     }
 
     @Override
-    public IncidenteEntity delete(Integer idIncidente) {
-        incidenteRepository.deleteById(idIncidente);
-        return null;
+    public boolean delete(Integer idIncidente) {
+        if (incidenteRepository.existsById(idIncidente)) {
+            incidenteRepository.deleteById(idIncidente);
+            return true;
+        }
+        return false;
     }
 
     @Override

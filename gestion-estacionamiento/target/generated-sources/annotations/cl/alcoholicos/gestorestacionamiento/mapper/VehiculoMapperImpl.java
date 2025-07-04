@@ -2,18 +2,20 @@ package cl.alcoholicos.gestorestacionamiento.mapper;
 
 import cl.alcoholicos.gestorestacionamiento.dto.MarcaResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.ModeloResponseDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.UsuarioBasicDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoCreateDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.dto.VehiculoUpdateDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.MarcaEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.ModeloEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
 import cl.alcoholicos.gestorestacionamiento.entity.VehiculoEntity;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-01T21:56:17-0400",
+    date = "2025-07-04T18:29:20-0400",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250628-1110, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -31,6 +33,7 @@ public class VehiculoMapperImpl implements VehiculoMapper {
         vehiculoResponseDTO.color( vehiculo.getColor() );
         vehiculoResponseDTO.modelo( modeloEntityToModeloResponseDTO( vehiculo.getModelo() ) );
         vehiculoResponseDTO.patente( vehiculo.getPatente() );
+        vehiculoResponseDTO.usuario( usuarioEntityToUsuarioBasicDTO( vehiculo.getUsuario() ) );
 
         return vehiculoResponseDTO.build();
     }
@@ -86,5 +89,24 @@ public class VehiculoMapperImpl implements VehiculoMapper {
         modeloResponseDTO.setNombreModelo( modeloEntity.getNombreModelo() );
 
         return modeloResponseDTO;
+    }
+
+    protected UsuarioBasicDTO usuarioEntityToUsuarioBasicDTO(UsuarioEntity usuarioEntity) {
+        if ( usuarioEntity == null ) {
+            return null;
+        }
+
+        UsuarioBasicDTO usuarioBasicDTO = new UsuarioBasicDTO();
+
+        usuarioBasicDTO.setApMaterno( usuarioEntity.getApMaterno() );
+        usuarioBasicDTO.setApPaterno( usuarioEntity.getApPaterno() );
+        usuarioBasicDTO.setCorreo( usuarioEntity.getCorreo() );
+        usuarioBasicDTO.setDv( usuarioEntity.getDv() );
+        usuarioBasicDTO.setNroCelular( usuarioEntity.getNroCelular() );
+        usuarioBasicDTO.setPrimerNombre( usuarioEntity.getPrimerNombre() );
+        usuarioBasicDTO.setRut( usuarioEntity.getRut() );
+        usuarioBasicDTO.setSegundoNombre( usuarioEntity.getSegundoNombre() );
+
+        return usuarioBasicDTO;
     }
 }

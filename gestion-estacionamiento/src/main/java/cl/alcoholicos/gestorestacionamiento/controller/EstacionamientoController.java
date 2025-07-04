@@ -238,7 +238,38 @@ public class EstacionamientoController {
     }
 
     @GetMapping("/estado/{estadoEstacionamiento}")
-    public ResponseEntity<List<EstacionamientoResponseDTO>> obtenerEstacionamientosDisponibles (@PathVariable String estadoEstacionamiento) {
+    @Operation(
+        summary = "Obtener estacionamientos por estado",
+        description = "Retorna una lista de estacionamientos filtrados por su estado"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Lista de estacionamientos obtenida exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = EstacionamientoResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "No hay estacionamientos con el estado especificado",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Estado inválido",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<List<EstacionamientoResponseDTO>> obtenerEstacionamientosDisponibles(
+        @Parameter(description = "Estado del estacionamiento a filtrar", required = true, example = "DISPONIBLE")
+        @PathVariable String estadoEstacionamiento) {
         List<EstacionamientoResponseDTO> estacionamientos = estacionamientoService.obtenerEstacionamientoPorEstado(estadoEstacionamiento);
         if (estacionamientos == null || estacionamientos.isEmpty()) {
             return ResponseEntity.noContent().build();

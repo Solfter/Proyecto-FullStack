@@ -13,4 +13,6 @@ public interface ITipoEstadoReserva {
 
     TipoEstadoReservaResponseDTO insert(TipoEstadoReservaCreateDTO tipoEstadoReservaCreateDTO);
 
+    boolean delete(Integer idTipoEstadoReserva);
+
 }

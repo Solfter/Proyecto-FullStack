@@ -10,4 +10,6 @@ public interface ITipoEstadoIncidente {
 
     TipoEstadoIncidenteResponseDTO getById(Integer idTipoEstadoIncidente);
 
+    boolean delete(Integer idTipoEstadoIncidente);
+
 }

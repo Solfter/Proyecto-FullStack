@@ -32,4 +32,13 @@ public class TipoEstadoIncidenteService implements ITipoEstadoIncidente {
             .orElse(null);  
     }
 
+    @Override
+    public boolean delete(Integer idTipoEstadoIncidente) {
+        if (tipoEstadoIncidenteRepository.existsById(idTipoEstadoIncidente)) {
+            tipoEstadoIncidenteRepository.deleteById(idTipoEstadoIncidente);
+            return true;
+        }
+        return false;
+    }
+
 }

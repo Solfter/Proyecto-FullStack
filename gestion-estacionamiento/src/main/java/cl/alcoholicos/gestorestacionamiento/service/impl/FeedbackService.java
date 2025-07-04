@@ -47,9 +47,12 @@ public class FeedbackService implements IFeedback {
     }
 
     @Override
-    public FeedbackEntity delete(Integer idFeedback) {
-        feedbackRepository.deleteById(idFeedback);
-        return null;
+    public boolean delete(Integer idFeedback) {
+        if (feedbackRepository.existsById(idFeedback)) {
+            feedbackRepository.deleteById(idFeedback);
+            return true;
+        }
+        return false;
     }
 
     @Override

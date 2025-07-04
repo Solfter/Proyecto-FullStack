@@ -12,7 +12,7 @@ public interface IFeedback {
 
     FeedbackEntity update(Integer idFeedback, FeedbackEntity feedback);
 
-    FeedbackEntity delete(Integer idFeedback);
+    boolean delete(Integer idFeedback);
 
     FeedbackEntity getById(Integer idFeedback);
 

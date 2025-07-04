@@ -30,6 +30,15 @@ public class TipoEstacionamientoService implements ITipoEstacionamiento {
     }
 
     @Override
+    public boolean delete(Integer idTipoEstacionamiento) {
+        if (tipoEstacionamientoRepository.existsById(idTipoEstacionamiento)) {
+            tipoEstacionamientoRepository.deleteById(idTipoEstacionamiento);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<TipoEstacionamientoResponseDTO> getAll() {
         return tipoEstacionamientoRepository.findAll().stream()
                 .map(tipoEstacionamientoMapper::toResponseDTO)

@@ -30,12 +30,21 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import cl.alcoholicos.gestorestacionamiento.config.JwtTokenUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/feedback")
 @AllArgsConstructor
+@Tag(name = "Feedback", description = "API para la gestión de feedback y comentarios de usuarios")
 public class FeedbackController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservaController.class);
@@ -43,6 +52,30 @@ public class FeedbackController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping
+    @Operation(
+        summary = "Obtener todos los feedback",
+        description = "Retorna una lista con todos los feedback registrados en el sistema"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Lista de feedback obtenida exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = FeedbackEntity.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "No hay feedback registrados",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
     public ResponseEntity<List<FeedbackEntity>> getAll() {
         List<FeedbackEntity> feedbacks = feedbackService.getAll();
         if (feedbacks.isEmpty()) {
@@ -52,8 +85,73 @@ public class FeedbackController {
     }
 
     @PostMapping
+    @Operation(
+        summary = "Crear un nuevo feedback",
+        description = "Registra un nuevo feedback en el sistema. Requiere autenticación JWT."
+    )
+    @SecurityRequirement(name = "Bearer Authentication")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Feedback creado exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = FeedbackResponseDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Datos inválidos o incompletos",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = String.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Token de autorización inválido o expirado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Acceso denegado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Usuario no encontrado",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "503",
+            description = "Servicio temporalmente no disponible",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = MessageResponse.class)
+            )
+        )
+    })
     public ResponseEntity<?> insert(
+            @Parameter(description = "Datos del feedback a crear", required = true)
             @RequestBody FeedbackCreateDTO createDTO,
+            @Parameter(description = "Token de autorización JWT (Bearer token)", required = true, example = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
             @RequestHeader("Authorization") String authHeader) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -126,8 +224,40 @@ public class FeedbackController {
     }
 
     @PutMapping("/{idFeedback}")
-    public ResponseEntity<FeedbackEntity> update(@PathVariable Integer idFeedback,
-            @RequestBody FeedbackEntity feedback) {
+    @Operation(
+        summary = "Actualizar feedback",
+        description = "Actualiza los datos de un feedback existente identificado por su ID"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Feedback actualizado exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = FeedbackEntity.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Feedback no encontrado",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Datos inválidos",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<FeedbackEntity> update(
+        @Parameter(description = "ID del feedback a actualizar", required = true, example = "1")
+        @PathVariable Integer idFeedback,
+        @Parameter(description = "Datos del feedback a actualizar", required = true)
+        @RequestBody FeedbackEntity feedback) {
         FeedbackEntity feedbackExistente = feedbackService.getById(idFeedback);
         if (feedbackExistente == null) {
             return ResponseEntity.notFound().build();
@@ -137,18 +267,41 @@ public class FeedbackController {
     }
 
     @DeleteMapping("/{idFeedback}")
-    public ResponseEntity<FeedbackEntity> delete(@PathVariable Integer idFeedback) {
+    @Operation(
+        summary = "Eliminar feedback",
+        description = "Elimina un feedback del sistema usando su ID"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Feedback eliminado exitosamente",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Feedback no encontrado",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<FeedbackEntity> delete(
+        @Parameter(description = "ID del feedback a eliminar", required = true, example = "1")
+        @PathVariable Integer idFeedback) {
         FeedbackEntity feedback = feedbackService.getById(idFeedback);
         if (feedback == null) {
             return ResponseEntity.notFound().build();
         }
 
-        FeedbackEntity feedbackBorrado = feedbackService.delete(idFeedback);
-        if (feedbackBorrado == null) {
-            return ResponseEntity.ok(feedback);
+        boolean feedbackBorrado = feedbackService.delete(idFeedback);
+        if (feedbackBorrado) {
+            return ResponseEntity.ok().build();
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
 
     }
 

@@ -48,4 +48,13 @@ public class TipoEstadoReservaService implements ITipoEstadoReserva {
         return responseDTO;
 
     }
+
+    @Override
+    public boolean delete(Integer idTipoEstadoReserva) {
+        if (tipoEstadoReservaRepository.existsById(idTipoEstadoReserva)) {
+            tipoEstadoReservaRepository.deleteById(idTipoEstadoReserva);
+            return true;
+        }
+        return false;
+    }
 }

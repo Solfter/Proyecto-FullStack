@@ -1,5 +1,10 @@
 package cl.alcoholicos.gestorestacionamiento.mapper;
 
-public class EstadoIncidenteMapper {
+import org.mapstruct.Mapper;
+
+
+@Mapper(componentModel = "spring")
+public interface EstadoIncidenteMapper {
+
 
 }

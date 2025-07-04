@@ -103,7 +103,38 @@ public class EstadoReservaController {
     }
 
     @PutMapping("{idReserva}/activar")
-    public ResponseEntity<String> actualizarReservaAActiva (@PathVariable Integer idReserva) {
+    @Operation(
+        summary = "Activar reserva",
+        description = "Cambia el estado de una reserva a 'Activa'"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Reserva activada exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = String.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Reserva no encontrada",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "No se puede activar la reserva en su estado actual",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<String> actualizarReservaAActiva(
+        @Parameter(description = "ID de la reserva a activar", required = true, example = "1")
+        @PathVariable Integer idReserva) {
 
         if (estadoReservaService.actualizarAEstadoActiva(idReserva)) {
             return new ResponseEntity<>("Se logró cambiar el estado de reserva a \"Activa\"", HttpStatus.OK);
@@ -112,7 +143,35 @@ public class EstadoReservaController {
     }
 
     @PutMapping("{idReserva}/cancelar")
-    public ResponseEntity<Void> actualizarReservaACancelada (@PathVariable Integer idReserva) {
+    @Operation(
+        summary = "Cancelar reserva",
+        description = "Cambia el estado de una reserva a 'Cancelada'"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "204",
+            description = "Reserva cancelada exitosamente",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Reserva no encontrada",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "No se puede cancelar la reserva en su estado actual",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Error interno del servidor",
+            content = @Content
+        )
+    })
+    public ResponseEntity<Void> actualizarReservaACancelada(
+        @Parameter(description = "ID de la reserva a cancelar", required = true, example = "1")
+        @PathVariable Integer idReserva) {
         ReservaEntity reserva = reservaRepository.findById(idReserva)
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
