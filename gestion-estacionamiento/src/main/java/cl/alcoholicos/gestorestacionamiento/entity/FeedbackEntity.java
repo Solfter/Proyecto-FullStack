@@ -1,6 +1,7 @@
 package cl.alcoholicos.gestorestacionamiento.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ public class FeedbackEntity {
     private int idFeedback;
 
     @Column(name = "FECHA_FEEDBACK")
-    private Date fechaFeedback;
+    private LocalDate fechaFeedback;
 
     @Column(name = "DESC_FEEDBACK")
     private String descFeedback;

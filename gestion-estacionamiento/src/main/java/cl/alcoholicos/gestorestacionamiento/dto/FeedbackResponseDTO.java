@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class FeedbackResponseDTO {
+
     private int idFeedback;
 
     private Date fechaFeedback;
     
     private String descFeedback;
+
+    private UsuarioBasicDTO usuario;
 
 }

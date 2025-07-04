@@ -1,23 +1,43 @@
 package cl.alcoholicos.gestorestacionamiento.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.alcoholicos.gestorestacionamiento.dto.FeedbackCreateDTO;
+import cl.alcoholicos.gestorestacionamiento.dto.FeedbackResponseDTO;
 import cl.alcoholicos.gestorestacionamiento.entity.FeedbackEntity;
+import cl.alcoholicos.gestorestacionamiento.entity.UsuarioEntity;
+import cl.alcoholicos.gestorestacionamiento.mapper.FeedbackMapper;
 import cl.alcoholicos.gestorestacionamiento.repository.FeedbackRepository;
+import cl.alcoholicos.gestorestacionamiento.repository.UsuarioRepository;
 import cl.alcoholicos.gestorestacionamiento.service.IFeedback;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class FeedbackService implements IFeedback {
 
-    @Autowired
-    private FeedbackRepository feedbackRepository;
+    private final FeedbackRepository feedbackRepository;
+    private final FeedbackMapper feedbackMapper;
+    private final UsuarioRepository usuarioRepository;
 
     @Override
-    public FeedbackEntity insert(FeedbackEntity feedback) {
-        return feedbackRepository.save(feedback);
+    public FeedbackResponseDTO insert(FeedbackCreateDTO createDTO, Integer rutUsuario) {
+        FeedbackEntity feedback = feedbackMapper.toEntity(createDTO);
+
+        UsuarioEntity usuario = usuarioRepository.findById(rutUsuario)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
+        feedback.setUsuario(usuario);
+        feedback.setFechaFeedback(LocalDate.now());
+
+        FeedbackEntity feedbackGuardado = feedbackRepository.save(feedback);
+        FeedbackResponseDTO responseDTO = feedbackMapper.toResponseDTO(feedbackGuardado);
+        return responseDTO;
     }
 
     @Override
