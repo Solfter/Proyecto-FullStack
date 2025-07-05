@@ -239,8 +239,8 @@
         
         <div class="header">
             <div class="security-badge">🛡️ PANEL DE SEGURIDAD</div>
-            <h1>Validar Reserva</h1>
-            <p>Ingresa el ID de la reserva para activarla y permitir el acceso</p>
+            <h1>Validar Estacionamiento</h1>
+            <p>Ingresa el ID de la reserva para validar y habilitar el acceso al estacionamiento</p>
         </div>
 
         <div class="form-container">
@@ -253,14 +253,14 @@
                         type="text" 
                         id="idReserva" 
                         name="idReserva" 
-                        placeholder="Ingresa el ID de la reserva"
+                        placeholder="Ingresa el ID de la reserva para validar"
                         required
                         autocomplete="off"
                     >
                 </div>
 
                 <button type="submit" class="validate-btn" id="validateBtn">
-                    <span id="btnText">✅ Validar y Activar Reserva</span>
+                    <span id="btnText">✅ Validar Estacionamiento y Habilitar Acceso</span>
                     <div id="loading" class="loading">
                         <div class="spinner"></div>
                     </div>
@@ -268,7 +268,7 @@
             </form>
 
             <div id="reservationInfo" class="reservation-info">
-                <h3>📋 Información de la Reserva</h3>
+                <h3>📋 Información de Validación</h3>
                 <div class="info-item">
                     <span class="info-label">Estado:</span>
                     <span class="info-value" id="estadoReserva">-</span>
@@ -339,9 +339,9 @@
                 });
 
                 if (response.ok) {
-                    // El controller retorna 204 No Content cuando es exitoso
-                    if (response.status === 204) {
-                        showMessage('✅ Reserva activada exitosamente. El acceso ha sido habilitado', 'success');
+                    // El controller puede retornar 200 OK o 204 No Content cuando es exitoso
+                    if (response.status === 200 || response.status === 204) {
+                        showMessage('✅ Validación exitosa: El estacionamiento ha sido activado y el acceso está habilitado', 'success');
                         
                         // Mostrar información de la reserva
                         document.getElementById('estadoReserva').textContent = 'ACTIVADA ✅';

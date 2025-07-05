@@ -135,6 +135,7 @@ C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\sr
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\service\impl\EspacioFavoritoService.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\controller\EstadoEstacionamientoController.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\repository\SensorRepository.java
+C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\mapper\IncidenteMapper.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\MessageResponse.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\repository\IncidenteRepository.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\controller\EstacionamientoController.java
@@ -150,16 +151,17 @@ C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\sr
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\controller\EstadoReservaController.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\config\SecurityConfig.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\service\IFeedback.java
+C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\EstadoIncidenteBasicDTO.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\config\OpenApiConfig.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\repository\EstadoEstacionamientoRepository.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\IncidenteUpdateDTO.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\service\impl\UserDetailsServiceImpl.java
-C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\controller\TipoUsuarioControllerCopy.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\entity\TipoEstacionamientoEntity.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\VehiculoCreateDTO.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\EspacioFavoritoBasicDTO.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\repository\FeedbackRepository.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\controller\FeedbackController.java
+C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\dto\TipoEstadoIncidenteCreateDTO.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\exception\ServiceUnavailableException.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\mapper\TipoEstadoReservaMapper.java
 C:\Users\el_se\OneDrive\Documentos\Proyecto-FullStack\gestion-estacionamiento\src\main\java\cl\alcoholicos\gestorestacionamiento\service\impl\PasswordMigrationService.java
